@@ -3,6 +3,7 @@
 {
 
   imports = [
+   ./fish.nix
    ./git.nix
   ];
 
@@ -12,12 +13,9 @@
     packages = with pkgs; [
       ansible
       bat
-      chezmoi
       curl
-      # delta
       fd
       gh
-      # git
       gnupg
       gnused
       go-task
@@ -33,14 +31,6 @@
   };
 
   programs.home-manager.enable = true;
-
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''source "$__fish_config_dir/config-real.fish"'';
-    plugins = [
-      { name = "pure"; src = pkgs.fishPlugins.pure.src; }
-    ];
-  };
 
   programs.neovim = {
     enable = true;
