@@ -4,6 +4,7 @@
 
   imports = [
    ./fish.nix
+   ./gh.nix
    ./git.nix
   ];
 
@@ -15,7 +16,6 @@
       bat
       curl
       fd
-      gh
       gnupg
       gnused
       go-task
@@ -26,11 +26,14 @@
       ripgrep
       wget
     ];
-    file = { };
+    file = {
+      "${config.home.homeDirectory}/intelephense" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/intelephense";
+        recursive = true;
+      };
+    };
     sessionVariables = { };
   };
-
-  programs.home-manager.enable = true;
 
   programs.neovim = {
     enable = true;
@@ -50,7 +53,12 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
         recursive = true;
       };
+      "github-copilot/hosts.json" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/github-copilot_hosts.json";
+      };
     };
   };
+
+  programs.home-manager.enable = true;
 
 }
