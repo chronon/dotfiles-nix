@@ -9,7 +9,9 @@
   home = {
     homeDirectory = "/home/chronon";
     packages = with pkgs; [
-      # wezterm
+      libcxxStdenv
+      unzip
+      wezterm
     ];
   };
 
