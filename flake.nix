@@ -25,12 +25,12 @@
           ];
         });
 
-        # "${username}@nixos" = home-manager.lib.homeManagerConfiguration (config // {
-        #   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        #   modules = [
-        #     ./hosts/nixos
-        #   ];
-        # });
+        "${username}@nixair" = home-manager.lib.homeManagerConfiguration (config // {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          modules = [
+            ./home-manager/hosts/nixair
+          ];
+        });
       };
     };
 }

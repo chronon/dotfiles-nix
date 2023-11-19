@@ -3,13 +3,13 @@
 {
 
   imports = [
-   ../../home/common.nix
+   ../../modules/common.nix
   ];
 
   home = {
     homeDirectory = "/home/chronon";
     packages = with pkgs; [
-      vim
+      # wezterm
     ];
   };
 
