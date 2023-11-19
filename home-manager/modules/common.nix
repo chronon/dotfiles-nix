@@ -7,6 +7,7 @@
    ./gh.nix
    ./git.nix
    ./neovim.nix
+   ./ssh.nix
   ];
 
   home = {
@@ -14,6 +15,7 @@
     stateVersion = "23.05";
     packages = with pkgs; [
       ansible
+      bat
       curl
       fd
       gnused
@@ -28,7 +30,6 @@
   };
 
   programs = {
-    bat.enable = true;
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
