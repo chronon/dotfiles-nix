@@ -2,39 +2,6 @@
 
 {
 
-  imports = [
-   ./fish.nix
-   ./gh.nix
-   ./git.nix
-  ];
-
-  home = {
-    username = "chronon";
-    stateVersion = "23.05";
-    packages = with pkgs; [
-      ansible
-      bat
-      curl
-      fd
-      gnupg
-      gnused
-      go-task
-      jq
-      nodejs_20
-      nodejs_20.pkgs.pnpm
-      pinentry
-      ripgrep
-      wget
-    ];
-    file = {
-      "${config.home.homeDirectory}/intelephense" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/intelephense";
-        recursive = true;
-      };
-    };
-    sessionVariables = { };
-  };
-
   programs.neovim = {
     enable = true;
     withRuby = false;
@@ -42,15 +9,23 @@
     defaultEditor = true;
   };
 
+  home = {
+    file = {
+      "${config.home.homeDirectory}/intelephense" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/intelephense";
+        recursive = true;
+      };
+    };
+  };
+
   xdg = {
-    enable = true;
     configFile = {
       "nvim" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
         recursive = true;
       };
-      "wezterm" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
+      "snippets" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/snippets";
         recursive = true;
       };
       "github-copilot/hosts.json" = {
@@ -58,7 +33,5 @@
       };
     };
   };
-
-  programs.home-manager.enable = true;
 
 }

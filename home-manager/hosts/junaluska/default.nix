@@ -3,7 +3,7 @@
 {
 
   imports = [
-   ../../home/common.nix
+   ../../modules/common.nix
   ];
 
   home = {

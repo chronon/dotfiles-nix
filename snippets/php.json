@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "scope": "php",
+    "prefix": "deb",
+    "body": [
+      "debug($1);"
+    ],
+    "description": "Debug and exit"
+  },
+  "debug-exit": {
+    "scope": "php",
+    "prefix": "dex",
+    "body": [
+      "debug($1);",
+      "exit;"
+    ],
+    "description": "Debug and exit"
+  }
+}
