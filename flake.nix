@@ -17,7 +17,6 @@
       };
     in {
       homeConfigurations = {
-
         "${username}@junaluska" = home-manager.lib.homeManagerConfiguration (config // {
           pkgs = nixpkgs.legacyPackages."x86_64-darwin";
           modules = [
