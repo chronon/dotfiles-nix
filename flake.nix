@@ -17,6 +17,13 @@
       };
     in {
       homeConfigurations = {
+        "${username}@kanzi" = home-manager.lib.homeManagerConfiguration (config // {
+          pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+          modules = [
+            ./home-manager/hosts/kanzi
+          ];
+        });
+
         "${username}@junaluska" = home-manager.lib.homeManagerConfiguration (config // {
           pkgs = nixpkgs.legacyPackages."x86_64-darwin";
           modules = [
