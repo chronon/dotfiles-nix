@@ -10,10 +10,13 @@
    ./ssh.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   home = {
     username = "chronon";
     stateVersion = "23.05";
     packages = with pkgs; [
+      _1password
       ansible
       bat
       curl
@@ -30,6 +33,7 @@
   };
 
   programs = {
+    direnv.enable = true;
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;

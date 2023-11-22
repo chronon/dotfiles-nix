@@ -18,6 +18,7 @@
       mcore = "cd $HOME/machines/core/";
       ghprce = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label enhancement";
       ghprcb = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label bug";
+      ghprm = "gh pr merge --merge --delete-branch && git mp";
     };
     interactiveShellInit = ''
       set_colorscheme

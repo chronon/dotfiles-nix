@@ -9,7 +9,6 @@
       prompt = "enabled";
       aliases = {
         prv = "pr view --web";
-        prm = "pr merge --merge --delete-branch && git mp";
         prc = "pr checks";
       };
     };
