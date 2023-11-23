@@ -14,6 +14,9 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/ssh/conf.d";
         recursive = true;
       };
+      "${config.home.homeDirectory}/.ssh/allowed_signers" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/ssh/allowed_signers";
+      };
     };
   };
 }

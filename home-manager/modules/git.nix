@@ -7,7 +7,7 @@
     userName = "Gregory Gaskill";
     userEmail = "gregory@chronon.com";
     signing = {
-      key = "715715478A5B85AF27DE43EC200609263BAC0D80";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBGWsRBSOvlCJsfypQvMprX65012c91pSs9Bu8TYEyAh";
       signByDefault = true;
     };
     extraConfig = {
@@ -15,21 +15,13 @@
         editor = "nvim";
         quotePath = false;
       };
-      init = {
-        defaultBranch = "main";
-      };
-      pager = {
-        branch = false;
-      };
-      pull = {
-        rebase = false;
-      };
-      difftool = {
-        prompt = false;
-      };
-      merge = {
-        tool = "smerge";
-      };
+      init.defaultBranch = "main";
+      gpg.format = "ssh";
+      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory }/.ssh/allowed_signers";
+      pager.branch = false;
+      pull.rebase = false;
+      difftool.prompt = false;
+      merge.tool = "smerge";
       mergetool.smerge = {
         cmd = "smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"";
         trustExitCode = true;
