@@ -16,9 +16,10 @@
       dudirs = "du -d 1 -h";
       kds = "find\ .\ -name\ .DS_Store\ -print\ -exec\ rm\ -f\ \{\}\ \\\;";
       mcore = "cd $HOME/machines/core/";
-      ghprce = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label enhancement";
-      ghprcb = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label bug";
-      ghprm = "gh pr merge --merge --delete-branch && git mp";
+      # ghprce = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label enhancement";
+      # ghprcb = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label bug";
+      # ghprm = "gh pr merge --merge --delete-branch && git mp";
+      # ghprc = "gh pr checks";
     };
     interactiveShellInit = ''
       set_colorscheme
