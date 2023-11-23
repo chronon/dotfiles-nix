@@ -7,6 +7,7 @@
    ./gh.nix
    ./git.nix
    ./neovim.nix
+   ./sessionvars.nix
    ./ssh.nix
   ];
 
@@ -28,8 +29,6 @@
       pinentry
       wget
     ];
-    file = { };
-    sessionVariables = { };
   };
 
   programs = {

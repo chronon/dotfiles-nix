@@ -16,14 +16,9 @@
       dudirs = "du -d 1 -h";
       kds = "find\ .\ -name\ .DS_Store\ -print\ -exec\ rm\ -f\ \{\}\ \\\;";
       mcore = "cd $HOME/machines/core/";
-      # ghprce = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label enhancement";
-      # ghprcb = "git rebase --whitespace=fix origin/main && gh pr create --assignee @me --label bug";
-      # ghprm = "gh pr merge --merge --delete-branch && git mp";
-      # ghprc = "gh pr checks";
     };
     interactiveShellInit = ''
       set_colorscheme
-      set_env_vars
       set_paths
 
       bind \cg accept-autosuggestion execute
@@ -42,16 +37,6 @@
         fish_add_path "${config.home.homeDirectory}/machines/core/bin"
         fish_add_path /usr/local/bin
         fish_add_path "${config.home.homeDirectory}/.local/bin"
-      '';
-
-      set_env_vars.body = ''
-        set -Ux FZF_DEFAULT_COMMAND 'rg --files --hidden --glob \!.git'
-        set -Ux BAT_THEME 'Visual Studio Dark+'
-        set -Ux PAGER 'bat --style plain'
-        set -Ux EDITOR nvim
-        set -Ux GPG_TTY (tty)
-        set -Ux MANPAGER "sh -c 'col -bx | bat -l man -p'"
-        set -Ux MANROFFOPT -c
       '';
 
       set_colorscheme.body = ''
