@@ -14,7 +14,7 @@
       username = "chronon";
       config = {
         # shared config
-      };
+    };
     in {
       homeConfigurations = {
         "${username}@kanzi" = home-manager.lib.homeManagerConfiguration (config // {
