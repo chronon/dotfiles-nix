@@ -23,8 +23,12 @@
 
       bind \cg accept-autosuggestion execute
 
-      if test -e "${config.home.homeDirectory}/dotfiles/secrets/fish_env.fish"
-          . "${config.home.homeDirectory}/dotfiles/secrets/fish_env.fish"
+      if test -e "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
+          . "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
+      end
+
+      if test -e "${config.home.homeDirectory}/dotfiles/secrets/env.fish"
+          . "${config.home.homeDirectory}/dotfiles/secrets/env.fish"
       end
 
       if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
