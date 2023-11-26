@@ -20,7 +20,7 @@
         };
         init.defaultBranch = "main";
         gpg.format = "ssh";
-        gpg.ssh.allowedSignersFile = "${config.home.homeDirectory }/.ssh/allowed_signers";
+        gpg.ssh.allowedSignersFile = "${config.home.homeDirectory }/.config/git/allowed_signers";
         pager.branch = false;
         pull.rebase = false;
         difftool.prompt = false;
