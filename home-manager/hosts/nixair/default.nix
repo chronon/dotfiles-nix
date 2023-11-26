@@ -16,16 +16,4 @@
     ];
   };
 
-  xdg = {
-    desktopEntries = {
-      wezterm = {
-        name = "WezTerm";
-        exec = "wezterm";
-        terminal = false;
-        icon = "org.wezfurlong.wezterm";
-        categories = [ "System" "TerminalEmulator" "Utility" ];
-      };
-    };
-  };
-
 }
