@@ -83,7 +83,7 @@
       '';
 
       frg.body = ''
-        rg --ignore-case --color=always --line-number --no-heading "$argv" |
+        rg --smart-case --color=always --line-number --no-heading "$argv" |
           fzf --ansi \
             --color 'hl:-1:underline,hl+:-1:underline:reverse' \
             --delimiter ':' \
