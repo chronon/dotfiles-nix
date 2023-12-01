@@ -81,6 +81,16 @@
         set -U fish_pager_color_prefix green --bold
         set -U fish_color_valid_path white
       '';
+
+      frg.body = ''
+        rg --ignore-case --color=always --line-number --no-heading "$argv" |
+          fzf --ansi \
+            --color 'hl:-1:underline,hl+:-1:underline:reverse' \
+            --delimiter ':' \
+            --preview "bat --color=always {1} --theme='$BAT_THEME' --highlight-line {2}" \
+            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+            --bind "enter:become($EDITOR +{2} {1})"
+      '';
     };
   };
 

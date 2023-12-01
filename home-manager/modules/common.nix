@@ -22,6 +22,7 @@
       bat
       curl
       fd
+      fzf
       gnused
       go-task
       nodejs_20
