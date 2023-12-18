@@ -40,6 +40,7 @@
         fish_add_path "${config.home.homeDirectory}/bin"
         fish_add_path "${config.home.homeDirectory}/machines/core/bin"
         fish_add_path /usr/local/bin
+        fish_add_path /opt/homebrew/bin
         fish_add_path "${config.home.homeDirectory}/.local/bin"
       '';
 
