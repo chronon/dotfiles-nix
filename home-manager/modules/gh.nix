@@ -7,6 +7,7 @@
     settings = {
       git_protocol = "ssh";
       prompt = "enabled";
+      version = 1;
       aliases = {
         prv = "pr view --web";
         prc = "pr checks";
