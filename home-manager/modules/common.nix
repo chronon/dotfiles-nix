@@ -29,6 +29,7 @@
       nodejs_20.pkgs.pnpm
       pinentry
       wget
+      (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
     ];
   };
 
