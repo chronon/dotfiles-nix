@@ -15,7 +15,7 @@ return {
           },
         },
         tailwindcss = {
-          autostart = false,
+          -- autostart = false,
         },
       },
     },

@@ -21,6 +21,7 @@ return {
         "query",
         "regex",
         "scss",
+        "svelte",
         "tsx",
         "typescript",
         "vim",
