@@ -4,7 +4,9 @@ return {
     opts = {
       servers = {
         intelephense = {},
-        cssls = {},
+        cssls = {
+          autostart = false,
+        },
         html = {},
         tsserver = {},
         yamlls = {
@@ -14,9 +16,7 @@ return {
             },
           },
         },
-        tailwindcss = {
-          -- autostart = false,
-        },
+        tailwindcss = {},
       },
     },
   },

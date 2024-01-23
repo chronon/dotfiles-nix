@@ -51,9 +51,9 @@ return {
     config = true,
   },
 
-  {
-    "leafOfTree/vim-svelte-plugin",
-  },
+  -- {
+  --   "leafOfTree/vim-svelte-plugin",
+  -- },
 
   {
     "iamcco/markdown-preview.nvim",
