@@ -6,6 +6,8 @@ return {
     lazy = true,
     name = "kanagawa",
     opts = {
+      commentStyle = { italic = false },
+      keywordStyle = { italic = false },
       overrides = function(colors)
         return {
           IlluminatedWordText = { bg = colors.palette.waveBlue1 },
@@ -50,10 +52,6 @@ return {
     event = "InsertEnter",
     config = true,
   },
-
-  -- {
-  --   "leafOfTree/vim-svelte-plugin",
-  -- },
 
   {
     "iamcco/markdown-preview.nvim",
