@@ -18,6 +18,7 @@ return {
         "markdown_inline",
         "nix",
         "php",
+        "php_only",
         "phpdoc",
         "query",
         "regex",
