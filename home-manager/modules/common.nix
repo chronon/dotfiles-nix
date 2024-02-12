@@ -39,6 +39,7 @@
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
+    lazygit.enable = true;
     ripgrep.enable = true;
   };
 
