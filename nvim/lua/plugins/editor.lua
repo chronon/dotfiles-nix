@@ -18,7 +18,7 @@ return {
       },
     },
     keys = {
-      { "<C-p>", require("lazyvim.util").telescope("files"), desc = "Find Files (root dir)" },
+      { "<C-p>", require("lazyvim.util").telescope("find_files"), desc = "Find Files (root dir)" },
     },
   },
 
