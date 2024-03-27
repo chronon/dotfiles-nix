@@ -21,6 +21,7 @@
       ansible
       bat
       curl
+      difftastic
       fd
       fzf
       gnused
