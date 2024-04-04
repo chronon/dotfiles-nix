@@ -1,28 +1,15 @@
-local wk = require("which-key")
+vim.keymap.set("n", "<leader>hh", "<cmd>nohl<cr>", { desc = "No highlight" })
+vim.keymap.set("n", "<leader>rn", "<cmd>set invrelativenumber<cr>", { desc = "Toggle relative line number" })
+vim.keymap.set(
+  "n",
+  "<leader>ac",
+  "<cmd>!docker-compose exec -T php bin/convert.php -w ../%<cr>",
+  { desc = "Convert PHP arrays" }
+)
 
-wk.register({
-  h = {
-    h = { "<cmd>nohl<cr>", "No highlight" },
-  },
-  r = {
-    n = { "<cmd>set invrelativenumber<cr>", "Toggle relative line number" },
-  },
-  a = {
-    c = { "<Cmd>!docker-compose exec -T php bin/convert.php -w ../%<CR>", "Convert PHP arrays" },
-  },
-  c = {
-    c = { '"+y', "Copy to clipboard", mode = "x" },
-  },
-}, {
-  prefix = "<leader>",
-})
-
-wk.register({
-  p = { '"_dP', "Black hole register" },
-  ["<LeftRelease>"] = { '"+ygv', "Copy to clipboard" },
-}, {
-  mode = "x",
-})
+vim.keymap.set("x", "<leader>cx", '"+y', { desc = "Copy to clipboard" })
+vim.keymap.set("x", "p", '"_dP', { desc = "Black hole register" })
+vim.keymap.set("x", "<LeftRelease>", '"+ygv', { desc = "Copy to clipboard" })
 
 vim.api.nvim_create_user_command("PhpStan", "! bin/phpstan analyse %", {})
 vim.api.nvim_create_user_command("AnsibleFile", "setlocal ft=yaml.ansible", {})
