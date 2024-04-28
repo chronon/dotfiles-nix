@@ -1,5 +1,3 @@
-vim.keymap.set("n", "<leader>hh", "<cmd>nohl<cr>", { desc = "No highlight" })
-vim.keymap.set("n", "<leader>rn", "<cmd>set invrelativenumber<cr>", { desc = "Toggle relative line number" })
 vim.keymap.set(
   "n",
   "<leader>ac",
