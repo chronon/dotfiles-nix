@@ -21,7 +21,6 @@
       ansible
       bat
       curl
-      difftastic
       fd
       fzf
       gnused
@@ -35,11 +34,9 @@
   };
 
   programs = {
-    direnv.enable = true;
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
-    lazygit.enable = true;
     ripgrep.enable = true;
   };
 

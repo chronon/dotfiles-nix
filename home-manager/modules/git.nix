@@ -38,12 +38,10 @@
         find-merge = "!sh -c 'commit=$0 && branch=\${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'";
         show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'";
       };
-      delta = {
+      difftastic = {
         enable = true;
-        options = {
-          navigate = true;
-          line-numbers = true;
-        };
+        background = "dark";
+        color = "always";
       };
       ignores = [
         ".vscode"
@@ -55,11 +53,12 @@
     };
 
     programs.lazygit = {
+      enable = true;
       settings = {
         promptToReturnFromSubprocess = false;
         git.paging = {
           colorArg = "always";
-          pager = "delta --dark --paging=never";
+          externalDiffCommand = "difft --color=always --display=inline";
         };
       };
     };
