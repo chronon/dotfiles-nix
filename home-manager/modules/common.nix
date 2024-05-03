@@ -40,6 +40,22 @@
     ripgrep.enable = true;
   };
 
+  programs.broot = {
+    enable = true;
+    settings = {
+      verbs = [
+        {
+          invocation = "edit";
+          key = "enter";
+          shortcut = "e";
+          execution = "$EDITOR +{line} {file}";
+          apply_to = "text_file";
+          leave_broot = false;
+        }
+      ];
+    };
+  };
+
   xdg = {
     enable = true;
     configFile = {
