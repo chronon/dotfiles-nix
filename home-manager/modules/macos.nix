@@ -9,7 +9,6 @@
   home = {
     homeDirectory = "/Users/${config.home.username}";
     packages = with pkgs; [
-      chatblade
       pinentry_mac
       unixtools.watch
     ];

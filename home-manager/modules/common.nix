@@ -19,10 +19,7 @@
     packages = with pkgs; [
       _1password
       ansible
-      bat
       curl
-      fd
-      fzf
       gnused
       go-task
       nodejs_20
@@ -34,6 +31,9 @@
   };
 
   programs = {
+    bat.enable = true;
+    fd.enable = true;
+    fzf.enable = true;
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
