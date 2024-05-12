@@ -4,10 +4,10 @@ local home = os.getenv("HOME")
 local mux = wezterm.mux
 
 local config = {
-  font_size = 15,
+  font_size = 16,
   default_prog = { home .. "/.nix-profile/bin/fish", "-l" },
   initial_rows = 100,
-  initial_cols = 170,
+  initial_cols = 153,
   window_decorations = "RESIZE",
   force_reverse_video_cursor = true,
 
