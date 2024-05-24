@@ -8,13 +8,6 @@ return {
     opts = {
       commentStyle = { italic = false },
       keywordStyle = { italic = false },
-      overrides = function(colors)
-        return {
-          IlluminatedWordText = { bg = colors.palette.waveBlue1 },
-          IlluminatedWordRead = { bg = colors.palette.waveBlue1 },
-          IlluminatedWordWrite = { bg = colors.palette.waveBlue1 },
-        }
-      end,
     },
   },
 

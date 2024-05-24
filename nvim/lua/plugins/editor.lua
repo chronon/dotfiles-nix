@@ -21,14 +21,4 @@ return {
       { "<C-p>", require("lazyvim.util").telescope("find_files"), desc = "Find Files (root dir)" },
     },
   },
-
-  {
-    "RRethy/vim-illuminate",
-    opts = {
-      filetypes_denylist = {
-        "gitcommit",
-      },
-      min_count_to_highlight = 2,
-    },
-  },
 }

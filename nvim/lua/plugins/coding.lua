@@ -1,22 +1,8 @@
 return {
   {
-    "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
-    end,
-    config = function()
-      require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/snippets" })
-    end,
+    "garymjr/nvim-snippets",
+    opts = { search_paths = { vim.fn.stdpath("config") .. "/misc/snippets" } },
   },
-
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   opts = function(_, opts)
-  --     opts.completion = {
-  --       autocomplete = false,
-  --     }
-  --   end,
-  -- },
 
   {
     "hrsh7th/nvim-cmp",
@@ -32,16 +18,16 @@ return {
         autocomplete = false,
       }
 
-      local luasnip = require("luasnip")
       local cmp = require("cmp")
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-          -- elseif luasnip.expand_or_locally_jumpable() then
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+          elseif vim.snippet.active({ direction = 1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(1)
+            end)
           elseif has_words_before() then
             cmp.complete()
           else
@@ -51,8 +37,10 @@ return {
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+          elseif vim.snippet.active({ direction = -1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(-1)
+            end)
           else
             fallback()
           end
