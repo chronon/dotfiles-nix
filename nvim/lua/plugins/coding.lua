@@ -1,10 +1,5 @@
 return {
   {
-    "garymjr/nvim-snippets",
-    opts = { search_paths = { vim.fn.stdpath("config") .. "/misc/snippets" } },
-  },
-
-  {
     "hrsh7th/nvim-cmp",
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
