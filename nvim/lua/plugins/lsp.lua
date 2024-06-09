@@ -18,6 +18,7 @@ return {
         },
         tailwindcss = {},
       },
+      inlay_hints = { enabled = false },
     },
   },
 

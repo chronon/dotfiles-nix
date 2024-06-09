@@ -35,6 +35,7 @@ return {
         panel = { enabled = false },
         filetypes = {
           php = true,
+          text = false,
         },
       },
     },
