@@ -6,19 +6,20 @@ return {
         file_ignore_patterns = {
           "composer.lock",
           "package-lock.json",
+          "pnpm-lock.yaml",
           "yarn.lock",
-        },
-        mappings = {
-          i = {
-            ["<c-t>"] = function(...)
-              return require("telescope.actions").select_tab(...)
-            end,
-          },
         },
       },
     },
     keys = {
-      { "<C-p>", require("lazyvim.util").telescope("find_files"), desc = "Find Files (root dir)" },
+      { "<C-p>", LazyVim.pick("auto"), desc = "Find Files (root dir)" },
     },
   },
+
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   keys = {
+  --     { "<C-p>", LazyVim.pick("auto"), desc = "Find Files (root dir)" },
+  --   },
+  -- },
 }

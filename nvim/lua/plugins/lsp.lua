@@ -7,6 +7,9 @@ return {
         cssls = {
           autostart = false,
         },
+        phpactor = {
+          autostart = false,
+        },
         html = {},
         tsserver = {},
         yamlls = {
