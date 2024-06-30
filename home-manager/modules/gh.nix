@@ -11,8 +11,8 @@
       aliases = {
         prv = "pr view --web";
         prc = "pr checks";
-        prce = "!git wsfix && gh pr create --assignee @me --label enhancement";
-        prcb = "!git wsfix && gh pr create --assignee @me --label bug";
+        prce = "pr create --assignee @me --label enhancement";
+        prcb = "pr create --assignee @me --label bug";
         prcd = "pr create --assignee @me --label dependencies";
         prm = "!gh pr merge --merge --delete-branch && git mp";
       };
