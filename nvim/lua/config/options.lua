@@ -10,3 +10,5 @@ vim.opt.timeoutlen = 500
 vim.opt.undofile = false
 vim.opt.wrap = true
 vim.wo.conceallevel = 0
+
+vim.g.lazyvim_php_lsp = "intelephense"

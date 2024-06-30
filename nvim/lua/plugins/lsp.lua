@@ -3,15 +3,12 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        intelephense = {},
         cssls = {
           autostart = false,
         },
         phpactor = {
           autostart = false,
         },
-        html = {},
-        tsserver = {},
         yamlls = {
           settings = {
             yaml = {
@@ -19,7 +16,6 @@ return {
             },
           },
         },
-        tailwindcss = {},
       },
       inlay_hints = { enabled = false },
     },
