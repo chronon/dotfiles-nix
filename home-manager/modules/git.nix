@@ -44,11 +44,12 @@
         color = "always";
       };
       ignores = [
+        ".DS_Store"
+        ".lazy.lua"
+        ".parcel-cache"
+        ".vim"
         ".vscode"
-          ".vim"
-          ".DS_Store"
-          ".parcel-cache"
-          "node_modules"
+        "node_modules"
       ];
     };
 
