@@ -24,8 +24,6 @@
       go-task
       nodejs_20
       nodejs_20.pkgs.pnpm
-      php83
-      php83Packages.composer
       rclone
       wget
       (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
