@@ -3,10 +3,8 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        intelephense = {},
         cssls = {
-          autostart = false,
-        },
-        phpactor = {
           autostart = false,
         },
         yamlls = {
