@@ -2,6 +2,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
+      -- opts.options.theme = "iceberg_dark"
       table.insert(opts.sections.lualine_y, function()
         local mode = vim.api.nvim_get_mode()
         if mode.mode == "n" then
