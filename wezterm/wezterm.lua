@@ -49,6 +49,21 @@ local config = {
       }),
     },
   },
+  mouse_bindings = {
+    -- default click only selects text
+    {
+      event = { Up = { streak = 1, button = "Left" } },
+      mods = "NONE",
+      action = act.CompleteSelection("ClipboardAndPrimarySelection"),
+    },
+
+    -- CTRL-click open hyperlinks
+    {
+      event = { Up = { streak = 1, button = "Left" } },
+      mods = "CTRL",
+      action = act.OpenLinkAtMouseCursor,
+    },
+  },
 }
 
 wezterm.on("gui-startup", function(cmd)
