@@ -15,6 +15,7 @@
         prcb = "pr create --assignee @me --label bug";
         prcd = "pr create --assignee @me --label dependencies";
         prm = "!gh pr merge --merge --delete-branch && git mp";
+        rlp = "run list -s in_progress";
       };
     };
   };
