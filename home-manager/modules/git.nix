@@ -24,6 +24,7 @@
         pager.branch = false;
         pull.rebase = false;
         difftool.prompt = false;
+        rerere.enabled = true;
         merge.tool = "smerge";
         mergetool.smerge = {
           cmd = "smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"";
