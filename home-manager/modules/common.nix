@@ -17,7 +17,7 @@
     username = "chronon";
     stateVersion = "23.11";
     packages = with pkgs; [
-      _1password
+      _1password-cli
       ansible
       curl
       gnused
