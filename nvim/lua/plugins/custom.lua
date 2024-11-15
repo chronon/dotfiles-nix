@@ -20,23 +20,18 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "InsertEnter",
     opts = {
       suggestion = {
         enabled = true,
-        auto_trigger = true,
+        --   auto_trigger = true,
         keymap = {
           accept = "<C-CR>",
           accept_word = "<C-W>",
           accept_line = "<C-L>",
         },
-        panel = { enabled = false },
-        filetypes = {
-          php = true,
-          text = false,
-        },
+        -- filetypes = {
+        --   text = false,
+        -- },
       },
     },
   },
@@ -45,6 +40,18 @@ return {
     "mfussenegger/nvim-lint",
     opts = function(_, opts)
       table.remove(opts.linters_by_ft.markdown)
+    end,
+  },
+
+  {
+    "folke/edgy.nvim",
+    opts = function(_, opts)
+      opts.right = {}
+      table.insert(opts.right, {
+        ft = "copilot-chat",
+        title = "Copilot Chat",
+        size = { width = 65 },
+      })
     end,
   },
 }
