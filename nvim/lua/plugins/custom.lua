@@ -23,15 +23,15 @@ return {
     opts = {
       suggestion = {
         enabled = true,
-        --   auto_trigger = true,
         keymap = {
           accept = "<C-CR>",
           accept_word = "<C-W>",
           accept_line = "<C-L>",
         },
-        -- filetypes = {
-        --   text = false,
-        -- },
+      },
+      filetypes = {
+        text = false,
+        markdown = false,
       },
     },
   },

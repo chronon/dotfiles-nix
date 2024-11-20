@@ -2,18 +2,13 @@
   "debug": {
     "scope": "php",
     "prefix": "deb",
-    "body": [
-      "debug($1);"
-    ],
-    "description": "Debug and exit"
+    "body": ["debug($1);"],
+    "description": "Debug"
   },
   "debug-exit": {
     "scope": "php",
     "prefix": "dex",
-    "body": [
-      "debug($1);",
-      "exit;"
-    ],
+    "body": ["debug($1);", "exit;"],
     "description": "Debug and exit"
   }
 }
