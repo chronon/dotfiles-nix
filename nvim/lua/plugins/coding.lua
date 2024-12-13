@@ -5,9 +5,12 @@ return {
       highlight = {
         use_nvim_cmp_as_default = true,
       },
-      windows = {
-        autocomplete = {
+      completion = {
+        menu = {
           auto_show = false,
+        },
+        ghost_text = {
+          enabled = false,
         },
       },
     },
