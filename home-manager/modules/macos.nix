@@ -23,4 +23,7 @@
     };
   };
 
+  programs = {
+    awscli.enable = true;
+  };
 }
