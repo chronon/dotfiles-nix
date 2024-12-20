@@ -18,6 +18,7 @@
           editor = "nvim";
           quotePath = false;
         };
+        credential.helper = "";
         init.defaultBranch = "main";
         gpg.format = "ssh";
         gpg.ssh.allowedSignersFile = "${config.home.homeDirectory }/.config/git/allowed_signers";
