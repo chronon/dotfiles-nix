@@ -21,8 +21,4 @@
       };
     };
   };
-
-  programs = {
-    awscli.enable = true;
-  };
 }
