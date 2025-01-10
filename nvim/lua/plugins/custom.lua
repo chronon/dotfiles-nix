@@ -1,4 +1,4 @@
-local colorscheme = os.getenv("COLORSCHEME_NVIM") or "catppuccin"
+local colorscheme = os.getenv("COLORSCHEME_NVIM") or "kanagawa"
 
 return {
   {

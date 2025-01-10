@@ -12,3 +12,4 @@ vim.opt.wrap = true
 
 vim.g.lazyvim_php_lsp = "intelephense"
 vim.g.snacks_animate = false
+vim.g.ai_cmp = false
