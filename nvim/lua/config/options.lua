@@ -9,6 +9,7 @@ vim.opt.relativenumber = false
 vim.opt.shell = "fish"
 vim.opt.undofile = false
 vim.opt.wrap = true
+vim.opt.conceallevel = 0
 
 vim.g.lazyvim_php_lsp = "intelephense"
 vim.g.snacks_animate = false
