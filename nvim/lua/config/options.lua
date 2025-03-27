@@ -14,3 +14,5 @@ vim.opt.conceallevel = 0
 vim.g.lazyvim_php_lsp = "intelephense"
 vim.g.snacks_animate = false
 vim.g.ai_cmp = false
+
+vim.g.lazyvim_picker = "snacks"
