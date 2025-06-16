@@ -1,2 +1,4 @@
 secrets
 nvim/lua/plugins/untracked.lua
+zed/conversations
+zed/prompts

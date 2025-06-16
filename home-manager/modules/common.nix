@@ -20,6 +20,7 @@
       _1password-cli
       ansible
       curl
+      f2
       gnused
       go-task
       nodejs_20
@@ -61,6 +62,14 @@
     configFile = {
       "wezterm" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
+        recursive = true;
+      };
+      "ghostty" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ghostty";
+        recursive = true;
+      };
+      "zed" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zed";
         recursive = true;
       };
     };

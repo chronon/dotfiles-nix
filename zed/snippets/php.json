@@ -1,0 +1,7 @@
+{
+  "Debug and exit": {
+    "prefix": "dex",
+    "body": "debug($1);\nexit;\n$0",
+    "description": "Debug and exit"
+  }
+}
