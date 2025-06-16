@@ -51,6 +51,7 @@
         ".parcel-cache"
         ".vim"
         ".vscode"
+        ".zed"
         "node_modules"
       ];
     };
