@@ -10,7 +10,12 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-p": "file_finder::Toggle"
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-/": "terminal_panel::ToggleFocus",
+      "ctrl-a -": "terminal_panel::ToggleFocus",
+      "ctrl-a, -": "terminal_panel::ToggleFocus",
+      ", e": "project_panel::ToggleFocus",
+      "cmd-p": ["task::Spawn", { "task_name": "File Finder", "reveal_target": "center" }]
     }
   },
   {
@@ -24,6 +29,7 @@
     "bindings": {
       ", c r": "editor::Rename",
       ", s s": "outline::Toggle",
+      "ctrl-a -": "terminal_panel::ToggleFocus",
       "[ h": "editor::GoToPreviousHunk",
       "] h": "editor::GoToHunk"
     }

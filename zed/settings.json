@@ -7,9 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "features": {
-    "edit_prediction_provider": "zed"
+  "agent": {
+    "model_parameters": [],
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
+    },
+    "version": "2"
   },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "show_edit_predictions": false,
   "telemetry": {
     "diagnostics": false,
     "metrics": false
@@ -20,11 +29,12 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Tokyo Night"
+    "dark": "Tokyo Night Storm"
   },
   "cursor_blink": false,
   "current_line_highlight": "gutter",
   "hover_popover_enabled": false,
+  "restore_on_startup": "none",
   "languages": {
     "PHP": {
       "language_servers": ["intelephense", "!phpactor", "..."],
@@ -49,11 +59,13 @@
   },
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "terminal": {
+    "copy_on_select": true,
     "shell": {
       "with_arguments": {
         "program": "/usr/local/bin/fish",
         "args": ["--login", "--interactive"]
       }
     }
-  }
+  },
+  "file_scan_exclusions": ["**/.git", "**/.DS_Store", "**/.settings", "**/node_modules", "**/vendor"]
 }
