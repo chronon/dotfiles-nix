@@ -11,6 +11,7 @@
     packages = with pkgs; [
       claude-code
       cloudflared
+      television
       unixtools.watch
     ];
 
