@@ -2,13 +2,12 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
-      -- opts.options.theme = "iceberg_dark"
       opts.sections.lualine_c[4] = { "filename", path = 1 }
       table.insert(opts.sections.lualine_y, function()
         local mode = vim.api.nvim_get_mode()
         if mode.mode == "n" then
           local line_num = vim.fn.search([[\s\+$]], "nwc")
-          return line_num ~= 0 and " " .. line_num or ""
+          return line_num ~= 0 and "⚠️ " .. line_num or ""
         else
           return ""
         end
