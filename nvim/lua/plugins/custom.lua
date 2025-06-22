@@ -1,15 +1,6 @@
-local colorscheme = os.getenv("COLORSCHEME_NVIM") or "kanagawa"
+local colorscheme = os.getenv("COLORSCHEME_NVIM") or "tokyonight"
 
 return {
-  {
-    "rebelot/kanagawa.nvim",
-    lazy = true,
-    name = "kanagawa",
-    opts = {
-      commentStyle = { italic = false },
-      keywordStyle = { italic = false },
-    },
-  },
 
   {
     "LazyVim/LazyVim",
@@ -17,25 +8,6 @@ return {
       colorscheme = colorscheme,
     },
   },
-
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   opts = {
-  --     suggestion = {
-  --       enabled = true,
-  --       keymap = {
-  --         accept = "<C-CR>",
-  --         accept_word = "<C-W>",
-  --         accept_line = "<C-L>",
-  --       },
-  --     },
-  --     filetypes = {
-  --       text = false,
-  --       markdown = false,
-  --     },
-  --     copilot_model = "gpt-4o-copilot", -- or gpt-35-turbo
-  --   },
-  -- },
 
   {
     "mfussenegger/nvim-lint",
@@ -56,10 +28,10 @@ return {
     end,
   },
 
-  -- {
-  --   "CopilotC-Nvim/CopilotChat.nvim",
-  --   opts = {
-  --     model = "claude-3.7-sonnet",
-  --   },
-  -- },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    opts = {
+      model = "claude-sonnet-4",
+    },
+  },
 }

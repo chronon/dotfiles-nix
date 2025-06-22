@@ -1,7 +1,6 @@
 font-size = 16
-theme = Kanagawa Wave
+theme = tokyonight_moon
 command = /usr/local/bin/fish --login --interactive
-# shell-integration = fish
 # copy-on-select = clipboard
 
 shell-integration-features = no-cursor

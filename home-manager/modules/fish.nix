@@ -46,16 +46,17 @@
       '';
 
       set_colorscheme.body = ''
-        set -l foreground DCD7BA normal
-        set -l selection 2D4F67 brcyan
-        set -l comment 727169 brblack
-        set -l red C34043 red
-        set -l orange FF9E64 brred
-        set -l yellow C0A36E yellow
-        set -l green 76946A green
-        set -l purple 957FB8 magenta
-        set -l cyan 7AA89F cyan
-        set -l pink D27E99 brmagenta
+        # TokyoNight Moon Color Palette
+        set -l foreground c8d3f5
+        set -l selection 2d3f76
+        set -l comment 636da6
+        set -l red ff757f
+        set -l orange ff966c
+        set -l yellow ffc777
+        set -l green c3e88d
+        set -l purple fca7ea
+        set -l cyan 86e1fc
+        set -l pink c099ff
 
         # Syntax Highlighting Colors
         set -g fish_color_normal $foreground
@@ -64,6 +65,7 @@
         set -g fish_color_quote $yellow
         set -g fish_color_redirection $foreground
         set -g fish_color_end $orange
+        set -g fish_color_option $pink
         set -g fish_color_error $red
         set -g fish_color_param $purple
         set -g fish_color_comment $comment
@@ -78,10 +80,7 @@
         set -g fish_pager_color_prefix $cyan
         set -g fish_pager_color_completion $foreground
         set -g fish_pager_color_description $comment
-
-        # theme overrides
-        set -U fish_pager_color_prefix green --bold
-        set -U fish_color_valid_path white
+        set -g fish_pager_color_selected_background --background=$selection
       '';
 
       frg.body = ''
