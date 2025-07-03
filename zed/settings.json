@@ -29,7 +29,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Tokyo Night Storm"
+    "dark": "Catppuccin Mocha"
   },
   "cursor_blink": false,
   "current_line_highlight": "gutter",
