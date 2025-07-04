@@ -10,6 +10,13 @@ return {
   },
 
   {
+    "catppuccin/nvim",
+    opts = {
+      no_italic = true,
+    },
+  },
+
+  {
     "mfussenegger/nvim-lint",
     opts = function(_, opts)
       table.remove(opts.linters_by_ft.markdown)
