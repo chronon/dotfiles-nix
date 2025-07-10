@@ -4,7 +4,7 @@
 
   home = {
     sessionVariables = {
-      BAT_THEME = "Coldark-Dark";
+      BAT_THEME = "Catppuccin Mocha";
       EDITOR = "nvim";
       GPG_TTY = "(tty)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";

@@ -2,13 +2,6 @@
 
 {
 
-  xdg.configFile."fish/themes/Catppuccin Mocha.theme".source = "${pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "fish";
-    rev = "6a85af2ff722ad0f9fbc8424ea0a5c454661dfed";
-    sha256 = "sha256-Oc0emnIUI4LV7QJLs4B2/FQtCFewRFVp7EDv8GawFsA=";
-  }}/themes/Catppuccin Mocha.theme";
-
   programs.fish = {
     enable = true;
     plugins = [
@@ -72,6 +65,19 @@
             --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
             --bind "enter:become($EDITOR +{2} {1})"
       '';
+    };
+  };
+
+  xdg = {
+    configFile = {
+      "fish/themes/Catppuccin Mocha.theme" = {
+        source = "${pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "fish";
+          rev = "6a85af2ff722ad0f9fbc8424ea0a5c454661dfed";
+          sha256 = "sha256-Oc0emnIUI4LV7QJLs4B2/FQtCFewRFVp7EDv8GawFsA=";
+        }}/themes/Catppuccin Mocha.theme";
+      };
     };
   };
 
