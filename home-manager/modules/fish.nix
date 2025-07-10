@@ -7,15 +7,6 @@
     plugins = [
       { name = "pure"; src = pkgs.fishPlugins.pure.src; }
       { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-      {
-        name = "catppuccin-fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "fish";
-          rev = "6a85af2ff722ad0f9fbc8424ea0a5c454661dfed";
-          sha256 = "sha256-Oc0emnIUI4LV7QJLs4B2/FQtCFewRFVp7EDv8GawFsA=";
-        };
-      }
     ];
     shellAbbrs = {
       chrobill = "cd $HOME/machines/misc/chrobill && docker-compose up -d";
