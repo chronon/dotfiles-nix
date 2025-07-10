@@ -15,7 +15,8 @@
       "ctrl-a -": "terminal_panel::ToggleFocus",
       "ctrl-a, -": "terminal_panel::ToggleFocus",
       ", e": "project_panel::ToggleFocus",
-      "cmd-p": ["task::Spawn", { "task_name": "File Finder", "reveal_target": "center" }]
+      "cmd-p": ["task::Spawn", { "task_name": "File Finder", "reveal_target": "center" }],
+      ", s w": ["task::Spawn", { "task_name": "Live Grep", "reveal_target": "center" }]
     }
   },
   {

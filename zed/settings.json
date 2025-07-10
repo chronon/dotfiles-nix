@@ -7,13 +7,13 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Catppuccin Mocha",
   "agent": {
     "model_parameters": [],
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-sonnet-4"
-    },
-    "version": "2"
+    }
   },
   "features": {
     "edit_prediction_provider": "copilot"
@@ -24,12 +24,12 @@
     "metrics": false
   },
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "ui_font_size": 18,
+  "buffer_font_size": 15.7,
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Catppuccin Mocha"
+    "dark": "Catppuccin Mocha - No Italics"
   },
   "cursor_blink": false,
   "current_line_highlight": "gutter",
@@ -67,5 +67,11 @@
       }
     }
   },
-  "file_scan_exclusions": ["**/.git", "**/.DS_Store", "**/.settings", "**/node_modules", "**/vendor"]
+  "file_scan_exclusions": ["**/.git", "**/.DS_Store", "**/.settings", "**/node_modules", "**/vendor"],
+  "scrollbar": {
+    "axes": {
+      "horizontal": false
+    }
+  },
+  "soft_wrap": "editor_width"
 }
