@@ -1,8 +1,27 @@
 #!/usr/bin/env bash
 
-mkdir -p secrets
+set -euo pipefail
 
-op inject -f -i github-copilot/hosts.json.tpl -o secrets/github-copilot_hosts.json
-op inject -f -i fish/env.fish.tpl -o secrets/env.fish
+readonly HOSTNAME=$(hostname -s)
+readonly SECRETS_DIR="secrets"
 
-home-manager switch --flake .#$USER@$(hostname -s)
+command -v op >/dev/null 2>&1 || {
+  echo "Error: 1Password CLI (op) is required but not installed." >&2
+  exit 1
+}
+
+[[ ! -d "$SECRETS_DIR" ]] && mkdir -p "$SECRETS_DIR" && chmod 700 "$SECRETS_DIR"
+
+readonly TEMPLATE_FILES=(
+  "github-copilot/hosts.json.tpl:secrets/github-copilot_hosts.json"
+  "fish/env.fish.tpl:secrets/env.fish"
+)
+
+for pair in "${TEMPLATE_FILES[@]}"; do
+  IFS=":" read -r template_file output_file <<<"$pair"
+  op inject -f -i "$template_file" -o "$output_file" &
+done
+
+wait
+
+home-manager switch --flake ".#$USER@$HOSTNAME"
