@@ -1,11 +1,9 @@
-local colorscheme = os.getenv("COLORSCHEME_NVIM") or "catppuccin-mocha"
-
 return {
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = colorscheme,
+      colorscheme = "catppuccin-mocha",
     },
   },
 
@@ -39,6 +37,15 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     opts = {
       model = "claude-sonnet-4",
+    },
+  },
+
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        nix = { "nixfmt" },
+      },
     },
   },
 }

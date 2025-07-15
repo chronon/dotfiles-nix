@@ -4,7 +4,7 @@
 
   programs.ssh = {
     enable = true;
-    includes = ["conf.d/*"];
+    includes = [ "conf.d/*" ];
     forwardAgent = true;
   };
 

@@ -10,7 +10,13 @@
     };
   };
 
-  outputs = { nixpkgs, catppuccin, home-manager, ... }:
+  outputs =
+    {
+      nixpkgs,
+      catppuccin,
+      home-manager,
+      ...
+    }:
     let
       username = "chronon";
 
@@ -20,7 +26,8 @@
         nixair = "x86_64-linux";
       };
 
-      mkHomeConfiguration = hostname: system:
+      mkHomeConfiguration =
+        hostname: system:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
@@ -31,8 +38,10 @@
             ./home-manager/hosts/${hostname}
           ];
         };
-    in {
-      homeConfigurations = nixpkgs.lib.mapAttrs' (hostname: system:
+    in
+    {
+      homeConfigurations = nixpkgs.lib.mapAttrs' (
+        hostname: system:
         nixpkgs.lib.nameValuePair "${username}@${hostname}" (mkHomeConfiguration hostname system)
       ) systems;
     };

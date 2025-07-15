@@ -3,13 +3,13 @@
 {
 
   imports = [
-   ../../modules/common.nix
+    ../../modules/common.nix
   ];
 
   home = {
     homeDirectory = "/home/${config.home.username}";
     packages = with pkgs; [
-      _1password-gui 
+      _1password-gui
       libcxxStdenv
       unzip
       wezterm

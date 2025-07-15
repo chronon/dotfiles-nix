@@ -3,7 +3,7 @@
 {
 
   imports = [
-   ../../modules/macos.nix
+    ../../modules/macos.nix
   ];
 
   home = { };

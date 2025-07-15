@@ -3,12 +3,12 @@
 {
 
   imports = [
-   ./fish.nix
-   ./gh.nix
-   ./git.nix
-   ./neovim.nix
-   ./sessionvars.nix
-   ./ssh.nix
+    ./fish.nix
+    ./gh.nix
+    ./git.nix
+    ./neovim.nix
+    ./sessionvars.nix
+    ./ssh.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -23,6 +23,7 @@
       f2
       gnused
       go-task
+      nixfmt-rfc-style
       nodejs_22
       nodejs_22.pkgs.pnpm
       rclone

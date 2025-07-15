@@ -5,8 +5,14 @@
   programs.fish = {
     enable = true;
     plugins = [
-      { name = "pure"; src = pkgs.fishPlugins.pure.src; }
-      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+      {
+        name = "pure";
+        src = pkgs.fishPlugins.pure.src;
+      }
+      {
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
     ];
     shellAbbrs = {
       chrobill = "cd $HOME/machines/misc/chrobill && docker-compose up -d";
@@ -58,6 +64,5 @@
       '';
     };
   };
-
 
 }
