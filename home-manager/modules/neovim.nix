@@ -8,6 +8,8 @@
     withPython3 = false;
     defaultEditor = true;
   };
+  
+  catppuccin.nvim.enable = false;
 
   home = {
     file = {
