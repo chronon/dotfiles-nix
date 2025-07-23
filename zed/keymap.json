@@ -28,6 +28,7 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
+      ", c f": "editor::Format",
       ", c r": "editor::Rename",
       ", s s": "outline::Toggle",
       "ctrl-a -": "terminal_panel::ToggleFocus",

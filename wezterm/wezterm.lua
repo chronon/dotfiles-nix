@@ -11,11 +11,7 @@ local config = {
   window_decorations = "RESIZE",
   force_reverse_video_cursor = true,
 
-  color_scheme = "Kanagawa (Gogh)",
-  set_environment_variables = {
-    COLORSCHEME_FISH = "kanagawa.fish",
-    COLORSCHEME_NVIM = "kanagawa",
-  },
+  color_scheme = "catppuccin-mocha",
 
   leader = {
     key = "a",
