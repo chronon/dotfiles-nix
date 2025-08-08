@@ -11,8 +11,6 @@
     packages = with pkgs; [
       claude-code
       cloudflared
-      # opencode
-      # gemini-cli
       television
       unixtools.watch
     ];

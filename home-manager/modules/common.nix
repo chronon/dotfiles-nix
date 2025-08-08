@@ -26,6 +26,7 @@
       nixfmt-rfc-style
       nodejs_22
       nodejs_22.pkgs.pnpm
+      posting
       rclone
       wget
       (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")

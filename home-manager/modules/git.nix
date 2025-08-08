@@ -54,6 +54,7 @@ in
       ".vscode"
       ".zed"
       "node_modules"
+      "tmp_notes.md"
     ];
   };
 
