@@ -18,7 +18,7 @@
   "features": {
     "edit_prediction_provider": "copilot"
   },
-  "show_edit_predictions": false,
+  // "show_edit_predictions": false,
   "telemetry": {
     "diagnostics": false,
     "metrics": false
@@ -37,7 +37,7 @@
   "restore_on_startup": "none",
   "languages": {
     "PHP": {
-      "language_servers": ["intelephense", "!phpactor", "..."],
+      "language_servers": ["intelephense", "!phpactor", "!phptools", "..."],
       "formatter": "language_server",
       "format_on_save": "off"
     }

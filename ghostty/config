@@ -1,17 +1,19 @@
-font-size = 16
+# https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf
 theme = catppuccin-mocha
-command = /usr/local/bin/fish --login --interactive
-# copy-on-select = clipboard
 
+font-size = 16
+command = /usr/local/bin/fish --login --interactive
 shell-integration-features = no-cursor
 cursor-style-blink = false
+# copy-on-select = clipboard
+
+split-divider-color = #a6e3a1
 
 keybind = ctrl+a>-=new_split:down
 keybind = ctrl+a>\=new_split:right
 keybind = ctrl+shift+left=previous_tab
 keybind = ctrl+shift+right=next_tab
+keybind = shift+enter=text:\n
 
 mouse-scroll-multiplier = 0.3
-
 macos-titlebar-style = tabs
-keybind = shift+enter=text:\n
