@@ -5,7 +5,12 @@
   programs.ssh = {
     enable = true;
     includes = [ "conf.d/*" ];
-    forwardAgent = true;
+    enableDefaultConfig = false;
+    matchBlocks = {
+      "*" = {
+        forwardAgent = true;
+      };
+    };
   };
 
   home = {
