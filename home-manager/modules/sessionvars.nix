@@ -10,6 +10,7 @@
       MANROFFOPT = "-c";
       PAGER = "bat --style plain";
       SSH_AUTH_SOCK = "${config.home.homeDirectory}/.1password/agent.sock";
+      PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
     };
     file = { };
   };
