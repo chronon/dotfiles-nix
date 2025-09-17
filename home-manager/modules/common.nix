@@ -17,6 +17,7 @@
     username = "chronon";
     stateVersion = "23.11";
     packages = with pkgs; [
+      # nodejs_22.pkgs.pnpm
       _1password-cli
       ansible
       curl
@@ -25,9 +26,10 @@
       go-task
       nixfmt-rfc-style
       nodejs_22
-      nodejs_22.pkgs.pnpm
+      pnpm
       posting
       rclone
+      tree-sitter
       wget
       (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
     ];
