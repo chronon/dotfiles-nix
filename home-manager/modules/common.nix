@@ -17,7 +17,6 @@
     username = "chronon";
     stateVersion = "23.11";
     packages = with pkgs; [
-      # nodejs_22.pkgs.pnpm
       _1password-cli
       ansible
       curl
@@ -26,7 +25,7 @@
       go-task
       nixfmt-rfc-style
       nodejs_22
-      pnpm
+      nodejs_22.pkgs.pnpm
       posting
       rclone
       tree-sitter
