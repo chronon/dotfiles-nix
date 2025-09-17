@@ -1,11 +1,10 @@
-# https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 font-size = 16
 command = /usr/local/bin/fish --login --interactive
 shell-integration-features = no-cursor
 cursor-style-blink = false
-# copy-on-select = clipboard
+copy-on-select = clipboard
 
 split-divider-color = #a6e3a1
 
