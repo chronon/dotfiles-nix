@@ -47,13 +47,9 @@ in
       color = "always";
     };
     ignores = [
-      ".DS_Store"
       ".lazy.lua"
-      ".parcel-cache"
-      ".vim"
       ".vscode"
       ".zed"
-      "node_modules"
       "tmp_notes.md"
     ];
   };

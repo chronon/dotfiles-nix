@@ -20,6 +20,7 @@
       _1password-cli
       ansible
       curl
+      curlie
       f2
       gnused
       go-task
@@ -28,7 +29,6 @@
       nodejs_22.pkgs.pnpm
       posting
       rclone
-      tree-sitter
       wget
       (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
     ];
