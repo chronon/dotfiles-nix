@@ -16,3 +16,4 @@ vim.g.snacks_animate = false
 -- vim.g.ai_cmp = false
 
 vim.g.lazyvim_picker = "snacks"
+vim.g.lazyvim_prettier_needs_config = true

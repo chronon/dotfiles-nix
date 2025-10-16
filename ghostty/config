@@ -13,6 +13,12 @@ keybind = ctrl+a>\=new_split:right
 keybind = ctrl+shift+left=previous_tab
 keybind = ctrl+shift+right=next_tab
 keybind = shift+enter=text:\n
+keybind = global:cmd+backquote=toggle_quick_terminal
 
 mouse-scroll-multiplier = 0.3
 macos-titlebar-style = tabs
+
+quick-terminal-position = left
+quick-terminal-size = 45%
+quick-terminal-autohide = false
+quick-terminal-animation-duration = 0
