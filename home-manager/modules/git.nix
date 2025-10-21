@@ -8,13 +8,15 @@ in
 {
   programs.git = {
     enable = true;
-    userName = "Gregory Gaskill";
-    userEmail = primaryEmail;
     signing = {
       key = sshKey;
       signByDefault = true;
     };
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Gregory Gaskill";
+        email = primaryEmail;
+      };
       core = {
         editor = "nvim";
         quotePath = false;
@@ -32,20 +34,13 @@ in
         cmd = "smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"";
         trustExitCode = true;
       };
-    };
-    aliases = {
-      st = "status -sb";
-      mp = "!git checkout main && git pull --prune";
-      wsfix = "!git rebase --whitespace=fix origin/main";
-      cleanpush = "!git wsfix && git push origin \"$(git rev-parse --abbrev-ref HEAD)\"";
-      find-merge = "!sh -c 'commit=$0 && branch=\${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'";
-      show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'";
-    };
-    difftastic = {
-      enable = true;
-      options = {
-        background = "dark";
-        color = "always";
+      alias = {
+        st = "status -sb";
+        mp = "!git checkout main && git pull --prune";
+        wsfix = "!git rebase --whitespace=fix origin/main";
+        cleanpush = "!git wsfix && git push origin \"$(git rev-parse --abbrev-ref HEAD)\"";
+        find-merge = "!sh -c 'commit=$0 && branch=\${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'";
+        show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'";
       };
     };
     ignores = [
@@ -54,6 +49,15 @@ in
       ".zed"
       "tmp_notes.md"
     ];
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+    options = {
+      background = "dark";
+      color = "always";
+    };
   };
 
   programs.lazygit = {
