@@ -1,6 +1,6 @@
 vim.keymap.set(
   "n",
-  "<leader>ac",
+  "<leader>mc",
   "<cmd>!docker-compose exec -T php bin/convert.php -w ../%<cr>",
   { desc = "Convert PHP arrays" }
 )

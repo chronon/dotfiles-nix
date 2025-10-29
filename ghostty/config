@@ -18,6 +18,9 @@ keybind = global:cmd+backquote=toggle_quick_terminal
 mouse-scroll-multiplier = 0.3
 macos-titlebar-style = tabs
 
+window-height = 75
+window-width = 150
+
 quick-terminal-position = left
 quick-terminal-size = 45%
 quick-terminal-autohide = false
