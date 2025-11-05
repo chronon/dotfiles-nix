@@ -23,7 +23,7 @@
       systems = {
         kanzi = "aarch64-darwin";
         junaluska = "x86_64-darwin";
-        nixair = "x86_64-linux";
+        kaxair = "x86_64-linux";
       };
 
       mkHomeConfiguration =

@@ -34,7 +34,7 @@ The repository uses 1Password CLI for secret injection:
 - `home-manager/hosts/`: Host-specific configurations
   - `kanzi/`: ARM64 macOS host
   - `junaluska/`: x86_64 macOS host
-  - `nixair/`: x86_64 Linux host
+  - `kaxair/`: x86_64 Linux host
 - `home-manager/modules/`: Shared configuration modules
   - `common.nix`: Core packages and programs
   - `macos.nix`: macOS-specific configurations
@@ -96,7 +96,7 @@ Most application configs are symlinked from dotfiles to XDG config directories:
 - Sublime Merge symlink for git mergetool
 - Additional tools: claude-code, cloudflared, gemini-cli, television
 
-### Linux Host (nixair)
+### Linux Host (kaxair)
 
 - Standard Linux paths and configurations
 - Imports common.nix for shared setup
