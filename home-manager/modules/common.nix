@@ -21,7 +21,6 @@
       ansible
       curl
       curlie
-      f2
       gnused
       go-task
       nixfmt-rfc-style
