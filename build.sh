@@ -4,8 +4,15 @@ set -euo pipefail
 
 readonly HOSTNAME=$(hostname -s)
 readonly SECRETS_DIR="secrets"
+readonly NIX_CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nix"
+readonly NIX_CONF="$NIX_CONF_DIR/nix.conf"
 
-# Check if this looks like a first run
+if [[ ! -f "$NIX_CONF" ]] || ! grep -q "experimental-features.*nix-command" "$NIX_CONF"; then
+  echo "Enabling Nix experimental features..."
+  mkdir -p "$NIX_CONF_DIR"
+  echo "experimental-features = nix-command flakes" >>"$NIX_CONF"
+fi
+
 if ! command -v op >/dev/null 2>&1; then
   echo "Warning: 1Password CLI (op) not found. Skipping secret injection."
   echo "After this build completes, run './build.sh' again to inject secrets."
