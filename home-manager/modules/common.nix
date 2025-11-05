@@ -5,6 +5,7 @@
   imports = [
     ./fish.nix
     ./gh.nix
+    ./ghostty.nix
     ./git.nix
     ./neovim.nix
     ./sessionvars.nix
@@ -64,10 +65,6 @@
     configFile = {
       "wezterm" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
-        recursive = true;
-      };
-      "ghostty" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ghostty";
         recursive = true;
       };
       "zed" = {
