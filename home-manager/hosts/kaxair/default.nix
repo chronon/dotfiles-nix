@@ -12,12 +12,15 @@
       libcxxStdenv
       unzip
     ];
+    sessionVariables = {
+      OP_BIOMETRIC_UNLOCK_ENABLED = "true";
+    };
   };
 
   programs.ghostty.settings = {
     font-size = 14;
     window-width = 100;
-    window-height = 60;
+    window-height = 25;
   };
 
 }
