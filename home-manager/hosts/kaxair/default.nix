@@ -18,7 +18,7 @@
   };
 
   programs.ghostty.settings = {
-    font-size = 14;
+    font-size = 12;
     window-width = 100;
     window-height = 25;
   };
