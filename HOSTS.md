@@ -1,10 +1,8 @@
 # Host Setup Guide
 
-## Setting Up a New macOS Host
+## macOS
 
-### Install Homebrew Applications
-
-Install the following applications using Homebrew:
+#### Install Homebrew Casks
 
 ```bash
 brew update && brew install \
@@ -16,50 +14,33 @@ brew update && brew install \
   sublime-merge \
   tableplus
 ```
+## Arch Linux
 
-### Complete Setup
-
-After installing the required applications:
-
-```bash
-./bootstrap.sh  # Sets up Nix features and secrets directory
-./build.sh      # Applies configuration
-```
-
-## Setting Up a New Linux Host
-
-For Arch-based Linux distributions:
-
-### On the New Host
-
-1. **Install required packages:**
+1. **Install packages:**
    ```bash
    sudo pacman -S nix ghostty docker docker-compose docker-buildx
+   paru 1password
+   paru appimagelauncher
+   paru brave-bin
    ```
+   - Manually install [Sublime Merge](https://www.sublimemerge.com/docs/linux_repositories)
+   - Manually download [TablePlus AppImage](https://tableplus.com/download/linux)
 
-2. **Install 1Password:**
-   Follow the [official installation guide](https://support.1password.com/install-linux/#arch-linux) for Arch Linux.
-
-3. **Configure Docker:**
+2. **Configure Docker:**
    ```bash
    sudo systemctl enable docker.service
    sudo usermod -aG docker $USER
    ```
    Log out and back in for group changes to take effect.
 
-### From Your Main Host
+3. **Transfer secrets to the new host from an existing host:**
+    ```bash
+    rsync -avz -L secrets [NEW_HOST]:dotfiles
+    ```
 
-Transfer secrets to the new host:
+## Complete Setup
+
 ```bash
-rsync -avz -L secrets [NEW_HOST]:dotfiles
-```
-
-Replace `[NEW_HOST]` with the hostname or IP address of your new host.
-
-### Complete Setup
-
-On the new host, run:
-```bash
-./bootstrap.sh  # Sets up Nix features and secrets directory
-./build.sh      # Applies configuration
+./bootstrap.sh
+./build.sh
 ```

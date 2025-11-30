@@ -9,6 +9,9 @@ Personal configuration management using Nix and Home Manager across macOS and Li
 git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
+# Sets up Nix features and secrets
+./bootstrap.sh
+
 # Build and apply configuration
 ./build.sh
 ```
