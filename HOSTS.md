@@ -26,12 +26,17 @@ brew update && brew install \
    - Manually install [Sublime Merge](https://www.sublimemerge.com/docs/linux_repositories)
    - Manually download [TablePlus AppImage](https://tableplus.com/download/linux)
 
-2. **Configure Docker:**
+2. **Other setup:**
    ```bash
+   # enable docker and add user to docker group
    sudo systemctl enable docker.service
+   # log out for group changes to take effect
    sudo usermod -aG docker $USER
+   # no password sudo
+   echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER && sudo chmod 0440 /etc/sudoers.d/$USER
+   # optionally change system shell to bash
+   sudo usermod -s /usr/bin/bash $USER
    ```
-   Log out and back in for group changes to take effect.
 
 3. **Transfer secrets to the new host from an existing host:**
     ```bash
