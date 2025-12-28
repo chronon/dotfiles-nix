@@ -64,6 +64,14 @@
             --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
             --bind "enter:become($EDITOR +{2} {1})"
       '';
+
+      claude.body = ''
+        if test -f .claude/docker-claude
+            ./.claude/docker-claude $argv
+        else
+            command claude $argv
+        end
+      '';
     };
   };
 

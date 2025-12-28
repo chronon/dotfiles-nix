@@ -10,6 +10,7 @@
     homeDirectory = "/home/${config.home.username}";
     packages = with pkgs; [
       libcxxStdenv
+      sublime-merge
       unzip
     ];
     sessionVariables = {
