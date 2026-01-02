@@ -20,7 +20,6 @@
       dcdown = "docker compose down";
       dcex = "docker compose exec";
       dcup = "docker compose up -d";
-      dcupl = "docker compose -f docker-compose.yml -f docker-compose.localdata.yml up -d";
       dudirs = "du -d 1 -h";
       kds = "find\ .\ -name\ .DS_Store\ -print\ -exec\ rm\ -f\ \{\}\ \\\;";
       mcore = "cd $HOME/machines/core/";
