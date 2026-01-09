@@ -24,7 +24,7 @@
       curlie
       gnused
       go-task
-      nixfmt-rfc-style
+      nixfmt
       nodejs_22
       nodejs_22.pkgs.pnpm
       posting
