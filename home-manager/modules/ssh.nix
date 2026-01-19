@@ -8,7 +8,7 @@
     enableDefaultConfig = false;
     matchBlocks = {
       "*" = {
-        forwardAgent = true;
+        forwardAgent = false;
       };
     };
   };
