@@ -20,6 +20,7 @@
     packages = with pkgs; [
       _1password-cli
       ansible
+      codex
       curl
       curlie
       gnused
