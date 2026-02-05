@@ -9,6 +9,7 @@
   home = {
     homeDirectory = "/home/${config.home.username}";
     packages = with pkgs; [
+      claude-code-bin
       libcxxStdenv
       sublime-merge
       unzip
