@@ -15,25 +15,24 @@
       "ctrl-a -": "terminal_panel::ToggleFocus",
       "ctrl-a, -": "terminal_panel::ToggleFocus",
       ", e": "project_panel::ToggleFocus",
-      "cmd-p": ["task::Spawn", { "task_name": "File Finder", "reveal_target": "center" }],
-      ", s w": ["task::Spawn", { "task_name": "Live Grep", "reveal_target": "center" }]
-    }
+    },
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-p": "file_finder::Toggle"
-    }
+      "ctrl-p": "file_finder::Toggle",
+    },
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
+      ", b d": "pane::CloseActiveItem",
       ", c f": "editor::Format",
       ", c r": "editor::Rename",
       ", s s": "outline::Toggle",
       "ctrl-a -": "terminal_panel::ToggleFocus",
       "[ h": "editor::GoToPreviousHunk",
-      "] h": "editor::GoToHunk"
-    }
-  }
+      "] h": "editor::GoToHunk",
+    },
+  },
 ]

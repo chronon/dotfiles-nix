@@ -2,4 +2,5 @@ secrets
 nvim/lua/plugins/untracked.lua
 zed/conversations
 zed/prompts
+zed/settings_backup.json
 .claude
