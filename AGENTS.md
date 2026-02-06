@@ -92,7 +92,7 @@ Application configs are symlinked from dotfiles to XDG config directories:
 - 1Password CLI integration with agent socket
 - Homebrew path additions
 - Sublime Merge symlink for git mergetool
-- Additional tools: cloudflared, television
+- Additional tools: cloudflared
 
 ### Linux Host (kaxair)
 

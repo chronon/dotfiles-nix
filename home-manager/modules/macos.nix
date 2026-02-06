@@ -10,7 +10,6 @@
     homeDirectory = "/Users/${config.home.username}";
     packages = with pkgs; [
       cloudflared
-      television
       unixtools.watch
     ];
 
