@@ -8,6 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-code = {
+      url = "github:sadjow/claude-code-nix?ref=v2.1.37";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    codex = {
+      url = "github:sadjow/codex-cli-nix?ref=v0.98.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -15,6 +23,8 @@
       nixpkgs,
       catppuccin,
       home-manager,
+      claude-code,
+      codex,
       ...
     }:
     let
@@ -32,6 +42,10 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            overlays = [
+              claude-code.overlays.default
+              codex.overlays.default
+            ];
           };
           modules = [
             catppuccin.homeModules.catppuccin
