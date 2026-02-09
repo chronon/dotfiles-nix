@@ -15,7 +15,7 @@
       theme = "Catppuccin Mocha";
 
       font-size = 16;
-      command = "$HOME/.nix-profile/bin/fish --login --interactive";
+      command = "$HOME/.nix-profile/bin/fish --interactive";
       shell-integration-features = "no-cursor, ssh-env";
       cursor-style-blink = false;
       copy-on-select = "clipboard";

@@ -25,6 +25,7 @@
       mcore = "cd $HOME/machines/core/";
     };
     interactiveShellInit = ''
+      set -g fish_greeting
       set_paths
 
       bind \cg accept-autosuggestion execute
