@@ -29,6 +29,7 @@
       ", b d": "pane::CloseActiveItem",
       ", c f": "editor::Format",
       ", c r": "editor::Rename",
+      ", c x": "editor::Copy",
       ", s s": "outline::Toggle",
       "ctrl-a -": "terminal_panel::ToggleFocus",
       "[ h": "editor::GoToPreviousHunk",

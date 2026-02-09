@@ -7,18 +7,25 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
   "which_key": {
     "enabled": true,
   },
   "collaboration_panel": {
-    "dock": "left",
+    "button": false,
   },
   "edit_predictions": {
+    "mode": "subtle",
+    "copilot": {
+      "enable_next_edit_suggestions": true
+    },
     "provider": "copilot",
   },
   "icon_theme": "Catppuccin Mocha",
   "agent": {
-    "dock": "right",
+    "enable_feedback": false,
+    "default_height": 500,
+    "dock": "bottom",
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
@@ -39,10 +46,13 @@
     "dark": "Catppuccin Mocha - No Italics",
   },
   "cursor_blink": false,
-  "current_line_highlight": "gutter",
+  "current_line_highlight": "none",
   "hover_popover_enabled": true,
-  "restore_on_startup": "none",
+  "restore_on_startup": "empty_tab",
   "languages": {
+    "Markdown": {
+      "show_edit_predictions": false
+    },
     "PHP": {
       "language_servers": ["intelephense", "!phpactor", "!phptools", "..."],
       "formatter": "language_server",
