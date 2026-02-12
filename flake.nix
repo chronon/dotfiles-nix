@@ -13,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     codex = {
-      url = "github:sadjow/codex-cli-nix?ref=v0.98.0";
+      url = "github:sadjow/codex-cli-nix?ref=v0.99.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
