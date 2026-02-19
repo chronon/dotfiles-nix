@@ -9,11 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code = {
-      url = "github:sadjow/claude-code-nix?ref=v2.1.44";
+      url = "github:sadjow/claude-code-nix?ref=v2.1.47";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     codex = {
-      url = "github:sadjow/codex-cli-nix?ref=v0.99.0";
+      url = "github:sadjow/codex-cli-nix?ref=v0.104.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
