@@ -51,15 +51,6 @@ in
     ];
   };
 
-  programs.difftastic = {
-    enable = true;
-    git.enable = true;
-    options = {
-      background = "dark";
-      color = "always";
-    };
-  };
-
   programs.lazygit = {
     enable = true;
     settings = {
@@ -74,7 +65,7 @@ in
   xdg = {
     configFile = {
       "git/allowed_signers" = {
-        text = ''${primaryEmail},${secondaryEmail} ${sshKey}'';
+        text = "${primaryEmail},${secondaryEmail} ${sshKey}";
       };
     };
   };
