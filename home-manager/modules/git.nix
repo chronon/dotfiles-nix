@@ -11,6 +11,7 @@ in
     signing = {
       key = sshKey;
       signByDefault = true;
+      format = "ssh";
     };
     settings = {
       user = {
@@ -23,7 +24,6 @@ in
       };
       credential.helper = "";
       init.defaultBranch = "main";
-      gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
       pager.branch = false;
       pull.rebase = false;
