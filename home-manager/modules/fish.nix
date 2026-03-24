@@ -30,7 +30,7 @@
 
       bind \cg accept-autosuggestion execute
 
-      fish_config theme choose "Catppuccin Mocha"
+      fish_config theme choose "catppuccin-mocha"
       set fish_color_valid_path
 
       if test -e "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
