@@ -29,7 +29,7 @@
       go-task
       nixfmt
       nodejs_22
-      nodejs_22.pkgs.pnpm
+      pnpm
       posting
       rclone
       wget

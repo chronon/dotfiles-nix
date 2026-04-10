@@ -10,6 +10,7 @@
     homeDirectory = "/Users/${config.home.username}";
     packages = with pkgs; [
       cloudflared
+      railway
       unixtools.watch
     ];
 

@@ -6,6 +6,13 @@ return {
         intelephense = {},
         cssls = {
           autostart = false,
+          settings = {
+            css = {
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+          },
         },
         tailwindcss = {
           autostart = false,
