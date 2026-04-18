@@ -1,57 +1,59 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "show_edit_predictions": false,
-  "which_key": {
-    "enabled": true,
-  },
-  "collaboration_panel": {
-    "button": false,
-  },
-  "edit_predictions": {
-    "mode": "subtle",
-    "copilot": {
-      "enable_next_edit_suggestions": true
-    },
-    "provider": "copilot",
-  },
-  "icon_theme": "Catppuccin Mocha",
-  "agent": {
-    "enable_feedback": false,
-    "default_height": 500,
-    "dock": "bottom",
-    "model_parameters": [],
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-codex",
-    },
-  },
-  // "show_edit_predictions": false,
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false,
-  },
-  "vim_mode": true,
-  "ui_font_size": 18.0,
-  "buffer_font_size": 15.7,
+  // Appearance
   "theme": {
     "mode": "system",
     "light": "One Light",
     "dark": "Catppuccin Mocha - No Italics",
   },
+  "icon_theme": "Catppuccin Mocha",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_size": 15.7,
+  "ui_font_size": 18.0,
   "cursor_blink": false,
   "current_line_highlight": "none",
-  "hover_popover_enabled": true,
+  "indent_guides": {
+    "enabled": false,
+  },
+  "scrollbar": {
+    "axes": {
+      "horizontal": false,
+    },
+  },
+
+  // Editor behavior
+  "vim_mode": true,
+  "soft_wrap": "editor_width",
+  "preferred_line_length": 120,
+  "hover_popover_enabled": false,
+  "show_completions_on_input": false,
   "restore_on_startup": "empty_tab",
+
+  // Edit predictions
+  "edit_predictions": {
+    "mode": "subtle",
+    "copilot": {
+      "enable_next_edit_suggestions": true,
+    },
+    "provider": "copilot",
+  },
+
+  // Git
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+    },
+  },
+
+  // Tabs
+  "tabs": {
+    "git_status": true,
+  },
+
+  // Languages
   "languages": {
     "Markdown": {
-      "show_edit_predictions": false
+      "show_edit_predictions": false,
+      "hard_wrap": "none",
     },
     "PHP": {
       "language_servers": ["intelephense", "!phpactor", "!phptools", "..."],
@@ -59,36 +61,58 @@
       "format_on_save": "off",
     },
   },
-  "git": {
-    "git_gutter": "tracked_files",
-    "inline_blame": {
-      "enabled": false,
-    },
-  },
-  "indent_guides": {
-    "enabled": false,
-  },
-  "show_completions_on_input": false,
-  "preferred_line_length": 120,
-  "tabs": {
-    "file_icons": true,
-    "git_status": true,
-  },
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+
+  // Terminal
   "terminal": {
     "copy_on_select": true,
     "shell": {
       "with_arguments": {
         "program": "/usr/local/bin/fish",
-        "args": ["--login", "--interactive"],
+        "args": ["--interactive"],
       },
     },
   },
-  "file_scan_exclusions": ["**/.git", "**/.DS_Store", "**/.settings", "**/node_modules", "**/vendor"],
-  "scrollbar": {
-    "axes": {
-      "horizontal": false,
+
+  // Agent
+  "agent": {
+    "default_profile": "ask",
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5.4",
+        "enable_thinking": false
+      }
+    ],
+    "enable_feedback": false,
+    "default_height": 500,
+    "dock": "bottom",
+    "default_model": {
+      "effort": "high",
+      "provider": "copilot_chat",
+      "model": "gpt-5.4",
     },
   },
-  "soft_wrap": "editor_width",
+
+  // Telemetry & UI panels
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "collaboration_panel": {
+    "button": false,
+  },
+  "which_key": {
+    "enabled": true,
+  },
+  "file_scan_exclusions": ["**/.git", "**/.DS_Store", "**/.settings", "**/node_modules", "**/vendor"],
 }
