@@ -2,15 +2,6 @@
 
 {
 
-  programs.neovim = {
-    enable = true;
-    withRuby = false;
-    withPython3 = false;
-    defaultEditor = true;
-  };
-
-  catppuccin.nvim.enable = false;
-
   home = {
     file = {
       "${config.home.homeDirectory}/intelephense" = {

@@ -27,6 +27,7 @@
       curlie
       gnused
       go-task
+      neovim
       nixfmt
       nodejs_22
       pnpm
