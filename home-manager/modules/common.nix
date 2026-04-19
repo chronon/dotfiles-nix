@@ -78,6 +78,15 @@
     };
   };
 
+  home.file = {
+    ".claude/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.json";
+    ".claude/commands" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/commands";
+      recursive = true;
+    };
+  };
+
   catppuccin.flavor = "mocha";
   catppuccin.enable = true;
 

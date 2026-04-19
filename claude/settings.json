@@ -1,0 +1,35 @@
+{
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(ls:*)"
+    ],
+    "defaultMode": "default"
+  },
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [
+        "https://api.githubcopilot.com",
+        "https://api.github.com",
+        "http://localhost"
+      ],
+      "allowUnixSockets": [
+        "/var/run/docker.sock"
+      ]
+    },
+    "enableWeakerNetworkIsolation": true
+  },
+  "voiceEnabled": false
+}
