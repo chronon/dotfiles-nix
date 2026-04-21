@@ -26,7 +26,7 @@
         "http://localhost"
       ],
       "allowUnixSockets": [
-        "/var/run/docker.sock"
+        "~/.orbstack/run/docker.sock"
       ]
     },
     "enableWeakerNetworkIsolation": true
