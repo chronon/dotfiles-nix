@@ -29,7 +29,7 @@
       go-task
       neovim
       nixfmt
-      nodejs_22
+      nodejs_24
       pnpm
       posting
       rclone
