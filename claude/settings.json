@@ -9,6 +9,25 @@
       "Bash(gh pr diff:*)",
       "Bash(ls:*)"
     ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/id_rsa)",
+      "Read(**/id_ed25519)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials.json)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.npmrc)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Write(**/.env)",
+      "Write(**/.env.*)"
+    ],
     "defaultMode": "default"
   },
   "enabledPlugins": {
@@ -26,7 +45,8 @@
         "http://localhost"
       ],
       "allowUnixSockets": [
-        "~/.orbstack/run/docker.sock"
+        "~/.orbstack/run/docker.sock",
+        "/var/run/docker.sock"
       ]
     },
     "enableWeakerNetworkIsolation": true
