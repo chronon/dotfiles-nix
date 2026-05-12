@@ -1,4 +1,4 @@
-Review PR comments from Copilot or chatgpt-codex-connector and provide your own assessment of each.
+Review PR comments from Copilot or chatgpt-codex-connector (whichever left comments) and provide your own assessment of each.
 
 The user will provide JSON output from `gh api` containing PR review comments. This is the argument: $ARGUMENTS
 
