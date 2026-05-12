@@ -49,10 +49,10 @@ return {
     },
   },
 
-  {
-    "folke/sidekick.nvim",
-    opts = {
-      nes = { enabled = false },
-    },
-  },
+  -- {
+  --   "folke/sidekick.nvim",
+  --   opts = {
+  --     nes = { enabled = false },
+  --   },
+  -- },
 }
