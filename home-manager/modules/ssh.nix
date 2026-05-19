@@ -6,9 +6,9 @@
     enable = true;
     includes = [ "conf.d/*" ];
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        forwardAgent = false;
+        ForwardAgent = false;
       };
     };
   };
