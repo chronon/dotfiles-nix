@@ -1,5 +1,14 @@
 {
   // Appearance
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -109,6 +118,7 @@
     "metrics": false,
   },
   "collaboration_panel": {
+    "dock": "left",
     "button": false,
   },
   "which_key": {
