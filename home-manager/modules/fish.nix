@@ -52,7 +52,7 @@
         fish_add_path /usr/local/bin
         fish_add_path /opt/homebrew/bin
         fish_add_path "${config.home.homeDirectory}/.local/bin"
-        fish_add_path "${config.home.homeDirectory}/.local/share/pnpm"
+        fish_add_path "${config.home.homeDirectory}/.local/share/pnpm/bin"
       '';
 
       frg.body = ''
