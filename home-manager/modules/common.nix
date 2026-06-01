@@ -88,6 +88,11 @@
   };
 
   catppuccin.flavor = "mocha";
+  catppuccin.autoEnable = true;
   catppuccin.enable = true;
+
+  # Tracking nixos-unstable + home-manager master, which report different
+  # release strings; silence the mismatch warning.
+  home.enableNixpkgsReleaseCheck = false;
 
 }
