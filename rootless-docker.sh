@@ -12,7 +12,6 @@ readonly USERNAME="$(id -un)"
 readonly UID_NUM="$(id -u)"
 readonly SUBID_RANGE="${USERNAME}:100000:65536"
 readonly DOCKER_SOCK="unix:///run/user/${UID_NUM}/docker.sock"
-readonly BASHRC="$HOME/.bashrc"
 
 # --- Sanity checks -----------------------------------------------------------
 
@@ -78,24 +77,15 @@ dockerd-rootless-setuptool.sh install
 sudo loginctl enable-linger "$USERNAME"
 systemctl --user enable --now docker.service
 
-# --- 5. Shell environment ----------------------------------------------------
-
-add_bashrc_line() {
-  local line="$1"
-  if ! grep -qxF "$line" "$BASHRC" 2>/dev/null; then
-    echo "$line" >>"$BASHRC"
-    echo "Added to .bashrc: $line"
-  fi
-}
-add_bashrc_line 'export PATH=/usr/bin:$PATH'
-add_bashrc_line "export DOCKER_HOST=${DOCKER_SOCK}"
-
-# --- 6. Verify ---------------------------------------------------------------
+# --- 5. Verify ---------------------------------------------------------------
 
 echo "Verifying with hello-world..."
 export DOCKER_HOST="$DOCKER_SOCK"
 docker run --rm hello-world
 
+# Shell environment is intentionally left to the user's shell config (this
+# script only sets up the daemon). Set DOCKER_HOST so new sessions find it:
 echo
-echo "Rootless Docker is ready. Open a new shell (or 'source ~/.bashrc')"
-echo "so DOCKER_HOST is set, then use docker normally."
+echo "Rootless Docker is ready. Point your shell at the socket with:"
+echo "    export DOCKER_HOST=${DOCKER_SOCK}"
+echo "(home-manager users: set it declaratively instead — see dev.nix.)"
