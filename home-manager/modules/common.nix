@@ -1,98 +1,10 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
 
   imports = [
-    ./fish.nix
-    ./gh.nix
-    ./ghostty.nix
-    ./git.nix
-    ./neovim.nix
-    ./sessionvars.nix
-    ./ssh.nix
+    ./base.nix
+    ./workstation.nix
   ];
-
-  nixpkgs.config.allowUnfree = true;
-
-  home = {
-    username = "chronon";
-    stateVersion = "23.11";
-    file.".hushlogin".text = "";
-    packages = with pkgs; [
-      _1password-cli
-      ansible
-      claude-code
-      codex
-      curl
-      curlie
-      gnused
-      go-task
-      neovim
-      nixfmt
-      nodejs_24
-      pnpm
-      posting
-      rclone
-      wget
-      (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
-    ];
-  };
-
-  programs = {
-    bat.enable = true;
-    fd.enable = true;
-    fzf.enable = true;
-    gpg.enable = true;
-    home-manager.enable = true;
-    jq.enable = true;
-    ripgrep.enable = true;
-  };
-
-  programs.broot = {
-    enable = true;
-    settings = {
-      verbs = [
-        {
-          invocation = "edit";
-          key = "enter";
-          shortcut = "e";
-          execution = "$EDITOR +{line} {file}";
-          apply_to = "text_file";
-          leave_broot = false;
-        }
-      ];
-    };
-  };
-
-  xdg = {
-    enable = true;
-    configFile = {
-      "wezterm" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
-        recursive = true;
-      };
-      "zed" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zed";
-        recursive = true;
-      };
-    };
-  };
-
-  home.file = {
-    ".claude/settings.json".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.json";
-    ".claude/commands" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/commands";
-      recursive = true;
-    };
-  };
-
-  catppuccin.flavor = "mocha";
-  catppuccin.autoEnable = true;
-  catppuccin.enable = true;
-
-  # Tracking nixos-unstable + home-manager master, which report different
-  # release strings; silence the mismatch warning.
-  home.enableNixpkgsReleaseCheck = false;
 
 }

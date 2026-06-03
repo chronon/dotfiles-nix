@@ -34,6 +34,7 @@
         kanzi = "aarch64-darwin";
         junaluska = "x86_64-darwin";
         kaxair = "x86_64-linux";
+        dev-true = "aarch64-linux";
       };
 
       mkHomeConfiguration =
