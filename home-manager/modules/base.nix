@@ -41,6 +41,21 @@
     ripgrep.enable = true;
   };
 
+  programs.tmux = {
+    enable = true;
+    prefix = "C-a";
+    keyMode = "vi";
+    baseIndex = 1;
+    mouse = true;
+    escapeTime = 0;
+    focusEvents = true;
+    historyLimit = 100000;
+    terminal = "tmux-256color";
+    extraConfig = ''
+      set -ag terminal-overrides ",xterm-256color:RGB"
+    '';
+  };
+
   xdg.enable = true;
 
   home.file = {
