@@ -39,6 +39,13 @@
 
       mkHomeConfiguration =
         hostname: system:
+        let
+          hostModule =
+            if nixpkgs.lib.hasPrefix "dev-" hostname then
+              ./home-manager/hosts/dev
+            else
+              ./home-manager/hosts/${hostname};
+        in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
@@ -50,7 +57,7 @@
           };
           modules = [
             catppuccin.homeModules.catppuccin
-            ./home-manager/hosts/${hostname}
+            hostModule
           ];
         };
     in
