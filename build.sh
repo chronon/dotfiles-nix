@@ -28,4 +28,6 @@ else
   HOME_MANAGER_CMD="nix run home-manager --"
 fi
 
-$HOME_MANAGER_CMD switch --flake ".#$USER@$HOSTNAME"
+# -b backup: on a fresh machine, pre-existing dotfiles (.bashrc, .profile, ...)
+# would otherwise block activation; back them up instead.
+$HOME_MANAGER_CMD switch -b backup --flake ".#$USER@$HOSTNAME"

@@ -6,11 +6,11 @@ Personal configuration management using Nix and Home Manager across macOS and Li
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+git clone https://github.com/chronon/dotfiles-nix.git ~/dotfiles
 cd ~/dotfiles
 
 # Sets up Nix features and secrets
-./bootstrap.sh
+./scripts/bootstrap.sh
 
 # Build and apply configuration
 ./build.sh
@@ -20,6 +20,23 @@ The build script will:
 - Enable Nix experimental features if needed
 - Inject secrets from 1Password CLI
 - Apply home-manager configuration for your host
+
+## Fresh Dev Host (Linux)
+
+On a brand-new Linux machine, bootstrap everything (Nix, this repo, rootless
+Docker, and the home-manager config) with one command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/chronon/dotfiles-nix/main/scripts/dev-init.sh | bash
+```
+
+Run it as your normal (non-root) user from a real login shell. It's safe to
+re-run. To bootstrap from a branch instead of `main` (e.g. to test a PR), set
+`DOTFILES_REF`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/chronon/dotfiles-nix/main/scripts/dev-init.sh | DOTFILES_REF=my-branch bash
+```
 
 ## Features
 
@@ -36,6 +53,7 @@ The build script will:
 - **kanzi**: ARM64 macOS (Apple Silicon)
 - **junaluska**: x86_64 macOS (Intel)
 - **kaxair**: x86_64 Linux
+- **dev-\***: Headless aarch64-linux dev VMs (shared config)
 
 ## Documentation
 

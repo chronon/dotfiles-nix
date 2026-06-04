@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
 readonly NIX_CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nix"
 readonly NIX_CONF="$NIX_CONF_DIR/nix.conf"
 readonly NIX_FEATURES="experimental-features = nix-command flakes"

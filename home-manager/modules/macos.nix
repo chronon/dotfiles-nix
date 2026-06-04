@@ -3,7 +3,8 @@
 {
 
   imports = [
-    ./common.nix
+    ./base.nix
+    ./workstation.nix
   ];
 
   home = {

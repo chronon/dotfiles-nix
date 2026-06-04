@@ -5,7 +5,6 @@
   imports = [
     ./fish.nix
     ./gh.nix
-    ./ghostty.nix
     ./git.nix
     ./neovim.nix
     ./sessionvars.nix
@@ -19,20 +18,15 @@
     stateVersion = "23.11";
     file.".hushlogin".text = "";
     packages = with pkgs; [
-      _1password-cli
-      ansible
       claude-code
       codex
       curl
-      curlie
       gnused
       go-task
       neovim
       nixfmt
       nodejs_24
       pnpm
-      posting
-      rclone
       wget
       (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
     ];
@@ -42,41 +36,27 @@
     bat.enable = true;
     fd.enable = true;
     fzf.enable = true;
-    gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
     ripgrep.enable = true;
   };
 
-  programs.broot = {
+  programs.tmux = {
     enable = true;
-    settings = {
-      verbs = [
-        {
-          invocation = "edit";
-          key = "enter";
-          shortcut = "e";
-          execution = "$EDITOR +{line} {file}";
-          apply_to = "text_file";
-          leave_broot = false;
-        }
-      ];
-    };
+    prefix = "C-a";
+    keyMode = "vi";
+    baseIndex = 1;
+    mouse = true;
+    escapeTime = 0;
+    focusEvents = true;
+    historyLimit = 100000;
+    terminal = "tmux-256color";
+    extraConfig = ''
+      set -ag terminal-overrides ",xterm-256color:RGB"
+    '';
   };
 
-  xdg = {
-    enable = true;
-    configFile = {
-      "wezterm" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
-        recursive = true;
-      };
-      "zed" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zed";
-        recursive = true;
-      };
-    };
-  };
+  xdg.enable = true;
 
   home.file = {
     ".claude/settings.json".source =
@@ -86,10 +66,6 @@
       recursive = true;
     };
   };
-
-  catppuccin.flavor = "mocha";
-  catppuccin.autoEnable = true;
-  catppuccin.enable = true;
 
   # Tracking nixos-unstable + home-manager master, which report different
   # release strings; silence the mismatch warning.

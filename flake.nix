@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    catppuccin.url = "github:catppuccin/nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +20,6 @@
   outputs =
     {
       nixpkgs,
-      catppuccin,
       home-manager,
       claude-code,
       codex,
@@ -34,10 +32,18 @@
         kanzi = "aarch64-darwin";
         junaluska = "x86_64-darwin";
         kaxair = "x86_64-linux";
+        dev-true = "aarch64-linux";
       };
 
       mkHomeConfiguration =
         hostname: system:
+        let
+          hostModule =
+            if nixpkgs.lib.hasPrefix "dev-" hostname then
+              ./home-manager/hosts/dev
+            else
+              ./home-manager/hosts/${hostname};
+        in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
@@ -48,8 +54,7 @@
             ];
           };
           modules = [
-            catppuccin.homeModules.catppuccin
-            ./home-manager/hosts/${hostname}
+            hostModule
           ];
         };
     in
