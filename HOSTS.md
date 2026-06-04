@@ -46,6 +46,6 @@ brew update && brew install \
 ## Complete Setup
 
 ```bash
-./bootstrap.sh
+./scripts/bootstrap.sh
 ./build.sh
 ```

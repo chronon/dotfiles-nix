@@ -30,15 +30,26 @@ The repository uses 1Password CLI for secret injection:
 
 ### Nix Flake Structure
 
-- `flake.nix`: Main entry point defining host configurations
+- `flake.nix`: Main entry point defining host configurations. Hostnames matching
+  `dev-*` are routed to the shared `hosts/dev` module; named hosts use their own dir.
 - `home-manager/hosts/`: Host-specific configurations
   - `kanzi/`: ARM64 macOS host
   - `junaluska/`: x86_64 macOS host
   - `kaxair/`: x86_64 Linux host
+  - `dev/`: Shared config for all `dev-*` hosts (headless aarch64-linux VMs)
 - `home-manager/modules/`: Shared configuration modules
-  - `common.nix`: Core packages and programs
+  - `base.nix`: Core packages and programs imported by every host
+  - `workstation.nix`: GUI/full-workstation extras layered on `base` (macOS + kaxair)
+  - `dev.nix`: Headless dev extras layered on `base` (gcc, rootless Docker host, bash→fish)
   - `macos.nix`: macOS-specific configurations
   - Individual tool configurations (fish, git, neovim, etc.)
+
+### Scripts
+
+- `build.sh`: Build and apply the home-manager config (run from repo root)
+- `scripts/bootstrap.sh`: Enable Nix flakes + prepare secrets dir
+- `scripts/dev-init.sh`: One-shot bootstrap for a fresh Linux dev host (Nix, repo clone, rootless Docker, build)
+- `scripts/rootless-docker.sh`: Set up rootless Docker on a Debian/apt host
 
 ### Configuration Symlinks
 
@@ -97,7 +108,13 @@ Application configs are symlinked from dotfiles to XDG config directories:
 ### Linux Host (kaxair)
 
 - Standard Linux paths and configurations
-- Imports common.nix for shared setup
+- Imports `base.nix` + `workstation.nix` for shared setup
+
+### Dev Hosts (dev-*)
+
+- Headless aarch64-linux VMs sharing the `hosts/dev` module
+- Imports `base.nix` + `dev.nix` (no GUI/workstation extras)
+- New dev box only needs a one-line arch entry in `flake.nix`'s `systems` — no new file
 
 ## Common Patterns
 
@@ -110,7 +127,7 @@ When modifying configurations:
 
 When adding new tools:
 
-1. Add package to `home-manager/modules/common.nix` or host-specific file
+1. Add package to `home-manager/modules/base.nix` (all hosts), `workstation.nix`/`dev.nix` (layer-specific), or a host-specific file
 2. Create dedicated module file if complex configuration needed
 3. Add XDG symlink if external config directory exists
 

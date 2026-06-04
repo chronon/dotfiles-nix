@@ -61,7 +61,7 @@ fi
 # --- 4. Rootless Docker ------------------------------------------------------
 
 echo "Setting up rootless Docker..."
-"$DOTFILES_DIR/rootless-docker.sh"
+"$DOTFILES_DIR/scripts/rootless-docker.sh"
 
 # --- 5. Apply home-manager configuration -------------------------------------
 # build.sh uses paths relative to the repo root and resolves the flake host as

@@ -3,7 +3,7 @@
 # Set up rootless Docker on a Debian/apt-based machine or VM.
 #
 # Run as your normal (non-root) user from a proper login shell:
-#   ./rootless-docker.sh
+#   ./scripts/rootless-docker.sh
 # Safe to re-run; each step is idempotent.
 
 set -euo pipefail
