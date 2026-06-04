@@ -43,6 +43,7 @@
 
   programs.tmux = {
     enable = true;
+    shell = "${pkgs.fish}/bin/fish";
     prefix = "C-a";
     keyMode = "vi";
     baseIndex = 1;

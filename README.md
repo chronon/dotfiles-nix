@@ -38,6 +38,21 @@ re-run. To bootstrap from a branch instead of `main` (e.g. to test a PR), set
 curl -fsSL https://raw.githubusercontent.com/chronon/dotfiles-nix/main/scripts/dev-init.sh | DOTFILES_REF=my-branch bash
 ```
 
+### GitHub auth (dev VMs only)
+
+There's no 1Password CLI on dev VMs, and `gh`'s config dir is a read-only
+Nix symlink (so `gh auth login` can't write to it). Authenticate with a
+fine-grained PAT via a fish universal variable instead:
+
+```fish
+set -Ux GH_TOKEN github_pat_xxxxx
+gh auth status
+```
+
+`GH_TOKEN` is stored cleartext in `~/.config/fish/fish_variables`; fine for
+a throwaway VM. For a per-session token that isn't persisted, use
+`export GH_TOKEN=...` instead.
+
 ## Features
 
 - **Unified theme**: Catppuccin Mocha across all tools
