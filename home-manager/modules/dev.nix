@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
 
   home.packages = [ pkgs.gcc ];
+
+  home.file.".claude/settings.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.dev.json";
 
   programs.bash = {
     enable = true;
