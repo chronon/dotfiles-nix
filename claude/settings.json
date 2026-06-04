@@ -10,6 +10,7 @@
       "Bash(ls:*)"
     ],
     "deny": [
+      "Bash(coolify:*)",
       "Read(**/.env)",
       "Read(**/.env.*)",
       "Read(**/*.pem)",
