@@ -63,6 +63,9 @@
     extraConfig = ''
       set -ag terminal-overrides ",xterm-256color:RGB"
 
+      set -g set-clipboard on
+      bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
+
       # Catppuccin status line (sourced after the plugin so modules render)
       set -g status-left-length 100
       set -g status-right-length 100
