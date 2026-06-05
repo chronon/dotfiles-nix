@@ -14,7 +14,6 @@ The user will provide JSON output from `gh api` containing PR review comments. T
    - **Reasoning**: explain why you agree or disagree, referencing the actual code in the diff_hunk and the project's conventions from CLAUDE.md/AGENTS.md
 
 4. When evaluating, consider:
-   - Is the suggestion actually correct for CakePHP 2.x conventions?
    - Does it align with this project's established patterns?
    - Is it a meaningful improvement or just noise?
    - Read the actual source file if needed to understand full context

@@ -74,7 +74,6 @@ Application configs are symlinked from dotfiles to XDG config directories:
 - Based on LazyVim framework
 - Configuration in `nvim/` directory
 - Plugins managed through Lazy.nvim
-- PHP development with Intelephense LSP
 
 ### Fish Shell
 
@@ -94,7 +93,6 @@ Application configs are symlinked from dotfiles to XDG config directories:
 - Vim mode enabled
 - Copilot for code completion
 - JetBrains Mono Nerd Font
-- PHP development setup with Intelephense
 
 ## Host-Specific Considerations
 
