@@ -2,7 +2,7 @@
 
 {
 
-  home.packages = [ pkgs.gcc ];
+  home.packages = with pkgs; [ gcc python3 ];
 
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.dev.json";
