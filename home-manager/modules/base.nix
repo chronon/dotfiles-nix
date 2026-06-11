@@ -77,6 +77,13 @@
 
   xdg.enable = true;
 
+  xdg.configFile."pnpm/rc".text = ''
+    minimum-release-age=1440
+    minimum-release-age-strict=true
+    block-exotic-subdeps=true
+    verify-deps-before-run=warn
+  '';
+
   home.file = {
     ".claude/commands" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/commands";
