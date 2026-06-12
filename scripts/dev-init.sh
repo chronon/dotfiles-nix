@@ -63,7 +63,36 @@ fi
 echo "Setting up rootless Docker..."
 "$DOTFILES_DIR/scripts/rootless-docker.sh"
 
-# --- 5. Apply home-manager configuration -------------------------------------
+# --- 5. OrbStack workaround: unreadable /proc/sys/kernel/modprobe ------------
+# OrbStack's kernel returns EPERM reading this sysctl, which aborts Nix garbage
+# collection (the GC root scan reads it and only tolerates ENOENT/EACCES).
+# Bind-mount a plain file holding the standard value over it, via a systemd
+# unit so the fix survives reboots. Skipped when the sysctl is readable.
+
+if ! sudo cat /proc/sys/kernel/modprobe >/dev/null 2>&1; then
+  echo "Installing /proc/sys/kernel/modprobe workaround for Nix GC..."
+  echo -n /sbin/modprobe | sudo tee /etc/fake-modprobe >/dev/null
+  sudo tee /etc/systemd/system/fix-modprobe-sysctl.service >/dev/null <<'EOF'
+[Unit]
+Description=Bind-mount readable file over /proc/sys/kernel/modprobe (OrbStack Nix GC fix)
+DefaultDependencies=no
+ConditionPathExists=/etc/fake-modprobe
+After=systemd-sysctl.service
+Before=nix-daemon.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/mount --bind /etc/fake-modprobe /proc/sys/kernel/modprobe
+
+[Install]
+WantedBy=sysinit.target
+EOF
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now fix-modprobe-sysctl.service
+fi
+
+# --- 6. Apply home-manager configuration -------------------------------------
 # build.sh uses paths relative to the repo root and resolves the flake host as
 # "$USER@$(hostname -s)", so the flake must define an entry for this machine.
 
@@ -71,7 +100,7 @@ echo "Building home-manager configuration..."
 cd "$DOTFILES_DIR"
 ./build.sh
 
-# --- 6. AI CLI tools (native installers) --------------------------------------
+# --- 7. AI CLI tools (native installers) --------------------------------------
 # Installed outside Nix so they can self-update; both land in ~/.local/bin,
 # which fish already has on PATH. Put it on this shell's PATH too, so the
 # installers skip writing PATH exports to ~/.bashrc (read-only, home-manager
