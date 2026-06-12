@@ -4,6 +4,11 @@
 
   home.packages = with pkgs; [ gcc python3 ];
 
+  programs.direnv = {
+    enable = true;
+    silent = true;
+  };
+
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.dev.json";
 
