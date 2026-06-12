@@ -24,6 +24,7 @@
         kaxair = "x86_64-linux";
         dev-true = "aarch64-linux";
         dev-chronon = "aarch64-linux";
+        dev-main = "aarch64-linux";
       };
 
       mkHomeConfiguration =
