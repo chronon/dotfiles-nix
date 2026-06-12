@@ -18,8 +18,6 @@
     stateVersion = "23.11";
     file.".hushlogin".text = "";
     packages = with pkgs; [
-      claude-code
-      codex
       curl
       gnused
       go-task

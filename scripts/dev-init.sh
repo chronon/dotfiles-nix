@@ -71,5 +71,28 @@ echo "Building home-manager configuration..."
 cd "$DOTFILES_DIR"
 ./build.sh
 
+# --- 6. AI CLI tools (native installers) --------------------------------------
+# Installed outside Nix so they can self-update; both land in ~/.local/bin,
+# which fish already has on PATH. Put it on this shell's PATH too, so the
+# installers skip writing PATH exports to ~/.bashrc (read-only, home-manager
+# owns it).
+
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v claude >/dev/null 2>&1 && [[ ! -x "$HOME/.local/bin/claude" ]]; then
+  echo "Installing Claude Code..."
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude Code already installed"
+fi
+
+if ! command -v codex >/dev/null 2>&1 && [[ ! -x "$HOME/.local/bin/codex" ]]; then
+  echo "Installing Codex..."
+  curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+else
+  echo "Codex already installed"
+fi
+
 echo
 echo "Dev environment ready. Open a new shell to pick up Nix and the new config."
