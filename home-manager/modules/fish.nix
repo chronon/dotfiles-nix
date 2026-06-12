@@ -68,10 +68,18 @@
       '';
 
       claude.body = ''
-        if test -f .claude/docker-claude
-            ./.claude/docker-claude $argv
+        if type -q __orb_dir; and set -l vmdir (__orb_dir 2>/dev/null)
+            __orb_run $vmdir claude $argv
         else
             command claude $argv
+        end
+      '';
+
+      codex.body = ''
+        if type -q __orb_dir; and set -l vmdir (__orb_dir 2>/dev/null)
+            __orb_run $vmdir codex $argv
+        else
+            command codex $argv
         end
       '';
     };

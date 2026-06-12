@@ -23,4 +23,26 @@
       };
     };
   };
+
+  programs.fish.functions = {
+    __orb_dir.body = ''
+      set -l vmdir "/mnt/mac"(pwd -P)
+      set -l fstype (orb findmnt -no FSTYPE -T $vmdir 2>/dev/null)
+      if test "$fstype" = virtiofs
+          echo $vmdir
+      else
+          echo "orb: $PWD is not mounted in the VM" >&2
+          return 1
+      end
+    '';
+
+    __orb_run.body = ''
+      orb bash -c 'export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"; cd "$0" && exec "$@"' $argv
+    '';
+
+    devshell.body = ''
+      set -l vmdir (__orb_dir); or return 1
+      __orb_run $vmdir fish
+    '';
+  };
 }
