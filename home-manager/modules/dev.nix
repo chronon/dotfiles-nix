@@ -2,12 +2,19 @@
 
 {
 
-  home.packages = with pkgs; [ gcc python3 ];
+  home.packages = with pkgs; [
+    gcc
+    python3
+  ];
 
   programs.direnv = {
     enable = true;
     silent = true;
   };
+
+  home.file.".terminfo/g/ghostty".source = "${pkgs.ghostty.terminfo}/share/terminfo/g/ghostty";
+  home.file.".terminfo/x/xterm-ghostty".source =
+    "${pkgs.ghostty.terminfo}/share/terminfo/x/xterm-ghostty";
 
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.dev.json";
