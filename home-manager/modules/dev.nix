@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     gcc
     python3
+    unzip
   ];
 
   programs.direnv = {

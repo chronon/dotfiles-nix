@@ -9,6 +9,8 @@
     settings = {
       "*" = {
         ForwardAgent = false;
+        StrictHostKeyChecking = "accept-new";
+        HashKnownHosts = true;
       };
     };
   };
