@@ -35,10 +35,6 @@
       fish_config theme choose "catppuccin-mocha"
       set fish_color_valid_path
 
-      if test -e "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
-          . "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
-      end
-
       if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
       end
