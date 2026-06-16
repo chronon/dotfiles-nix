@@ -39,10 +39,6 @@
           . "${config.home.homeDirectory}/dotfiles/secrets/op-cli.fish"
       end
 
-      if test -e "${config.home.homeDirectory}/dotfiles/secrets/env.fish"
-          . "${config.home.homeDirectory}/dotfiles/secrets/env.fish"
-      end
-
       if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
       end

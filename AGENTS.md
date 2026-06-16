@@ -22,7 +22,7 @@ home-manager switch --flake .#$USER@$(hostname -s)
 
 The repository uses 1Password CLI for secret injection:
 
-- Templates are in `fish/env.fish.tpl` and `github-copilot/hosts.json.tpl`
+- Templates are in `github-copilot/hosts.json.tpl`
 - Secrets are injected to `secrets/` directory during build
 - Never commit files in `secrets/` directory
 

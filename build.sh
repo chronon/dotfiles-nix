@@ -6,7 +6,6 @@ readonly HOSTNAME=$(hostname -s)
 readonly SECRETS_DIR="secrets"
 readonly TEMPLATE_FILES=(
   "github-copilot/hosts.json.tpl:secrets/github-copilot_hosts.json"
-  "fish/env.fish.tpl:secrets/env.fish"
 )
 
 if command -v op >/dev/null 2>&1; then
