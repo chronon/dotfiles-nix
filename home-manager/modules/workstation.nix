@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-# Full-workstation extras layered on top of base.nix: GUI apps plus CLI tools
-# that the minimal headless hosts (e.g. the dev-true VM) don't need.
-
 {
 
   imports = [
@@ -12,7 +9,6 @@
   home.packages = with pkgs; [
     _1password-cli
     ansible
-    curlie
     posting
     rclone
   ];
