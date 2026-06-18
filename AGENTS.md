@@ -4,7 +4,7 @@ This file provides guidance to AI assistants when working with code in this repo
 
 ## Overview
 
-This is a personal dotfiles repository using Nix/Home Manager for configuration management across multiple hosts (macOS and Linux). The setup includes configurations for fish shell, neovim (LazyVim), git, Zed editor, Ghostty terminal, and WezTerm.
+This is a personal dotfiles repository using Nix/Home Manager for configuration management across multiple hosts (macOS and Linux). The setup includes configurations for fish shell, neovim (LazyVim), git, Zed editor, and Ghostty terminal.
 
 ## Development Commands
 
@@ -57,14 +57,13 @@ Application configs are symlinked from dotfiles to XDG config directories:
 
 - `nvim/` → `~/.config/nvim`
 - `zed/` → `~/.config/zed`
-- `wezterm/` → `~/.config/wezterm`
 
 ### Key Components
 
 - **Shell**: Fish with pure prompt, fzf integration, and Catppuccin Mocha theme
 - **Editor**: Neovim with LazyVim configuration
 - **Git**: SSH signing enabled, difftastic for diffs, lazygit for TUI
-- **Terminal**: Ghostty (primary), WezTerm (secondary)
+- **Terminal**: Ghostty
 - **Development**: Zed editor
 
 ## Tool-Specific Notes

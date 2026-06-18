@@ -36,10 +36,6 @@
   };
 
   xdg.configFile = {
-    "wezterm" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/wezterm";
-      recursive = true;
-    };
     "zed" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zed";
       recursive = true;

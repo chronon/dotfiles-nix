@@ -58,7 +58,7 @@ a throwaway VM. For a per-session token that isn't persisted, use
 - **Unified theme**: Catppuccin Mocha across all tools
 - **Shell**: Fish with pure prompt, fzf integration
 - **Editor**: Neovim (LazyVim)
-- **Terminal**: Ghostty and WezTerm configurations
+- **Terminal**: Ghostty configuration
 - **Development**: Zed editor with Claude Sonnet 4 and Copilot
 - **Git**: SSH signing, difftastic diffs, lazygit integration
 - **Secrets**: 1Password CLI for secure credential management
