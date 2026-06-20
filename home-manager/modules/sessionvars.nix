@@ -12,6 +12,8 @@
       SSH_AUTH_SOCK = "${config.home.homeDirectory}/.1password/agent.sock";
       PNPM_HOME = "${config.home.homeDirectory}/.local/share/pnpm";
       AWS_USE_OP = 1;
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1;
+      DO_NOT_TRACK = 1;
     };
     file = { };
   };
