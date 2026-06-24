@@ -40,7 +40,7 @@
       orb bash -c 'export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH" DIRENV_LOG_FORMAT=; cd "$0" || exit 1; if command -v direnv >/dev/null; then exec direnv exec . "$@"; else exec "$@"; fi' $argv
     '';
 
-    devshell.body = ''
+    dvs.body = ''
       set -l vmdir (__orb_dir); or return 1
       __orb_run $vmdir fish
     '';
