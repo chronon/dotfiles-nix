@@ -42,7 +42,11 @@
 
     dvs.body = ''
       set -l vmdir (__orb_dir); or return 1
-      __orb_run $vmdir fish
+      if test (count $argv) -gt 0
+          __orb_run $vmdir $argv
+      else
+          __orb_run $vmdir fish
+      end
     '';
   };
 }
