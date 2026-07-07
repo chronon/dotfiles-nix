@@ -22,25 +22,6 @@ return {
   },
 
   {
-    "folke/edgy.nvim",
-    opts = function(_, opts)
-      opts.bottom = {}
-      table.insert(opts.bottom, {
-        ft = "copilot-chat",
-        title = "Copilot Chat",
-        size = { height = 30 },
-      })
-    end,
-  },
-
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    opts = {
-      model = "claude-sonnet-4",
-    },
-  },
-
-  {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
