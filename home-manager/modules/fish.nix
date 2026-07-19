@@ -74,10 +74,6 @@
             command codex $argv
         end
       '';
-
-      coolify.body = ''
-        command coolify --token (op read 'op://4pswfrz4cyx6mbnbbh5i2m3h4y/s5lw4576qr255iqxkmwxgtyrxa/add more/lpjtnsk3y3zvn5xfnaypaamihu') $argv
-      '';
     };
   };
 
