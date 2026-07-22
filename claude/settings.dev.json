@@ -1,8 +1,17 @@
-{
-  "permissions": {
-    "defaultMode": "bypassPermissions"
-  },
-  "voiceEnabled": false,
-  "skipDangerousModePermissionPrompt": true,
-  "disableClaudeAiConnectors": true
-}
+  {
+    "permissions": {
+      "defaultMode": "bypassPermissions"
+    },
+    "disableClaudeAiConnectors": true,
+    "enabledPlugins": {},
+    "extraKnownMarketplaces": {
+      "cloudflare": {
+        "source": {
+          "source": "github",
+          "repo": "cloudflare/skills"
+        }
+      }
+    },
+    "skipDangerousModePermissionPrompt": true,
+    "voiceEnabled": false
+  }
