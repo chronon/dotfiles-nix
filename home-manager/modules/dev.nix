@@ -6,6 +6,7 @@
     gcc
     python3
     unzip
+    pi-coding-agent
   ];
 
   programs.direnv = {
