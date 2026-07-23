@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  primaryEmail = "gregory@chronon.com";
-  secondaryEmail = "gregory@loadsys.com";
+  # Committer emails live in 1Password and are rendered into
+  # secrets/ at build time (see build.sh); they are symlinked in below
+  # so real addresses stay out of this public repo.
+  dotfiles = "${config.home.homeDirectory}/dotfiles";
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBGWsRBSOvlCJsfypQvMprX65012c91pSs9Bu8TYEyAh";
 in
 {
@@ -16,8 +18,9 @@ in
     settings = {
       user = {
         name = "Gregory Gaskill";
-        email = primaryEmail;
       };
+      # user.email is injected from 1Password into secrets/git_identity.conf.
+      include.path = "${dotfiles}/secrets/git_identity.conf";
       core = {
         editor = "nvim";
         quotePath = false;
@@ -65,7 +68,7 @@ in
   xdg = {
     configFile = {
       "git/allowed_signers" = {
-        text = "${primaryEmail},${secondaryEmail} ${sshKey}";
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/secrets/git_allowed_signers";
       };
     };
   };
