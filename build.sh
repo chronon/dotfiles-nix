@@ -10,12 +10,18 @@ readonly TEMPLATE_FILES=(
   "git/identity.conf.tpl:secrets/git_identity.conf"
 )
 
+inject() {
+  local template_file output_file
+  IFS=":" read -r template_file output_file <<<"$1"
+  op inject -f -i "$template_file" -o "$output_file"
+}
+
 if command -v op >/dev/null 2>&1; then
   echo "Injecting secrets..."
   mkdir -p "$SECRETS_DIR"
-  for pair in "${TEMPLATE_FILES[@]}"; do
-    IFS=":" read -r template_file output_file <<<"$pair"
-    op inject -f -i "$template_file" -o "$output_file" &
+  inject "${TEMPLATE_FILES[0]}"
+  for pair in "${TEMPLATE_FILES[@]:1}"; do
+    inject "$pair" &
   done
   wait
 else
