@@ -58,22 +58,6 @@
             --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
             --bind "enter:become($EDITOR +{2} {1})"
       '';
-
-      claude.body = ''
-        if type -q __orb_dir; and set -l vmdir (__orb_dir 2>/dev/null)
-            __orb_run $vmdir claude $argv
-        else
-            command claude $argv
-        end
-      '';
-
-      codex.body = ''
-        if type -q __orb_dir; and set -l vmdir (__orb_dir 2>/dev/null)
-            __orb_run $vmdir codex $argv
-        else
-            command codex $argv
-        end
-      '';
     };
   };
 
