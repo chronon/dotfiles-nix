@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # Full dev environment bootstrap for a fresh Linux machine.
-# Installs Nix, clones this dotfiles repo, sets up rootless Docker, and applies
-# the home-manager configuration.
+# Installs Nix, seeds this dotfiles repo (from the mounted Mac checkout when
+# available, else GitHub), sets up rootless Docker, and applies the
+# home-manager configuration.
 #
 # Run as your normal (non-root) user from a real login shell, safe to re-run.
 
@@ -12,6 +13,7 @@ readonly REPO_URL="https://github.com/chronon/dotfiles-nix.git"
 readonly DOTFILES_DIR="$HOME/dotfiles"
 # Branch/tag to check out; override to test a PR, e.g. DOTFILES_REF=my-branch
 readonly DOTFILES_REF="${DOTFILES_REF:-main}"
+readonly MAC_DOTFILES="${MAC_DOTFILES-/mnt/mac/Users/$USER/dotfiles}"
 readonly NIX_INSTALLER_URL="https://install.determinate.systems/nix"
 readonly NIX_PROFILE="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 
@@ -46,13 +48,45 @@ if ! command -v git >/dev/null 2>&1; then
   sudo apt-get install -y git
 fi
 
-# --- 3. Clone (or update) the dotfiles repo ----------------------------------
+# --- 3. Seed (or update) the dotfiles repo -----------------------------------
+# Prefer the Mac checkout when it's mounted, falling back to GitHub. Only
+# committed state crosses the mount, so commit on the Mac first to pick changes
+# up here. origin stays pointed at GitHub either way.
+
+# Is the host checkout mounted and usable as a git remote?
+have_mount_repo() {
+  [[ -n "$MAC_DOTFILES" && -d "$MAC_DOTFILES/.git" ]]
+}
+
+# Does the repo at $1 have $DOTFILES_REF? (A PR branch may exist only on the
+# remote, in which case seeding can't work and we clone from GitHub instead.)
+mount_has_ref() {
+  git -C "$1" rev-parse --verify --quiet "refs/heads/$DOTFILES_REF" >/dev/null ||
+    git -C "$1" rev-parse --verify --quiet "refs/tags/$DOTFILES_REF" >/dev/null
+}
 
 if [[ -d "$DOTFILES_DIR/.git" ]]; then
-  echo "Updating existing $DOTFILES_DIR ($DOTFILES_REF)..."
-  git -C "$DOTFILES_DIR" fetch origin
-  git -C "$DOTFILES_DIR" checkout "$DOTFILES_REF"
-  git -C "$DOTFILES_DIR" pull --ff-only
+  if have_mount_repo; then
+    fetch_from="$MAC_DOTFILES"
+  else
+    fetch_from="origin"
+  fi
+  echo "Updating existing $DOTFILES_DIR ($DOTFILES_REF) from $fetch_from..."
+  # A private repo with no credentials on the box fails here; that shouldn't
+  # abort the run, since the checkout on disk is still usable.
+  if git -C "$DOTFILES_DIR" fetch "$fetch_from" "$DOTFILES_REF"; then
+    git -C "$DOTFILES_DIR" checkout "$DOTFILES_REF"
+    git -C "$DOTFILES_DIR" merge --ff-only FETCH_HEAD
+  else
+    echo "Warning: fetch from $fetch_from failed; using the checkout already on disk." >&2
+    git -C "$DOTFILES_DIR" checkout "$DOTFILES_REF"
+  fi
+elif have_mount_repo && mount_has_ref "$MAC_DOTFILES"; then
+  echo "Seeding from host checkout $MAC_DOTFILES ($DOTFILES_REF) -> $DOTFILES_DIR..."
+  # --no-hardlinks: keep the VM's object store independent of the Mac's, so it
+  # survives the mount going away or a gc on the host.
+  git clone --no-hardlinks --branch "$DOTFILES_REF" "$MAC_DOTFILES" "$DOTFILES_DIR"
+  git -C "$DOTFILES_DIR" remote set-url origin "$REPO_URL"
 else
   echo "Cloning $REPO_URL ($DOTFILES_REF) -> $DOTFILES_DIR..."
   git clone --branch "$DOTFILES_REF" "$REPO_URL" "$DOTFILES_DIR"

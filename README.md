@@ -38,6 +38,29 @@ re-run. To bootstrap from a branch instead of `main` (e.g. to test a PR), set
 curl -fsSL https://raw.githubusercontent.com/chronon/dotfiles-nix/main/scripts/dev-init.sh | DOTFILES_REF=my-branch bash
 ```
 
+### Seeding from the Mac checkout
+
+On an OrbStack guest the Mac checkout is visible over virtiofs, so `dev-init.sh`
+seeds `~/dotfiles` from `/mnt/mac/Users/$USER/dotfiles` instead of cloning from
+GitHub, and later re-runs fetch from there too. That needs no credentials and no
+network — which also means the whole bootstrap works with a private repo, if you
+run the script from the mount rather than piping it from `raw.githubusercontent`:
+
+```bash
+/mnt/mac/Users/$USER/dotfiles/scripts/dev-init.sh
+```
+
+Only committed state crosses the mount, so commit on the Mac before re-running.
+`origin` still points at GitHub, so ordinary `git pull`/`push` work as usual.
+
+GitHub is used automatically when the mount isn't there, or when `DOTFILES_REF`
+names a branch that only exists on the remote. To skip the mount entirely, set
+`MAC_DOTFILES` empty:
+
+```bash
+MAC_DOTFILES= ./scripts/dev-init.sh
+```
+
 ### GitHub auth (dev VMs only)
 
 There's no 1Password CLI on dev VMs, and `gh`'s config dir is a read-only

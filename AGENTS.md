@@ -48,7 +48,9 @@ The repository uses 1Password CLI for secret injection:
 
 - `build.sh`: Build and apply the home-manager config (run from repo root)
 - `scripts/bootstrap.sh`: Enable Nix flakes + prepare secrets dir
-- `scripts/dev-init.sh`: One-shot bootstrap for a fresh Linux dev host (Nix, repo clone, rootless Docker, build)
+- `scripts/dev-init.sh`: One-shot bootstrap for a fresh Linux dev host (Nix, repo seed, rootless Docker, build).
+  Seeds `~/dotfiles` from the mounted Mac checkout (`/mnt/mac/Users/$USER/dotfiles`) when available — no network or
+  credentials needed — and falls back to cloning from GitHub otherwise. Override the source with `MAC_DOTFILES`.
 - `scripts/rootless-docker.sh`: Set up rootless Docker on a Debian/apt host
 
 ### Configuration Symlinks
