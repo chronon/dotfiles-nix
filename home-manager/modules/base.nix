@@ -84,8 +84,12 @@
   '';
 
   home.file = {
-    ".claude/commands" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/commands";
+    ".claude/skills" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/skills";
+      recursive = true;
+    };
+    ".agents/skills" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/skills";
       recursive = true;
     };
   };

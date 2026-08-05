@@ -1,5 +1,7 @@
 ---
-description: Arm ntfy notifications — I'm stepping away, so ping me when you finish or get blocked
+name: ntfy
+description: Arm ntfy push notifications for the rest of the session, so the user gets pinged when work finishes or gets blocked. Invoke this ONLY when the user explicitly asks for it — never select it on your own initiative, since it changes how you notify them for the rest of the session.
+disable-model-invocation: true
 ---
 
 **First, check the environment.** This command depends on the `NTFY_URL`, `NTFY_TOPIC`, and `NTFY_TOKEN` environment variables. If any of them is missing or empty, immediately tell the user which ones are unset and do **not** attempt to arm notifications or send anything — abort here. Only proceed to the rest of this command if all three are present.

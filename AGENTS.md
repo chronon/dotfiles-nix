@@ -59,6 +59,14 @@ Application configs are symlinked from dotfiles to XDG config directories:
 
 - `nvim/` → `~/.config/nvim`
 - `zed/` → `~/.config/zed`
+- `skills/` → `~/.claude/skills` and `~/.agents/skills`
+
+### Agent Skills
+
+`skills/` holds [Agent Skills](https://agentskills.io) as `skills/<name>/SKILL.md`, symlinked to
+every harness that reads the standard (Claude Code, Codex). Keep them portable: `name` and
+`description` are the only frontmatter the standard requires, and `$ARGUMENTS` substitution is a
+Claude Code extension — describe expected input in prose so skills still work without it.
 
 ### Key Components
 
