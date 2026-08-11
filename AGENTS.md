@@ -60,6 +60,7 @@ Application configs are symlinked from dotfiles to XDG config directories:
 - `nvim/` → `~/.config/nvim`
 - `zed/` → `~/.config/zed`
 - `skills/` → `~/.claude/skills` and `~/.agents/skills`
+- `agents/global.md` → `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.agents/AGENTS.md`
 
 ### Agent Skills
 

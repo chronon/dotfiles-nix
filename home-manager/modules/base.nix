@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+let
+  dotfiles = "${config.home.homeDirectory}/dotfiles";
+
+  globalInstructions = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/global.md";
+  skills = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/skills";
+in
 {
 
   imports = [
@@ -84,12 +90,15 @@
   '';
 
   home.file = {
+    ".claude/CLAUDE.md".source = globalInstructions;
+    ".codex/AGENTS.md".source = globalInstructions;
+    ".agents/AGENTS.md".source = globalInstructions;
     ".claude/skills" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/skills";
+      source = skills;
       recursive = true;
     };
     ".agents/skills" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/skills";
+      source = skills;
       recursive = true;
     };
   };
