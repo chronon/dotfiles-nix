@@ -6,7 +6,6 @@
     "permissions": {
       "defaultMode": "bypassPermissions"
     },
-    "disableClaudeAiConnectors": true,
     "enabledPlugins": {},
     "extraKnownMarketplaces": {
       "cloudflare": {
