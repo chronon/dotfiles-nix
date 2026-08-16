@@ -1,5 +1,17 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
+let
+  orbTools = [
+    "claude"
+    "codex"
+    "pi"
+  ];
+in
 {
 
   imports = [
@@ -24,47 +36,43 @@
     };
   };
 
-  programs.fish.functions = {
-    __orb_dir.body = ''
-      set -l vmdir "/mnt/mac"(pwd -P)
-      set -l fstype (orb findmnt -no FSTYPE -T $vmdir 2>/dev/null)
-      if test "$fstype" = virtiofs
-          echo $vmdir
-      else
-          echo "orb: $PWD is not mounted in the VM" >&2
-          return 1
-      end
-    '';
+  programs.fish.functions =
+    lib.genAttrs orbTools (tool: {
+      body = "__orb_tool ${tool} $argv";
+    })
+    // {
+      __orb_dir.body = ''
+        set -l vmdir "/mnt/mac"(pwd -P)
+        set -l fstype (orb findmnt -no FSTYPE -T $vmdir 2>/dev/null)
+        if test "$fstype" = virtiofs
+            echo $vmdir
+        else
+            echo "orb: $PWD is not mounted in the VM" >&2
+            return 1
+        end
+      '';
 
-    __orb_run.body = ''
-      orb bash -c 'export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH" DIRENV_LOG_FORMAT=; cd "$0" || exit 1; if command -v direnv >/dev/null; then exec direnv exec . "$@"; else exec "$@"; fi' $argv
-    '';
+      __orb_run.body = ''
+        orb bash -c 'export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH" DIRENV_LOG_FORMAT=; cd "$0" || exit 1; if command -v direnv >/dev/null; then exec direnv exec . "$@"; else exec "$@"; fi' $argv
+      '';
 
-    __orb_tool.body = ''
-      set -l tool $argv[1]
-      set -l vmdir (__orb_dir 2>/dev/null)
-      if test -z "$vmdir"
-          set vmdir "/home/${config.home.username}"
-          echo "orb: $PWD is not mounted in the VM, running $tool in $vmdir" >&2
-      end
-      __orb_run $vmdir $tool $argv[2..]
-    '';
+      __orb_tool.body = ''
+        set -l tool $argv[1]
+        set -l vmdir (__orb_dir 2>/dev/null)
+        if test -z "$vmdir"
+            set vmdir "/home/${config.home.username}"
+            echo "orb: $PWD is not mounted in the VM, running $tool in $vmdir" >&2
+        end
+        __orb_run $vmdir $tool $argv[2..]
+      '';
 
-    claude.body = ''
-      __orb_tool claude $argv
-    '';
-
-    codex.body = ''
-      __orb_tool codex $argv
-    '';
-
-    dvs.body = ''
-      set -l vmdir (__orb_dir); or return 1
-      if test (count $argv) -gt 0
-          __orb_run $vmdir $argv
-      else
-          __orb_run $vmdir fish
-      end
-    '';
-  };
+      dvs.body = ''
+        set -l vmdir (__orb_dir); or return 1
+        if test (count $argv) -gt 0
+            __orb_run $vmdir $argv
+        else
+            __orb_run $vmdir fish
+        end
+      '';
+    };
 }
