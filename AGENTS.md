@@ -22,8 +22,8 @@ home-manager switch --flake .#$USER@$(hostname -s)
 
 The repository uses 1Password CLI for secret injection:
 
-- Templates are in `github-copilot/hosts.json.tpl`
-- Secrets are injected to `secrets/` directory during build
+- Templates: `github-copilot/hosts.json.tpl`, `git/allowed_signers.tpl`, `git/identity.conf.tpl`
+- Secrets are injected to `secrets/` directory during build (template → output mapping is in `build.sh`)
 - Never commit files in `secrets/` directory
 
 ## Architecture

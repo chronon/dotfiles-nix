@@ -5,7 +5,6 @@
   home = {
     sessionVariables = {
       EDITOR = "nvim";
-      GPG_TTY = "(tty)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
       MANROFFOPT = "-c";
       PAGER = "bat --style plain";
@@ -15,7 +14,6 @@
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1;
       DO_NOT_TRACK = 1;
     };
-    file = { };
   };
 
 }

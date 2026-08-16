@@ -33,7 +33,7 @@ in
       pnpm
       shellcheck
       wget
-      (pkgs.writeShellScriptBin "gsed" "exec ${pkgs.gnused}/bin/sed \"$@\"")
+      (writeShellScriptBin "gsed" "exec ${gnused}/bin/sed \"$@\"")
     ];
   };
 
