@@ -22,6 +22,7 @@ in
   home = {
     homeDirectory = "/Users/${config.home.username}";
     packages = with pkgs; [
+      _1password-cli
       cloudflared
       unixtools.watch
     ];
