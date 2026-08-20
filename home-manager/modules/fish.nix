@@ -2,7 +2,8 @@
 
 {
 
-  xdg.configFile."fish/themes/catppuccin-mocha.theme".source = ../../fish/themes/catppuccin-mocha.theme;
+  xdg.configFile."fish/themes/catppuccin-mocha.theme".source =
+    ../../fish/themes/catppuccin-mocha.theme;
 
   programs.fish = {
     enable = true;

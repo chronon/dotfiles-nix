@@ -67,6 +67,10 @@ in
         __orb_run $vmdir $tool $argv[2..]
       '';
 
+      claude-rc.body = ''
+        __orb_tool env -u CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC claude rc $argv
+      '';
+
       dvs.body = ''
         set -l vmdir (__orb_dir); or return 1
         if test (count $argv) -gt 0
