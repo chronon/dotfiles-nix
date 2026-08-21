@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of chronon";
+  description = "Home Manager configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,19 +16,35 @@
       ...
     }:
     let
-      username = "chronon";
-
-      systems = {
-        kanzi = "aarch64-darwin";
-        junaluska = "x86_64-darwin";
-        kaxair = "x86_64-linux";
-        dev-true = "aarch64-linux";
-        dev-chronon = "aarch64-linux";
-        dev-main = "aarch64-linux";
+      hosts = {
+        kanzi = {
+          system = "aarch64-darwin";
+          user = "chronon";
+        };
+        junaluska = {
+          system = "x86_64-darwin";
+          user = "chronon";
+        };
+        kaxair = {
+          system = "x86_64-linux";
+          user = "chronon";
+        };
+        dev-true = {
+          system = "aarch64-linux";
+          user = "chronon";
+        };
+        dev-chronon = {
+          system = "aarch64-linux";
+          user = "chronon";
+        };
+        dev-main = {
+          system = "aarch64-linux";
+          user = "chronon";
+        };
       };
 
       mkHomeConfiguration =
-        hostname: system:
+        hostname: host:
         let
           hostModule =
             if nixpkgs.lib.hasPrefix "dev-" hostname then
@@ -38,18 +54,19 @@
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit system;
+            inherit (host) system;
             config.allowUnfree = true;
           };
           modules = [
             hostModule
+            { home.username = host.user; }
           ];
         };
     in
     {
       homeConfigurations = nixpkgs.lib.mapAttrs' (
-        hostname: system:
-        nixpkgs.lib.nameValuePair "${username}@${hostname}" (mkHomeConfiguration hostname system)
-      ) systems;
+        hostname: host:
+        nixpkgs.lib.nameValuePair "${host.user}@${hostname}" (mkHomeConfiguration hostname host)
+      ) hosts;
     };
 }

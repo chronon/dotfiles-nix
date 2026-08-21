@@ -20,7 +20,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   home = {
-    username = "chronon";
     stateVersion = "23.11";
     file.".hushlogin".text = "";
     packages = with pkgs; [
