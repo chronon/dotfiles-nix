@@ -36,7 +36,6 @@ The repository uses 1Password CLI for secret injection:
   `dev-*` are routed to the shared `hosts/dev` module; named hosts use their own dir.
 - `home-manager/hosts/`: Host-specific configurations
   - `kanzi/`: ARM64 macOS host
-  - `junaluska/`: x86_64 macOS host
   - `kaxair/`: x86_64 Linux host
   - `dev/`: Shared config for all `dev-*` hosts (headless aarch64-linux VMs)
 - `home-manager/modules/`: Shared configuration modules
@@ -108,7 +107,7 @@ Claude Code extension — describe expected input in prose so skills still work 
 
 ## Host-Specific Considerations
 
-### macOS Hosts (kanzi, junaluska)
+### macOS Host (kanzi)
 
 - 1Password CLI integration with agent socket
 - Homebrew path additions

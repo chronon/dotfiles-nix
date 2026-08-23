@@ -89,7 +89,6 @@ a throwaway VM. For a per-session token that isn't persisted, use
 ## Supported Hosts
 
 - **kanzi**: ARM64 macOS (Apple Silicon)
-- **junaluska**: x86_64 macOS (Intel)
 - **kaxair**: x86_64 Linux
 - **dev-\***: Headless aarch64-linux dev VMs (shared config)
 
