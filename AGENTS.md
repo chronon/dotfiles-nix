@@ -31,8 +31,8 @@ The repository uses 1Password CLI for secret injection:
 ### Nix Flake Structure
 
 - `flake.nix`: Main entry point defining host configurations. Each machine gets one
-  entry in `hosts` (`{ system; user; }`), which sets `home.username` and names the
-  config `user@hostname`. Hostnames matching
+  entry in `hosts` (hostname → system); a single `username` binding sets
+  `home.username` and names each config `username@hostname`. Hostnames matching
   `dev-*` are routed to the shared `hosts/dev` module; named hosts use their own dir.
 - `home-manager/hosts/`: Host-specific configurations
   - `kanzi/`: ARM64 macOS host

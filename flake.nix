@@ -16,35 +16,19 @@
       ...
     }:
     let
+      username = "chronon";
+
       hosts = {
-        kanzi = {
-          system = "aarch64-darwin";
-          user = "chronon";
-        };
-        junaluska = {
-          system = "x86_64-darwin";
-          user = "chronon";
-        };
-        kaxair = {
-          system = "x86_64-linux";
-          user = "chronon";
-        };
-        dev-true = {
-          system = "aarch64-linux";
-          user = "chronon";
-        };
-        dev-chronon = {
-          system = "aarch64-linux";
-          user = "chronon";
-        };
-        dev-main = {
-          system = "aarch64-linux";
-          user = "chronon";
-        };
+        kanzi = "aarch64-darwin";
+        junaluska = "x86_64-darwin";
+        kaxair = "x86_64-linux";
+        dev-true = "aarch64-linux";
+        dev-chronon = "aarch64-linux";
+        dev-main = "aarch64-linux";
       };
 
       mkHomeConfiguration =
-        hostname: host:
+        hostname: system:
         let
           hostModule =
             if nixpkgs.lib.hasPrefix "dev-" hostname then
@@ -54,19 +38,19 @@
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit (host) system;
+            inherit system;
             config.allowUnfree = true;
           };
           modules = [
             hostModule
-            { home.username = host.user; }
+            { home.username = username; }
           ];
         };
     in
     {
       homeConfigurations = nixpkgs.lib.mapAttrs' (
-        hostname: host:
-        nixpkgs.lib.nameValuePair "${host.user}@${hostname}" (mkHomeConfiguration hostname host)
+        hostname: system:
+        nixpkgs.lib.nameValuePair "${username}@${hostname}" (mkHomeConfiguration hostname system)
       ) hosts;
     };
 }
