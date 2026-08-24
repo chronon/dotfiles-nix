@@ -10,6 +10,7 @@ let
     "claude"
     "codex"
     "omp"
+    "opencode"
     "pi"
   ];
 in

@@ -6,7 +6,10 @@
     gcc
     python3
     unzip
+    claude-code
     pi-coding-agent
+    opencode
+    codex
   ];
 
   programs.direnv = {
