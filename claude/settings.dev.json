@@ -1,24 +1,25 @@
-  {
-    "$schema": "https://json.schemastore.org/claude-code-settings.json",
-    "env": {
-      "DO_NOT_TRACK": "0",
-      "DISABLE_ERROR_REPORTING": "1",
-      "DISABLE_AUTOUPDATER": "1",
-      "DISABLE_FEEDBACK_COMMAND": "1",
-      "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
-    },
-    "permissions": {
-      "defaultMode": "bypassPermissions"
-    },
-    "enabledPlugins": {},
-    "extraKnownMarketplaces": {
-      "cloudflare": {
-        "source": {
-          "source": "github",
-          "repo": "cloudflare/skills"
-        }
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "DO_NOT_TRACK": "0",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "true"
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
       }
-    },
-    "skipDangerousModePermissionPrompt": true,
-    "voiceEnabled": false
-  }
+    }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": false
+}
