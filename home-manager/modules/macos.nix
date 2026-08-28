@@ -27,6 +27,9 @@ in
       _1password-cli
       cloudflared
       unixtools.watch
+      (writeShellScriptBin "tailscale" ''
+        exec /Applications/Tailscale.app/Contents/MacOS/Tailscale "$@"
+      '')
     ];
 
     file = {
