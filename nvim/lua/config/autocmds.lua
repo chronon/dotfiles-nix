@@ -3,6 +3,8 @@
 
 vim.api.nvim_del_augroup_by_name("lazyvim_highlight_yank")
 
+vim.filetype.add({ extension = { hujson = "jsonc" } })
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
