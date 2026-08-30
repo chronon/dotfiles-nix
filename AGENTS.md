@@ -21,7 +21,9 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
 - `flake.nix` — one `hosts` entry per machine (hostname → system); a single `username` binding sets
   `home.username` and names each config `username@hostname`. Hostnames matching `dev-*` route to the
   shared `hosts/dev` module, so a new dev box needs only that one line. Named hosts use their own
-  `home-manager/hosts/<name>/` directory.
+  `home-manager/hosts/<name>/` directory. Overlays from the `sadjow/claude-code-nix` and
+  `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and `pkgs.codex` with hourly-updated
+  builds of the upstream releases (nixpkgs lags); bump with `nix flake update claude-code codex`.
 - `home-manager/modules/`
   - `base.nix` — imported by every host
   - `workstation.nix` — GUI extras layered on `base` (kanzi, kaxair)
