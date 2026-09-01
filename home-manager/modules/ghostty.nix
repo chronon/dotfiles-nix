@@ -29,6 +29,7 @@
         "ctrl+shift+right=next_tab"
         "shift+enter=text:\\n"
         "global:cmd+backquote=toggle_quick_terminal"
+        "ctrl+shift+e=csi:1;5F"
       ];
 
       mouse-scroll-multiplier = 0.3;
