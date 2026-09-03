@@ -8,6 +8,7 @@ Manager across macOS and Linux hosts.
 ```bash
 ./build.sh                                          # inject secrets, build, apply
 home-manager switch --flake .#$USER@$(hostname -s)  # apply without secret injection
+./scripts/update.sh                                 # daily refresh: update, build, commit, push
 ```
 
 ## Secrets
@@ -32,6 +33,12 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
+- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then commit
+  and push `flake.lock` and `nvim/lazy-lock.json`. Aborts on any failure; commits with a pathspec so
+  unrelated working-tree changes are never included, and skips the commit when neither lockfile
+  moved. Shows a diffstat and prompts before committing (default no) so a bad update can be
+  discarded after the build; `-y` skips the prompt, which is also required when stdin isn't a tty.
+  Takes an optional commit message argument (default `Update lockfiles`).
 - `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Seeds `~/dotfiles` from the
   Mac checkout at `/mnt/mac/Users/$USER/dotfiles` when present (no network or credentials, so it
   works with a private repo), else clones from GitHub. Override with `MAC_DOTFILES`.

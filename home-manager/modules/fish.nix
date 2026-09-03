@@ -23,6 +23,7 @@
       dcdown = "docker compose down";
       dcex = "docker compose exec";
       dcup = "docker compose up -d";
+      dotup = "$HOME/dotfiles/scripts/update.sh";
       dudirs = "du -d 1 -h";
       kds = "find\ .\ -name\ .DS_Store\ -print\ -exec\ rm\ -f\ \{\}\ \\\;";
       mcore = "cd $HOME/machines/core/";
