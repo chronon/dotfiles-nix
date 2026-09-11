@@ -7,6 +7,7 @@
     python3
     unzip
     claude-code
+    herdr
     pi-coding-agent
     opencode
     codex

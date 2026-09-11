@@ -9,6 +9,7 @@ let
   orbTools = [
     "claude"
     "codex"
+    "herdr"
     "omp"
     "opencode"
     "pi"
