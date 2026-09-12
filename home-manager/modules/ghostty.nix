@@ -39,7 +39,7 @@
       window-width = 150;
 
       quick-terminal-position = "left";
-      quick-terminal-size = "45%";
+      quick-terminal-size = "50%";
       quick-terminal-autohide = false;
       quick-terminal-animation-duration = 0;
     };
