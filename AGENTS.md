@@ -33,10 +33,10 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
-- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then commit
-  and push `flake.lock` and `nvim/lazy-lock.json`. Aborts on any failure; commits with a pathspec so
-  unrelated working-tree changes are never included, and skips the commit when neither lockfile
-  moved. Shows a diffstat and prompts before committing (default no) so a bad update can be
+- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, regenerate
+  `skills/herdr/SKILL.md` from the newly built `herdr` (skipped on hosts without it), then commit and
+  push those three paths. Aborts on any failure; commits with a pathspec so unrelated working-tree
+  changes are never included, and skips the commit when none of them moved. Shows a diffstat and prompts before committing (default no) so a bad update can be
   discarded after the build; `-y` skips the prompt, which is also required when stdin isn't a tty.
   Takes an optional commit message argument (default `Update lockfiles`).
 - `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Seeds `~/dotfiles` from the
@@ -59,6 +59,10 @@ These are out-of-store symlinks, so edits take effect without a rebuild.
 harness that reads the standard. Keep them portable: `name` and `description` are the only
 frontmatter the standard requires, and `$ARGUMENTS` substitution is a Claude Code extension —
 describe expected input in prose so a skill still works without it.
+
+`skills/herdr/` is generated, not hand-written: the herdr package ships the skill at
+`share/herdr/skills/herdr/SKILL.md` and `herdr --skill` prints it, so `update.sh` regenerates it
+after each build to keep it matched to the installed version. Edit upstream, not here.
 
 ## Orb shims (macOS)
 

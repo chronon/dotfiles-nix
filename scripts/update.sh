@@ -20,6 +20,8 @@ done
 readonly ASSUME_YES MESSAGE
 readonly REPO_ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 readonly LOCKFILES=(flake.lock nvim/lazy-lock.json)
+readonly GENERATED=(skills/herdr/SKILL.md)
+readonly TRACKED=("${LOCKFILES[@]}" "${GENERATED[@]}")
 
 confirm() {
   if [[ $ASSUME_YES == true ]]; then
@@ -50,19 +52,29 @@ echo "==> Building and activating"
 echo "==> Syncing neovim plugins"
 nvim --headless "+Lazy! sync" +qa
 
-if git diff --quiet HEAD -- "${LOCKFILES[@]}"; then
-  echo "No lockfile changes, nothing to commit"
+echo "==> Regenerating herdr skill"
+if command -v herdr >/dev/null; then
+  tmp=$(mktemp)
+  herdr --skill >"$tmp"
+  install -m 644 "$tmp" skills/herdr/SKILL.md
+  rm -f "$tmp"
+else
+  echo "herdr not installed on this host, leaving skills/herdr/SKILL.md unchanged"
+fi
+
+if git diff --quiet HEAD -- "${TRACKED[@]}"; then
+  echo "No lockfile or generated file changes, nothing to commit"
   exit 0
 fi
 
-git --no-pager diff --stat HEAD -- "${LOCKFILES[@]}"
+git --no-pager diff --stat HEAD -- "${TRACKED[@]}"
 
 if ! confirm; then
-  echo "Skipped; lockfile changes left in the working tree"
+  echo "Skipped; changes left in the working tree"
   exit 0
 fi
 
-git commit -m "$MESSAGE" -- "${LOCKFILES[@]}"
+git commit -m "$MESSAGE" -- "${TRACKED[@]}"
 git push
 
 if [[ -n $(git status --porcelain --untracked-files=no) ]]; then
