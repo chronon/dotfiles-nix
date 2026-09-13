@@ -23,8 +23,6 @@
       split-divider-color = "#a6e3a1";
 
       keybind = [
-        "ctrl+a>-=new_split:down"
-        "ctrl+a>\\=new_split:right"
         "ctrl+shift+left=previous_tab"
         "ctrl+shift+right=next_tab"
         "shift+enter=text:\\n"
