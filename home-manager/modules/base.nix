@@ -45,40 +45,6 @@ in
     ripgrep.enable = true;
   };
 
-  programs.tmux = {
-    enable = true;
-    shell = "${pkgs.fish}/bin/fish";
-    keyMode = "vi";
-    baseIndex = 1;
-    mouse = true;
-    escapeTime = 0;
-    focusEvents = true;
-    historyLimit = 100000;
-    terminal = "tmux-256color";
-    plugins = with pkgs; [
-      {
-        plugin = tmuxPlugins.catppuccin;
-        extraConfig = ''
-          set -g @catppuccin_flavor 'mocha'
-          set -g @catppuccin_window_status_style 'rounded'
-        '';
-      }
-    ];
-    extraConfig = ''
-      set -ag terminal-overrides ",xterm-256color:RGB"
-
-      set -g set-clipboard on
-      bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
-
-      # Catppuccin status line (sourced after the plugin so modules render)
-      set -g status-left-length 100
-      set -g status-right-length 100
-      set -g status-left ""
-      set -g status-right "#{E:@catppuccin_status_application}"
-      set -ag status-right "#{E:@catppuccin_status_session}"
-    '';
-  };
-
   xdg.enable = true;
 
   xdg.configFile."pnpm/rc".text = ''

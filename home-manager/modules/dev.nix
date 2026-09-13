@@ -2,12 +2,15 @@
 
 {
 
+  imports = [
+    ./herdr.nix
+  ];
+
   home.packages = with pkgs; [
     gcc
     python3
     unzip
     claude-code
-    herdr
     pi-coding-agent
     opencode
     codex
