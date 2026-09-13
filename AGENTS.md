@@ -41,7 +41,9 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
   Takes an optional commit message argument (default `Update lockfiles`).
 - `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Seeds `~/dotfiles` from the
   Mac checkout at `/mnt/mac/Users/$USER/dotfiles` when present (no network or credentials, so it
-  works with a private repo), else clones from GitHub. Override with `MAC_DOTFILES`.
+  works with a private repo), else clones from GitHub. Override with `MAC_DOTFILES`. Installs
+  `codex/config.dev.toml` as the system defaults at `/etc/codex/config.toml`; user and project state
+  remain in the untracked `~/.codex/config.toml`.
 - `scripts/rootless-docker.sh` — rootless Docker on a Debian/apt host
 
 ## Symlinks

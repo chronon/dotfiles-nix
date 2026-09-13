@@ -16,6 +16,8 @@ readonly DOTFILES_REF="${DOTFILES_REF:-main}"
 readonly MAC_DOTFILES="${MAC_DOTFILES-/mnt/mac/Users/$USER/dotfiles}"
 readonly NIX_INSTALLER_URL="https://install.determinate.systems/nix"
 readonly NIX_PROFILE="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+readonly CODEX_CONFIG_SOURCE="$DOTFILES_DIR/codex/config.dev.toml"
+readonly CODEX_CONFIG_TARGET="/etc/codex/config.toml"
 
 # --- 1. Nix (Determinate) ----------------------------------------------------
 
@@ -92,12 +94,27 @@ else
   git clone --branch "$DOTFILES_REF" "$REPO_URL" "$DOTFILES_DIR"
 fi
 
-# --- 4. Rootless Docker ------------------------------------------------------
+# --- 4. Codex system configuration ------------------------------------------
+
+echo "Installing Codex system configuration..."
+sudo install -d -m 755 /etc/codex
+if [[ -e "$CODEX_CONFIG_TARGET" || -L "$CODEX_CONFIG_TARGET" ]]; then
+  if [[ -L "$CODEX_CONFIG_TARGET" && $(readlink "$CODEX_CONFIG_TARGET") == "$CODEX_CONFIG_SOURCE" ]]; then
+    echo "Codex system configuration already installed"
+  else
+    echo "Error: $CODEX_CONFIG_TARGET already exists and is not managed by this script" >&2
+    exit 1
+  fi
+else
+  sudo ln -s "$CODEX_CONFIG_SOURCE" "$CODEX_CONFIG_TARGET"
+fi
+
+# --- 5. Rootless Docker ------------------------------------------------------
 
 echo "Setting up rootless Docker..."
 "$DOTFILES_DIR/scripts/rootless-docker.sh"
 
-# --- 5. OrbStack workaround: unreadable /proc/sys/kernel/modprobe ------------
+# --- 6. OrbStack workaround: unreadable /proc/sys/kernel/modprobe ------------
 # OrbStack's kernel returns EPERM reading this sysctl, which aborts Nix garbage
 # collection (the GC root scan reads it and only tolerates ENOENT/EACCES).
 # Bind-mount a plain file holding the standard value over it, via a systemd
@@ -126,7 +143,7 @@ EOF
   sudo systemctl enable --now fix-modprobe-sysctl.service
 fi
 
-# --- 6. Apply home-manager configuration -------------------------------------
+# --- 7. Apply home-manager configuration -------------------------------------
 # build.sh uses paths relative to the repo root and resolves the flake host as
 # "$USER@$(hostname -s)", so the flake must define an entry for this machine.
 
