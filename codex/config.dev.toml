@@ -1,4 +1,3 @@
-approvals_reviewer = "user"
 sandbox_mode = "danger-full-access"
 approval_policy = "never"
 check_for_update_on_startup = false
@@ -10,12 +9,11 @@ model_reasoning_effort = "high"
 PATH = """
 /home/chronon/.nix-profile/bin:\
 /home/chronon/.local/bin:\
+/usr/local/bin:\
+/nix/var/nix/profiles/default/bin:\
 /usr/bin:\
 /bin
 """
 
 [tui]
 show_tooltips = false
-
-[features]
-terminal_resize_reflow = true
