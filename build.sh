@@ -5,7 +5,7 @@ set -euo pipefail
 readonly HOSTNAME=$(hostname -s)
 readonly SECRETS_DIR="secrets"
 readonly TEMPLATE_FILES=(
-  "github-copilot/hosts.json.tpl:secrets/github-copilot_hosts.json"
+  # "github-copilot/hosts.json.tpl:secrets/github-copilot_hosts.json"
   "git/allowed_signers.tpl:secrets/git_allowed_signers"
   "git/identity.conf.tpl:secrets/git_identity.conf"
 )

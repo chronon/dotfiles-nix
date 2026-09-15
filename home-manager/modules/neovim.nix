@@ -17,9 +17,9 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
         recursive = true;
       };
-      "github-copilot/hosts.json" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/github-copilot_hosts.json";
-      };
+      # "github-copilot/hosts.json" = {
+      #   source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/github-copilot_hosts.json";
+      # };
     };
   };
 
