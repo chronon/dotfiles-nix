@@ -111,4 +111,6 @@ fall back to `agent read` and ask it for the file. Then:
   Disagree explicitly if verification contradicts it.
 - Give the tab ID and worker name so the user can inspect the tab.
 
-Leave worker tabs open. Close a tab only when the user asks.
+Close a worker's tab as soon as its work is verified and any follow-on action (a commit, a relay) has
+been taken. Keep a tab open only while the worker still has a follow-up coming, and say so. Never
+close a tab you did not create.
