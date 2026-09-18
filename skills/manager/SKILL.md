@@ -115,8 +115,9 @@ herdr agent prompt <name> "<prompt>" --wait --timeout <ms>
 ```
 
 Always run this, and any other blocking wait (`agent wait`, `pane wait-output`), as a background
-command so the user keeps control of the session. Tell them which tab and worker to watch, end the
-turn, and pick up the result when the background task notifies you. Never wait in the foreground.
+command so the user keeps control of the session. Tell them which tab to watch by its label (the
+name you gave `--label`), end the turn, and pick up the result when the background task notifies
+you. Never wait in the foreground.
 
 Pick a timeout suited to the task; reviews and audits usually need several minutes. On `timeout`,
 inspect with `agent get` and `agent read` before deciding whether to keep waiting. Do not resend the
@@ -143,7 +144,8 @@ fall back to `agent read` and ask it for the file. Then:
   `git diff --check`, that the test output it quoted is present and clean.
 - Relay the findings to the user attributed to the worker, condensed but not reinterpreted.
   Disagree explicitly if verification contradicts it.
-- Give the tab ID and worker name so the user can inspect the tab.
+- Name the tab by its label so the user can find it. Tab and pane IDs such as `w1:t3` mean nothing
+  to the user; keep them for `herdr` commands only.
 
 Close a worker's tab as soon as its work is verified and any follow-on action (a commit, a relay) has
 been taken. Keep a tab open only while the worker still has a follow-up coming, and say so. Never
