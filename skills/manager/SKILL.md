@@ -27,13 +27,19 @@ without it.
 You may:
 
 - Run Herdr commands to create tabs, start workers, prompt them, wait on them, and read them.
-- Read files and run read-only commands (`git status`, `git diff`, `git log`, tests, linters) to
-  understand a task before delegating it or to verify a worker's claims afterwards.
+- Read files and run read-only commands (`git status`, `git diff`, `git log`) to understand a task
+  before delegating it or to verify a worker's claims afterwards. Never run tests, linters or builds
+  yourself; that is the worker's job, and its quoted output is what you verify against.
+- Commit a worker's changes, but only when the user has explicitly told you to commit, and only
+  after you have verified the worker's report. The worker never commits. Use the message agreed
+  with the user; if signing is unavailable, commit with `-c commit.gpgsign=false` and say the
+  commit needs re-signing. Never push.
 
 You may not:
 
 - Create, edit, or delete files in the repository, or write anywhere except the report directory below.
-- Run mutating git commands, builds, installs, formatters, or anything else that changes the tree.
+- Run mutating git commands (other than the explicitly requested commit above), builds, installs,
+  formatters, or anything else that changes the tree.
 - Answer a worker's approval or question prompt. Surface it to the user instead.
 
 If verification shows a worker's report is wrong or incomplete, send the worker a follow-up prompt
@@ -49,6 +55,26 @@ message) names a worker kind, an optional model ID, and a task:
   after `--` on `agent start`. When absent, let the worker use its default.
 - **Task**: everything else. Ask the user only if the task is too vague to write a self-contained
   prompt for.
+
+## Decide whether to plan
+
+The user's directive says what to build, not how to run it. Unless the user explicitly asks for a
+plan, you decide whether the worker plans first or implements directly. Default to implementing
+directly: a diff is a better review artifact than prose describing it, and a plan-then-approve
+gate costs the user a second round trip for the same information.
+
+Have the worker plan first, and stop for the user's approval before implementing, only when the
+task has a real fork the diff alone would not expose:
+
+- A schema change, migration, payment-path change, or anything else costly to unwind.
+- A shared component whose correct behaviour differs between the places it is used.
+- A genuine product decision (for example, whether "all" means the current page or the whole
+  filtered set) where a wrong guess would make the work useless.
+- A long or multi-file change where a wrong turn early wastes significant worker time.
+
+When you skip the plan, tell the worker to state its assumptions and any product decisions it made
+at the top of its report, so the user can redirect from the diff. When the user asks for a plan,
+plan regardless of task size.
 
 ## Spawn a worker
 
@@ -75,7 +101,10 @@ Workers start with none of your context. Every prompt must be self-contained and
 
 1. The working directory and the exact scope of the task.
 2. Any constraints the user gave, plus: do not commit, and do not touch files outside the scope.
-3. The report contract: write the complete report as Markdown to
+3. For any task that edits code: run the relevant tests, linters and syntax checks itself until
+   they pass with clean output, and quote the commands and their summary lines verbatim in the
+   report. The manager never runs them.
+4. The report contract: write the complete report as Markdown to
    `${TMPDIR:-/tmp}/herdr-reports/<name>.md`, creating the directory if needed, and reply with
    only that path.
 
@@ -84,6 +113,10 @@ Send it and wait:
 ```bash
 herdr agent prompt <name> "<prompt>" --wait --timeout <ms>
 ```
+
+Always run this, and any other blocking wait (`agent wait`, `pane wait-output`), as a background
+command so the user keeps control of the session. Tell them which tab and worker to watch, end the
+turn, and pick up the result when the background task notifies you. Never wait in the foreground.
 
 Pick a timeout suited to the task; reviews and audits usually need several minutes. On `timeout`,
 inspect with `agent get` and `agent read` before deciding whether to keep waiting. Do not resend the
@@ -106,7 +139,8 @@ editing worker in its own Herdr worktree and say so in the report.
 When a worker settles, read the report file at the path it returned. If it did not return a path,
 fall back to `agent read` and ask it for the file. Then:
 
-- Verify anything that is cheap to verify (the diff it claims to have made, a test it claims passes).
+- Verify anything that is cheap to verify without running tests: the diff it claims to have made,
+  `git diff --check`, that the test output it quoted is present and clean.
 - Relay the findings to the user attributed to the worker, condensed but not reinterpreted.
   Disagree explicitly if verification contradicts it.
 - Give the tab ID and worker name so the user can inspect the tab.
