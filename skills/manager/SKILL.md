@@ -1,7 +1,7 @@
 ---
 name: manager
 description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr spawns in new tabs, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr.
-argument-hint: "have <claude|codex> [model-id] <task>"
+argument-hint: "have <claude|codex> [model-id] <task | skill <name> [args]>"
 disable-model-invocation: true
 ---
 
@@ -30,6 +30,8 @@ You may:
 - Read files and run read-only commands (`git status`, `git diff`, `git log`) to understand a task
   before delegating it or to verify a worker's claims afterwards. Never run tests, linters or builds
   yourself; that is the worker's job, and its quoted output is what you verify against.
+- Create the branch an editing worker will work on, following the rules under "Choose the branch".
+  That is the only branch operation you perform.
 - Commit a worker's changes, but only when the user has explicitly told you to commit, and only
   after you have verified the worker's report. The worker never commits. Use the message agreed
   with the user; if signing is unavailable, commit with `-c commit.gpgsign=false` and say the
@@ -38,8 +40,8 @@ You may:
 You may not:
 
 - Create, edit, or delete files in the repository, or write anywhere except the report directory below.
-- Run mutating git commands (other than the explicitly requested commit above), builds, installs,
-  formatters, or anything else that changes the tree.
+- Run mutating git commands (other than the branch creation and the explicitly requested commit
+  above), builds, installs, formatters, or anything else that changes the tree.
 - Answer a worker's approval or question prompt. Surface it to the user instead.
 
 If verification shows a worker's report is wrong or incomplete, send the worker a follow-up prompt
@@ -54,7 +56,47 @@ message) names a worker kind, an optional model ID, and a task:
 - **Model**: an optional model ID immediately after the kind. Pass it through as `--model <id>`
   after `--` on `agent start`. When absent, let the worker use its default.
 - **Task**: everything else. Ask the user only if the task is too vague to write a self-contained
-  prompt for.
+  prompt for. A task of the form `skill <name> [args]` means "run that skill"; see the next
+  section.
+
+## Run a skill through a worker
+
+The user asks for a skill in plain text, as the task part of a directive or on its own line:
+
+```
+skill pr-review 4758
+have codex run skill pr-review 4758
+```
+
+Any skill other than this one is a task for a worker, never instructions for you, even when its
+steps are read-only.
+
+Resolve the skill from disk, never from the list of skills your session shows you: skills with
+`disable-model-invocation: true` in their frontmatter (including `pr-review`, `ntfy`, and this one)
+are hidden from that list by design, and a worker cannot invoke them through its Skill tool either.
+Look for `~/.claude/skills/<name>/SKILL.md`, then `.claude/skills/<name>/SKILL.md` in the project;
+if neither exists, say so. Read its frontmatter and body to learn:
+
+- **The input it requires.** `argument-hint` names it. When the user supplied something else (a PR
+  number where the skill wants `gh api` JSON), tell the worker to fetch the required input itself
+  with the read-only command the skill documents, then proceed. Do not ask the user for input a
+  worker can fetch.
+- **Whether it edits files.** Most are read-only (reviews, assessments) and need no branch. If one
+  does edit, apply "Choose the branch" and the editing rules under "Delegate".
+
+Prompt the worker with the absolute path of the `SKILL.md`, the user's arguments, and the usual
+report contract. Both worker kinds read the file directly, so the prompt is the same for `claude`
+and `codex`:
+
+```
+Read <absolute path>/SKILL.md and follow it exactly. The user's arguments are: <args>. The skill
+requires <input>; you were given <what the user gave>, so first run `<command>` to obtain it, then
+apply the skill to that output. Working directory: <cwd>. Do not edit or commit anything. Write the
+complete result as Markdown to ${TMPDIR:-/tmp}/herdr-reports/<name>.md and reply with only that path.
+```
+
+Relay the report as the skill's own output format specifies, attributed to the worker. For
+`pr-review` that means every reviewer comment with its verdict, plus the closing count line.
 
 ## Decide whether to plan
 
@@ -75,6 +117,27 @@ task has a real fork the diff alone would not expose:
 When you skip the plan, tell the worker to state its assumptions and any product decisions it made
 at the top of its report, so the user can redirect from the diff. When the user asks for a plan,
 plan regardless of task size.
+
+## Choose the branch
+
+Before spawning a worker that will edit files, check `git branch --show-current` and
+`git status --short` in the shared working tree:
+
+- **On the default branch with a clean tree**: create a branch first, so the worker's edits never
+  land on `main`. Follow the repository's naming convention when one is visible in `git log` or the
+  project instructions (for example `b/<slug>` for bug fixes and `f/<slug>` for features); derive a
+  short slug from the task. `git switch -c <branch>` is the one mutating git command permitted here,
+  and it must run before the worker starts.
+- **On the default branch with a dirty tree**: stop and ask. The uncommitted work is almost always
+  the user's, and neither sweeping it into a new branch nor mixing the worker's edits into it is
+  your call.
+- **Already on a non-default branch**: use it. Assume the user set it up deliberately; do not nest a
+  new branch under it.
+- **In a Herdr worktree**: skip this section. The worktree already has its own branch.
+
+Read-only workers (review, audit, analysis) never need a branch. Tell every editing worker which
+branch it is on and that it must not create or switch branches, and report the branch name to the
+user when relaying the result.
 
 ## Spawn a worker
 
@@ -100,7 +163,8 @@ Wait for `idle` before prompting.
 Workers start with none of your context. Every prompt must be self-contained and must include:
 
 1. The working directory and the exact scope of the task.
-2. Any constraints the user gave, plus: do not commit, and do not touch files outside the scope.
+2. Any constraints the user gave, plus: do not commit, stay on the named branch (no creating or
+   switching branches), and do not touch files outside the scope.
 3. For any task that edits code: run the relevant tests, linters and syntax checks itself until
    they pass with clean output, and quote the commands and their summary lines verbatim in the
    report. The manager never runs them.
