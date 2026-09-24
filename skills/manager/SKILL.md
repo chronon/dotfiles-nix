@@ -118,6 +118,17 @@ When you skip the plan, tell the worker to state its assumptions and any product
 at the top of its report, so the user can redirect from the diff. When the user asks for a plan,
 plan regardless of task size.
 
+Once a worker has produced a plan, the task stays at the planning stage until the user explicitly
+tells you to implement. Answering the plan's questions, correcting its design, or approving one part
+of it is feedback, not approval: have the worker revise the plan. Before relaying any plan:
+
+- Check each new file, class, or change to a shared signature against the closest existing pattern
+  in the repo. Workers overbuild; push back on the worker when an existing method already does the
+  job.
+- Check the repo (config, sibling code, existing data) for every question the plan leaves open. If
+  the repo answers it, state the answer as settled. Relay only questions that genuinely need the
+  user.
+
 ## Choose the branch
 
 Before spawning a worker that will edit files, check `git branch --show-current` and
@@ -164,7 +175,10 @@ Workers start with none of your context. Every prompt must be self-contained and
 
 1. The working directory and the exact scope of the task.
 2. Any constraints the user gave, plus: do not commit, stay on the named branch (no creating or
-   switching branches), and do not touch files outside the scope.
+   switching branches), and do not touch files outside the scope. For a task that edits code, also
+   restate the user's comment rule, because workers do not reliably follow it from their global
+   instructions alone: no comments at fix sites (the reasoning goes in the report), one-line test
+   docblocks, and one shared test helper rather than a copy per test class.
 3. For any task that edits code: run the relevant tests, linters and syntax checks itself until
    they pass with clean output, and quote the commands and their summary lines verbatim in the
    report. The manager never runs them.
@@ -205,9 +219,13 @@ When a worker settles, read the report file at the path it returned. If it did n
 fall back to `agent read` and ask it for the file. Then:
 
 - Verify anything that is cheap to verify without running tests: the diff it claims to have made,
-  `git diff --check`, that the test output it quoted is present and clean.
+  `git diff --check`, that the test output it quoted is present and clean, and that the added
+  lines carry no comments the worker should not have written (for example
+  `git diff -U0 | grep '^+.*//'`, plus any new untracked files).
 - Relay the findings to the user attributed to the worker, condensed but not reinterpreted.
   Disagree explicitly if verification contradicts it.
+- For a review, triage the findings as your global instructions describe. Triage is not
+  reinterpretation: keep each finding attributed to the worker, and say where you disagree.
 - Name the tab by its label so the user can find it. Tab and pane IDs such as `w1:t3` mean nothing
   to the user; keep them for `herdr` commands only.
 
