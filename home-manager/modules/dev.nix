@@ -44,4 +44,8 @@
     set -g pure_color_current_directory bryellow
   '';
 
+  programs.fish.functions.codex.body = ''
+    command codex --no-daemon $argv
+  '';
+
 }

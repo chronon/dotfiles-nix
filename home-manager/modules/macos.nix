@@ -48,6 +48,8 @@ in
       body = "__orb_tool ${tool} $argv";
     })
     // {
+      codex.body = "__orb_tool codex --no-daemon $argv";
+
       __orb_dir.body = ''
         set -l vmdir "/mnt/mac"(pwd -P)
         set -l fstype (orb findmnt -no FSTYPE -T $vmdir 2>/dev/null)
