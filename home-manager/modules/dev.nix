@@ -14,6 +14,14 @@
     pi-coding-agent
     opencode
     codex
+    (playwright-mcp.override {
+      playwright-driver = playwright-driver // {
+        browsers = playwright-driver.selectBrowsers {
+          withFirefox = false;
+          withWebkit = false;
+        };
+      };
+    })
   ];
 
   programs.direnv = {
