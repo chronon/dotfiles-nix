@@ -47,11 +47,10 @@ in
 
   xdg.enable = true;
 
-  xdg.configFile."pnpm/rc".text = ''
-    minimum-release-age=1440
-    minimum-release-age-strict=true
-    block-exotic-subdeps=true
-    verify-deps-before-run=warn
+  xdg.configFile."pnpm/config.yaml".text = ''
+    minimumReleaseAge: 1440
+    minimumReleaseAgeStrict: true
+    verifyDepsBeforeRun: warn
   '';
 
   home.file = {
