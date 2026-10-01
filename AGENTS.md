@@ -73,7 +73,11 @@ per tool that runs it inside an OrbStack dev VM against the same working tree: `
 `$PWD` to its `/mnt/mac/...` path and checks the mount is virtiofs, `__orb_run` execs through
 `orb bash -c` with the Nix profile on `PATH` and `direnv exec` when available, and `__orb_tool`
 combines the two, falling back to the VM home with a warning when `$PWD` isn't mounted. `dvs` opens
-a VM shell, or runs a single command, in the mapped directory.
+a VM shell, or runs a single command, in the mapped directory. `dvup` brings up the shared
+coolify dev stack and then the current directory's compose project, both in the VM; `dvdown`
+takes down the project, then the shared stack. Both find the shared stack at
+`../../utility/compose.yml`, so they only work from a `machines/coolify/<group>/<site>` directory.
+Extra arguments (e.g. `--build`) go to the project's `up`/`down`.
 
 Adding a tool to `orbTools` only creates the shim — install the tool itself via `dev.nix`.
 

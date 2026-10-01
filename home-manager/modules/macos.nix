@@ -83,5 +83,17 @@ in
             __orb_run $vmdir fish
         end
       '';
+
+      dvup.body = ''
+        set -l vmdir (__orb_dir); or return 1
+        __orb_run $vmdir docker compose -f ../../utility/compose.yml up -d; or return 1
+        __orb_run $vmdir docker compose up -d $argv
+      '';
+
+      dvdown.body = ''
+        set -l vmdir (__orb_dir); or return 1
+        __orb_run $vmdir docker compose down $argv; or return 1
+        __orb_run $vmdir docker compose -f ../../utility/compose.yml down
+      '';
     };
 }
