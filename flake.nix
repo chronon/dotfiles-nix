@@ -15,6 +15,10 @@
       url = "github:sadjow/codex-cli-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cloudflare-skills = {
+      url = "github:cloudflare/skills";
+      flake = false;
+    };
   };
 
   outputs =
@@ -23,6 +27,7 @@
       home-manager,
       claude-code,
       codex,
+      cloudflare-skills,
       ...
     }:
     let
@@ -54,6 +59,7 @@
               codex.overlays.default
             ];
           };
+          extraSpecialArgs = { inherit cloudflare-skills; };
           modules = [
             hostModule
             { home.username = username; }

@@ -25,11 +25,12 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
   `home-manager/hosts/<name>/` directory. Overlays from the `sadjow/claude-code-nix` and
   `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and `pkgs.codex` with hourly-updated
   builds of the upstream releases (nixpkgs lags); bump with `nix flake update claude-code codex`.
+  The non-flake `cloudflare-skills` input pins `cloudflare/skills` for `skills.nix`.
 - `home-manager/modules/`
   - `base.nix` — imported by every host
   - `workstation.nix` — GUI extras layered on `base` (kanzi, kaxair)
   - `dev.nix` — headless extras layered on `base` (gcc, rootless Docker host, bash→fish, agent
-    harnesses)
+    harnesses, agent skills via `skills.nix`)
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
@@ -53,7 +54,8 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
 - `skills/` → `~/.claude/skills`, `~/.agents/skills`
 - `agents/global.md` → `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.agents/AGENTS.md`
 
-These are out-of-store symlinks, so edits take effect without a rebuild.
+These are out-of-store symlinks, so edits take effect without a rebuild. On dev hosts, `skills.nix`
+links each skill directory individually instead, so a new skill needs `git add` and a rebuild.
 
 ## Agent skills
 
@@ -65,6 +67,12 @@ describe expected input in prose so a skill still works without it.
 `skills/herdr/` is generated, not hand-written: the herdr package ships the skill at
 `share/herdr/skills/herdr/SKILL.md` and `herdr --skill` prints it, so `update.sh` regenerates it
 after each build to keep it matched to the installed version. Edit upstream, not here.
+
+Cloudflare's skills are linked from the `cloudflare-skills` input on dev hosts (subset listed in
+`skills.nix`), so `dotup` keeps them current. Cloudflare MCP is per project: each Cloudflare
+project's `.mcp.json` and `.codex/config.toml` define a `cloudflare` server at
+`https://mcp.cloudflare.com/mcp` that sends `CLOUDFLARE_MCP_TOKEN` as a bearer token, and the
+directory tree's `.envrc` sets that to the owning account's API token.
 
 ## Orb shims (macOS)
 

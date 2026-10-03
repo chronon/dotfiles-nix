@@ -7,14 +7,6 @@
     "defaultMode": "bypassPermissions"
   },
   "enabledPlugins": {},
-  "extraKnownMarketplaces": {
-    "cloudflare": {
-      "source": {
-        "source": "github",
-        "repo": "cloudflare/skills"
-      }
-    }
-  },
   "skipDangerousModePermissionPrompt": true,
   "voiceEnabled": false,
   "modelSettings": {

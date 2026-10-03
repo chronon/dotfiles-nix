@@ -4,6 +4,7 @@
 
   imports = [
     ./herdr.nix
+    ./skills.nix
   ];
 
   home.packages = with pkgs; [
