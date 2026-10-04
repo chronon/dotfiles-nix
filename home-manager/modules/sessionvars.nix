@@ -13,6 +13,7 @@
       AWS_USE_OP = 1;
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1;
       DO_NOT_TRACK = 1;
+      ENABLE_CLAUDEAI_MCP_SERVERS = "false";
     };
   };
 
