@@ -2,12 +2,12 @@
 
 set -euo pipefail
 
-ASSUME_YES=false
+COMMIT=false
 MESSAGE="Update lockfiles"
 
 while (($#)); do
   case "$1" in
-  -y | --yes) ASSUME_YES=true ;;
+  -c | --commit) COMMIT=true ;;
   -*)
     echo "Unknown option: $1" >&2
     exit 2
@@ -17,27 +17,9 @@ while (($#)); do
   shift
 done
 
-readonly ASSUME_YES MESSAGE
+readonly COMMIT MESSAGE
 readonly REPO_ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 readonly LOCKFILES=(flake.lock nvim/lazy-lock.json)
-
-confirm() {
-  if [[ $ASSUME_YES == true ]]; then
-    return 0
-  fi
-
-  if [[ ! -t 0 ]]; then
-    echo "Not a terminal; pass -y to commit and push without confirmation" >&2
-    return 1
-  fi
-
-  local reply
-  read -r -p "Commit and push? [y/N] " reply || reply=""
-  case "$reply" in
-  y | Y | yes | YES) return 0 ;;
-  *) return 1 ;;
-  esac
-}
 
 cd "$REPO_ROOT"
 
@@ -51,14 +33,14 @@ echo "==> Syncing neovim plugins"
 nvim --headless "+Lazy! sync" +qa
 
 if git diff --quiet HEAD -- "${LOCKFILES[@]}"; then
-  echo "No lockfile changes, nothing to commit"
+  echo "No lockfile changes"
   exit 0
 fi
 
 git --no-pager diff --stat HEAD -- "${LOCKFILES[@]}"
 
-if ! confirm; then
-  echo "Skipped; changes left in the working tree"
+if [[ $COMMIT != true ]]; then
+  echo "Lockfile changes left uncommitted; pass -c to commit and push"
   exit 0
 fi
 

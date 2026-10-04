@@ -8,7 +8,7 @@ Manager across macOS and Linux hosts.
 ```bash
 ./build.sh                                          # inject secrets, build, apply
 home-manager switch --flake .#$USER@$(hostname -s)  # apply without secret injection
-./scripts/update.sh                                 # daily refresh: update, build, commit, push
+./scripts/update.sh                                 # daily refresh: update, build (-c to commit)
 ```
 
 ## Secrets
@@ -23,11 +23,11 @@ template → output mapping lives in that script). Templates: `git/allowed_signe
   `home.username` and names each config `username@hostname`. `home.homeDirectory` and the `dotfiles`
   module argument (the repo checkout, `~/dotfiles`) are derived from it and the system. Hostnames
   matching `dev-*` route to the shared `hosts/dev` module, so a new dev box needs only that one
-  line. Named hosts use their own
-  `home-manager/hosts/<name>/` directory. Overlays from the `sadjow/claude-code-nix` and
-  `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and `pkgs.codex` with hourly-updated
-  builds of the upstream releases (nixpkgs lags); bump with `nix flake update claude-code codex`.
-  The non-flake `cloudflare-skills` input pins `cloudflare/skills` for `skills.nix`.
+  line. Named hosts use their own `home-manager/hosts/<name>/` directory. Overlays from the
+  `sadjow/claude-code-nix` and `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and
+  `pkgs.codex` with hourly-updated builds of the upstream releases (nixpkgs lags); bump with
+  `nix flake update claude-code codex`. The non-flake `cloudflare-skills` input pins
+  `cloudflare/skills` for `skills.nix`.
 - `home-manager/modules/`
   - `base.nix` — imported by every host
   - `workstation.nix` — GUI extras layered on `base` (kanzi, kaxair)
@@ -36,12 +36,11 @@ template → output mapping lives in that script). Templates: `git/allowed_signe
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
-- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then commit
-  and push the two lockfiles. Aborts on any failure; commits with a pathspec so unrelated
-  working-tree changes are never included, and skips the commit when neither moved. Shows a diffstat
-  and prompts before committing (default no) so a bad update can be discarded after the build; `-y`
-  skips the prompt, which is also required when stdin isn't a tty.
-  Takes an optional commit message argument (default `Update lockfiles`).
+- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then a
+  diffstat of the two lockfiles, left uncommitted so a bad update can be discarded after the build.
+  `-c` commits and pushes them instead, with a pathspec so unrelated working-tree changes are never
+  included, and an optional commit message argument (default `Update lockfiles`). Aborts on any
+  failure.
 - `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Makes `~/dotfiles` a
   symlink to the Mac checkout at `/mnt/mac/Users/$USER/dotfiles` when present, so the VM builds from
   and links into the Mac's working tree (no network or credentials, so it works with a private
