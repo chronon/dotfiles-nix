@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, dotfiles, ... }:
 
 {
 
@@ -17,9 +17,8 @@
 
   home = {
     file = {
-      "${config.home.homeDirectory}/.ssh/conf.d" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/ssh/conf.d";
-        recursive = true;
+      ".ssh/conf.d" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/secrets/ssh/conf.d";
       };
     };
   };

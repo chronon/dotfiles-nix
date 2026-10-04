@@ -2,12 +2,11 @@
   config,
   lib,
   cloudflare-skills,
+  dotfiles,
   ...
 }:
 
 let
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
-
   ownSkills = lib.attrNames (
     lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../../skills)
   );
@@ -26,7 +25,10 @@ let
 
   sources =
     lib.genAttrs ownSkills (name: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/skills/${name}")
-    // lib.genAttrs cloudflareSkills (name: "${cloudflare-skills}/skills/${name}");
+    // lib.genAttrs cloudflareSkills (name: "${cloudflare-skills}/skills/${name}")
+    // {
+      herdr = "${config.programs.herdr.package}/share/skills/herdr/herdr";
+    };
 
   linksIn =
     dir: lib.mapAttrs' (name: source: lib.nameValuePair "${dir}/${name}" { inherit source; }) sources;
@@ -39,14 +41,5 @@ in
   }
   // linksIn ".claude/skills"
   // linksIn ".agents/skills";
-
-  # base.nix links these as whole directories; drop the old links so per-skill links don't land in the repo.
-  home.activation.replaceSkillsDirLinks = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-    for dir in "$HOME/.claude/skills" "$HOME/.agents/skills"; do
-      if [[ -L $dir ]]; then
-        run rm "$dir"
-      fi
-    done
-  '';
 
 }

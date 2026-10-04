@@ -1,12 +1,11 @@
-{ config, pkgs, ... }:
+{ config, dotfiles, ... }:
 
 {
 
   home = {
     file = {
-      "${config.home.homeDirectory}/intelephense" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/intelephense";
-        recursive = true;
+      "intelephense" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/secrets/intelephense";
       };
     };
   };
@@ -14,12 +13,8 @@
   xdg = {
     configFile = {
       "nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
-        recursive = true;
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
       };
-      # "github-copilot/hosts.json" = {
-      #   source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/secrets/github-copilot_hosts.json";
-      # };
     };
   };
 

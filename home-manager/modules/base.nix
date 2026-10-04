@@ -1,8 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  dotfiles,
+  ...
+}:
 
 let
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
-
   globalInstructions = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/global.md";
   skills = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/skills";
 in
@@ -16,8 +19,6 @@ in
     ./sessionvars.nix
     ./ssh.nix
   ];
-
-  nixpkgs.config.allowUnfree = true;
 
   home = {
     stateVersion = "23.11";
@@ -57,14 +58,8 @@ in
     ".claude/CLAUDE.md".source = globalInstructions;
     ".codex/AGENTS.md".source = globalInstructions;
     ".agents/AGENTS.md".source = globalInstructions;
-    ".claude/skills" = {
-      source = skills;
-      recursive = true;
-    };
-    ".agents/skills" = {
-      source = skills;
-      recursive = true;
-    };
+    ".claude/skills".source = skills;
+    ".agents/skills".source = skills;
   };
 
   # Tracking nixos-unstable + home-manager master, which report different

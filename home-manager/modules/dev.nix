@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  dotfiles,
+  ...
+}:
 
 {
 
@@ -35,7 +40,7 @@
     "${pkgs.ghostty.terminfo}/share/terminfo/x/xterm-ghostty";
 
   home.file.".claude/settings.json".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.dev.json";
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.dev.json";
 
   programs.bash = {
     enable = true;

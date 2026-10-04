@@ -1,10 +1,6 @@
-{ config, pkgs, ... }:
+{ dotfiles, ... }:
 
 let
-  # Committer emails live in 1Password and are rendered into
-  # secrets/ at build time (see build.sh); they are symlinked in below
-  # so real addresses stay out of this public repo.
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBGWsRBSOvlCJsfypQvMprX65012c91pSs9Bu8TYEyAh";
 in
 {
@@ -27,7 +23,7 @@ in
       };
       credential.helper = "";
       init.defaultBranch = "main";
-      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
+      gpg.ssh.allowedSignersFile = "${dotfiles}/secrets/git_allowed_signers";
       pager.branch = false;
       pull.rebase = false;
       difftool.prompt = false;
@@ -61,14 +57,6 @@ in
       git.paging = {
         colorArg = "always";
         externalDiffCommand = "difft --color=always --display=inline";
-      };
-    };
-  };
-
-  xdg = {
-    configFile = {
-      "git/allowed_signers" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/secrets/git_allowed_signers";
       };
     };
   };

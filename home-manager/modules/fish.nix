@@ -25,7 +25,7 @@
       dcup = "docker compose up -d";
       dotup = "$HOME/dotfiles/scripts/update.sh";
       dudirs = "du -d 1 -h";
-      kds = "find\ .\ -name\ .DS_Store\ -print\ -exec\ rm\ -f\ \{\}\ \\\;";
+      kds = "find . -name .DS_Store -print -delete";
       mcore = "cd $HOME/machines/core/";
     };
     interactiveShellInit = ''

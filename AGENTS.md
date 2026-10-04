@@ -8,24 +8,26 @@ Manager across macOS and Linux hosts.
 ```bash
 ./build.sh                                          # inject secrets, build, apply
 home-manager switch --flake .#$USER@$(hostname -s)  # apply without secret injection
-./scripts/update.sh                                 # daily refresh: update, build, commit, push
+./scripts/update.sh                                 # daily refresh: update, build (-c to commit)
 ```
 
 ## Secrets
 
 `build.sh` renders the `*.tpl` templates through the 1Password CLI into `secrets/` (the
-template → output mapping lives in that script). Templates: `github-copilot/hosts.json.tpl`,
-`git/allowed_signers.tpl`, `git/identity.conf.tpl`. **Never commit anything under `secrets/`.**
+template → output mapping lives in that script). Templates: `git/allowed_signers.tpl`,
+`git/identity.conf.tpl`. **Never commit anything under `secrets/`.**
 
 ## Layout
 
 - `flake.nix` — one `hosts` entry per machine (hostname → system); a single `username` binding sets
-  `home.username` and names each config `username@hostname`. Hostnames matching `dev-*` route to the
-  shared `hosts/dev` module, so a new dev box needs only that one line. Named hosts use their own
-  `home-manager/hosts/<name>/` directory. Overlays from the `sadjow/claude-code-nix` and
-  `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and `pkgs.codex` with hourly-updated
-  builds of the upstream releases (nixpkgs lags); bump with `nix flake update claude-code codex`.
-  The non-flake `cloudflare-skills` input pins `cloudflare/skills` for `skills.nix`.
+  `home.username` and names each config `username@hostname`. `home.homeDirectory` and the `dotfiles`
+  module argument (the repo checkout, `~/dotfiles`) are derived from it and the system. Hostnames
+  matching `dev-*` route to the shared `hosts/dev` module, so a new dev box needs only that one
+  line. Named hosts use their own `home-manager/hosts/<name>/` directory. Overlays from the
+  `sadjow/claude-code-nix` and `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and
+  `pkgs.codex` with hourly-updated builds of the upstream releases (nixpkgs lags); bump with
+  `nix flake update claude-code codex`. The non-flake `cloudflare-skills` input pins
+  `cloudflare/skills` for `skills.nix`.
 - `home-manager/modules/`
   - `base.nix` — imported by every host
   - `workstation.nix` — GUI extras layered on `base` (kanzi, kaxair)
@@ -34,15 +36,15 @@ template → output mapping lives in that script). Templates: `github-copilot/ho
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
-- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, regenerate
-  `skills/herdr/SKILL.md` from the newly built `herdr` (skipped on hosts without it), then commit and
-  push those three paths. Aborts on any failure; commits with a pathspec so unrelated working-tree
-  changes are never included, and skips the commit when none of them moved. Shows a diffstat and prompts before committing (default no) so a bad update can be
-  discarded after the build; `-y` skips the prompt, which is also required when stdin isn't a tty.
-  Takes an optional commit message argument (default `Update lockfiles`).
-- `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Seeds `~/dotfiles` from the
-  Mac checkout at `/mnt/mac/Users/$USER/dotfiles` when present (no network or credentials, so it
-  works with a private repo), else clones from GitHub. Override with `MAC_DOTFILES`. Installs
+- `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then a
+  diffstat of the two lockfiles, left uncommitted so a bad update can be discarded after the build.
+  `-c` commits and pushes them instead, with a pathspec so unrelated working-tree changes are never
+  included, and an optional commit message argument (default `Update lockfiles`). Aborts on any
+  failure.
+- `scripts/dev-init.sh` — bootstrap a fresh Linux dev host end to end. Makes `~/dotfiles` a
+  symlink to the Mac checkout at `/mnt/mac/Users/$USER/dotfiles` when present, so the VM builds from
+  and links into the Mac's working tree (no network or credentials, so it works with a private
+  repo); else clones from GitHub. Override with `MAC_DOTFILES`. Installs
   `codex/config.dev.toml` as the system defaults at `/etc/codex/config.toml`; user and project state
   remain in the untracked `~/.codex/config.toml`.
 - `scripts/rootless-docker.sh` — rootless Docker on a Debian/apt host
@@ -64,15 +66,13 @@ harness that reads the standard. Keep them portable: `name` and `description` ar
 frontmatter the standard requires, and `$ARGUMENTS` substitution is a Claude Code extension —
 describe expected input in prose so a skill still works without it.
 
-`skills/herdr/` is generated, not hand-written: the herdr package ships the skill at
-`share/herdr/skills/herdr/SKILL.md` and `herdr --skill` prints it, so `update.sh` regenerates it
-after each build to keep it matched to the installed version. Edit upstream, not here.
-
 Cloudflare's skills are linked from the `cloudflare-skills` input on dev hosts (subset listed in
-`skills.nix`), so `dotup` keeps them current. Cloudflare MCP is per project: each Cloudflare
-project's `.mcp.json` and `.codex/config.toml` define a `cloudflare` server at
-`https://mcp.cloudflare.com/mcp` that sends `CLOUDFLARE_MCP_TOKEN` as a bearer token, and the
-directory tree's `.envrc` sets that to the owning account's API token.
+`skills.nix`), so `dotup` keeps them current. The herdr skill is linked the same way from the
+installed herdr package (`share/skills/herdr/herdr`), so it always matches the herdr version.
+
+Cloudflare MCP is per project: each Cloudflare project's `.mcp.json` and `.codex/config.toml`
+define a `cloudflare` server at `https://mcp.cloudflare.com/mcp` that sends `CLOUDFLARE_MCP_TOKEN`
+as a bearer token, and the directory tree's `.envrc` sets that to the owning account's API token.
 
 ## Orb shims (macOS)
 
