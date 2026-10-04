@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  dotfiles,
+  ...
+}:
 
 {
 
@@ -36,8 +41,7 @@
 
   xdg.configFile = {
     "zed" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zed";
-      recursive = true;
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/zed";
     };
   };
 

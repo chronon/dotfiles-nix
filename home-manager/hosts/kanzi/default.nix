@@ -1,13 +1,9 @@
-{ config, pkgs, ... }:
-
 {
 
   imports = [
+    ../../modules/base.nix
+    ../../modules/workstation.nix
     ../../modules/macos.nix
   ];
-
-  # home.packages = with pkgs; [
-  #   (llama-cpp.override { nodejs_latest = nodejs_24; })
-  # ];
 
 }

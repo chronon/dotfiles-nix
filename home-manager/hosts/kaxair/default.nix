@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -8,7 +8,6 @@
   ];
 
   home = {
-    homeDirectory = "/home/${config.home.username}";
     packages = with pkgs; [
       libcxxStdenv
       sublime-merge

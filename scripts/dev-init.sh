@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Full dev environment bootstrap for a fresh Linux machine.
-# Installs Nix, seeds this dotfiles repo (from the mounted Mac checkout when
-# available, else GitHub), sets up rootless Docker, and applies the
-# home-manager configuration.
+# Installs Nix, links this dotfiles repo to the mounted Mac checkout (or clones
+# it from GitHub when there's no mount), sets up rootless Docker, and applies
+# the home-manager configuration.
 #
 # Run as your normal (non-root) user from a real login shell, safe to re-run.
 
@@ -11,7 +11,7 @@ set -euo pipefail
 
 readonly REPO_URL="https://github.com/chronon/dotfiles-nix.git"
 readonly DOTFILES_DIR="$HOME/dotfiles"
-# Branch/tag to check out; override to test a PR, e.g. DOTFILES_REF=my-branch
+# Branch/tag for a GitHub clone; override to test a PR, e.g. DOTFILES_REF=my-branch
 readonly DOTFILES_REF="${DOTFILES_REF:-main}"
 readonly MAC_DOTFILES="${MAC_DOTFILES-/mnt/mac/Users/$USER/dotfiles}"
 readonly NIX_INSTALLER_URL="https://install.determinate.systems/nix"
@@ -50,45 +50,31 @@ if ! command -v git >/dev/null 2>&1; then
   sudo apt-get install -y git
 fi
 
-# --- 3. Seed (or update) the dotfiles repo -----------------------------------
-# Prefer the Mac checkout when it's mounted, falling back to GitHub. Only
-# committed state crosses the mount, so commit on the Mac first to pick changes
-# up here. origin stays pointed at GitHub either way.
+# --- 3. Link (or clone) the dotfiles repo ------------------------------------
+# When the Mac checkout is mounted, ~/dotfiles is a symlink to it, so the VM
+# builds from and links into the Mac's working tree. Otherwise clone from GitHub.
 
-# Is the host checkout mounted and usable as a git remote?
-have_mount_repo() {
-  [[ -n "$MAC_DOTFILES" && -d "$MAC_DOTFILES/.git" ]]
-}
-
-# Does the repo at $1 have $DOTFILES_REF? (A PR branch may exist only on the
-# remote, in which case seeding can't work and we clone from GitHub instead.)
-mount_has_ref() {
-  git -C "$1" rev-parse --verify --quiet "refs/heads/$DOTFILES_REF" >/dev/null ||
-    git -C "$1" rev-parse --verify --quiet "refs/tags/$DOTFILES_REF" >/dev/null
-}
-
-if [[ -d "$DOTFILES_DIR/.git" ]]; then
-  if have_mount_repo; then
-    fetch_from="$MAC_DOTFILES"
+if [[ -n "$MAC_DOTFILES" && -d "$MAC_DOTFILES/.git" ]]; then
+  if [[ -L "$DOTFILES_DIR" && $(readlink "$DOTFILES_DIR") == "$MAC_DOTFILES" ]]; then
+    echo "$DOTFILES_DIR already links to $MAC_DOTFILES"
+  elif [[ -e "$DOTFILES_DIR" || -L "$DOTFILES_DIR" ]]; then
+    echo "Error: $DOTFILES_DIR already exists; move it aside to link $MAC_DOTFILES there" >&2
+    exit 1
   else
-    fetch_from="origin"
+    echo "Linking $DOTFILES_DIR -> $MAC_DOTFILES..."
+    ln -s "$MAC_DOTFILES" "$DOTFILES_DIR"
   fi
-  echo "Updating existing $DOTFILES_DIR ($DOTFILES_REF) from $fetch_from..."
+elif [[ -d "$DOTFILES_DIR/.git" ]]; then
+  echo "Updating existing $DOTFILES_DIR ($DOTFILES_REF) from origin..."
   # A private repo with no credentials on the box fails here; that shouldn't
   # abort the run, since the checkout on disk is still usable.
-  if git -C "$DOTFILES_DIR" fetch "$fetch_from" "$DOTFILES_REF"; then
+  if git -C "$DOTFILES_DIR" fetch origin "$DOTFILES_REF"; then
     git -C "$DOTFILES_DIR" checkout "$DOTFILES_REF"
     git -C "$DOTFILES_DIR" merge --ff-only FETCH_HEAD
   else
-    echo "Warning: fetch from $fetch_from failed; using the checkout already on disk." >&2
+    echo "Warning: fetch from origin failed; using the checkout already on disk." >&2
     git -C "$DOTFILES_DIR" checkout "$DOTFILES_REF"
   fi
-elif have_mount_repo && mount_has_ref "$MAC_DOTFILES"; then
-  echo "Seeding from host checkout $MAC_DOTFILES ($DOTFILES_REF) -> $DOTFILES_DIR..."
-  # --no-hardlinks: keep the VM's object store independent of the Mac's, so it
-  # survives the mount going away or a gc on the host.
-  git clone --no-hardlinks --branch "$DOTFILES_REF" "$MAC_DOTFILES" "$DOTFILES_DIR"
-  git -C "$DOTFILES_DIR" remote set-url origin "$REPO_URL"
 else
   echo "Cloning $REPO_URL ($DOTFILES_REF) -> $DOTFILES_DIR..."
   git clone --branch "$DOTFILES_REF" "$REPO_URL" "$DOTFILES_DIR"

@@ -36,8 +36,6 @@
       hosts = {
         kanzi = "aarch64-darwin";
         kaxair = "x86_64-linux";
-        dev-true = "aarch64-linux";
-        dev-chronon = "aarch64-linux";
         dev-main = "aarch64-linux";
       };
 
@@ -49,6 +47,8 @@
               ./home-manager/hosts/dev
             else
               ./home-manager/hosts/${hostname};
+          homeDirectory =
+            if nixpkgs.lib.hasSuffix "-darwin" system then "/Users/${username}" else "/home/${username}";
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -59,10 +59,13 @@
               codex.overlays.default
             ];
           };
-          extraSpecialArgs = { inherit cloudflare-skills; };
+          extraSpecialArgs = {
+            inherit cloudflare-skills;
+            dotfiles = "${homeDirectory}/dotfiles";
+          };
           modules = [
             hostModule
-            { home.username = username; }
+            { home = { inherit username homeDirectory; }; }
           ];
         };
     in

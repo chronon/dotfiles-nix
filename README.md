@@ -22,22 +22,22 @@ your normal (non-root) user from a real login shell; it's safe to re-run.
 curl -fsSL https://raw.githubusercontent.com/chronon/dotfiles-nix/main/scripts/dev-init.sh | bash
 ```
 
-Set `DOTFILES_REF=my-branch` to bootstrap from a branch instead of `main`.
+Set `DOTFILES_REF=my-branch` to clone a branch instead of `main`.
 
-### Seeding from the Mac checkout
+### Using the Mac checkout
 
-On an OrbStack guest the Mac checkout is visible over virtiofs, so `dev-init.sh` seeds `~/dotfiles`
-from `/mnt/mac/Users/$USER/dotfiles` instead of cloning, and later re-runs fetch from there too.
-That needs no credentials and no network, so the whole bootstrap works with a private repo — run
-the script from the mount rather than piping it from `raw.githubusercontent`:
+On an OrbStack guest the Mac checkout is visible over virtiofs, so `dev-init.sh` makes `~/dotfiles`
+a symlink to `/mnt/mac/Users/$USER/dotfiles` instead of cloning. The VM builds from and links into
+the Mac's working tree, so edits there reach the VM without a commit or pull. That needs no
+credentials and no network, so the whole bootstrap works with a private repo — run the script from
+the mount rather than piping it from `raw.githubusercontent`:
 
 ```bash
 /mnt/mac/Users/$USER/dotfiles/scripts/dev-init.sh
 ```
 
-Only committed state crosses the mount, so commit on the Mac before re-running; `origin` still
-points at GitHub. GitHub is used automatically when the mount isn't there, or when `DOTFILES_REF`
-names a branch that only exists on the remote. `MAC_DOTFILES=` skips the mount entirely.
+GitHub is used when the mount isn't there; `MAC_DOTFILES=` skips the mount entirely, which is also
+how to use `DOTFILES_REF` on a VM that has the mount.
 
 ### GitHub auth (dev VMs)
 
