@@ -36,9 +36,12 @@
     enable = true;
     keyboards.default = {
       ids = [ "*" ];
-      settings.meta = {
-        c = "C-insert";
-        v = "S-insert";
+      settings = {
+        main.capslock = "layer(control)";
+        meta = {
+          c = "C-insert";
+          v = "S-insert";
+        };
       };
     };
   };
