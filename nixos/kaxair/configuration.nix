@@ -7,6 +7,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = false;
+    AllowHibernation = false;
+    AllowHybridSleep = false;
+    AllowSuspendThenHibernate = false;
+  };
+
   networking.hostName = "kaxair";
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
