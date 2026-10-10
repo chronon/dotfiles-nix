@@ -54,7 +54,7 @@ per-session token that isn't persisted, use `export GH_TOKEN=...`.
 ## Hosts
 
 - **kanzi** — ARM64 macOS
-- **kaxair** — x86_64 Linux
+- **kaxair** — x86_64 NixOS (MacBook Air); system config in `nixos/kaxair/`
 - **dev-\*** — headless aarch64-linux dev VMs (shared config)
 
 ## Reference

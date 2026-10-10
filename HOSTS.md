@@ -14,34 +14,36 @@ brew update && brew install \
   sublime-merge \
   tableplus
 ```
-## Arch Linux
+## NixOS (kaxair)
 
-1. **Install packages:**
+The system config lives in `nixos/kaxair/` and is applied with `nixos-rebuild`; home-manager is
+applied separately by `build.sh`.
+
+1. **Install NixOS** with the graphical installer (KDE Plasma), user `chronon`, hostname `kaxair`.
+   Install over Ethernet: the installer has no driver for the Broadcom Wi-Fi.
+
+2. **Clone and build the system** from the console. A reinstall changes the disk UUIDs, so copy
+   the regenerated `hardware-configuration.nix` into the repo and commit it:
    ```bash
-   sudo pacman -S nix ghostty docker docker-compose docker-buildx
-   paru 1password
-   paru appimagelauncher
-   paru brave-bin
+   nix-shell -p git --run 'git clone https://github.com/chronon/dotfiles-nix.git ~/dotfiles'
+   cp /etc/nixos/hardware-configuration.nix ~/dotfiles/nixos/kaxair/
+   sudo nixos-rebuild boot --flake ~/dotfiles#kaxair && sudo reboot
    ```
-   - Manually install [Sublime Merge](https://www.sublimemerge.com/docs/linux_repositories)
-   - Manually download [TablePlus AppImage](https://tableplus.com/download/linux)
+   Then connect Wi-Fi with `nmcli device wifi connect "<SSID>" --ask`.
 
-2. **Other setup:**
-   ```bash
-   # enable docker and add user to docker group
-   sudo systemctl enable docker.service
-   # log out for group changes to take effect
-   sudo usermod -aG docker $USER
-   # no password sudo
-   echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER && sudo chmod 0440 /etc/sudoers.d/$USER
-   # optionally change system shell to bash
-   sudo usermod -s /usr/bin/bash $USER
-   ```
+3. **Tailscale:** remove the old `kaxair` node in the admin console (otherwise the new one
+   registers as `kaxair-1`), then run `sudo tailscale up`.
 
-3. **Transfer secrets to the new host from an existing host:**
+4. **1Password:** sign in to the desktop app, enable Settings → Developer → *Integrate with
+   1Password CLI* and *Use the SSH agent*, then run `op signin`.
+
+5. **Transfer secrets from an existing host** (NixOS has no rsync by default):
     ```bash
-    rsync -avz -L secrets [NEW_HOST]:dotfiles
+    scp -r secrets kaxair:dotfiles/
     ```
+
+Then run Complete Setup from a terminal in the Plasma session, so `op` can unlock through the
+desktop app.
 
 ## Complete Setup
 
