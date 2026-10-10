@@ -9,8 +9,7 @@
 
   home = {
     packages = with pkgs; [
-      libcxxStdenv
-      sublime-merge
+      gcc
       unzip
     ];
     sessionVariables = {

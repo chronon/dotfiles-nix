@@ -74,5 +74,9 @@
         hostname: system:
         nixpkgs.lib.nameValuePair "${username}@${hostname}" (mkHomeConfiguration hostname system)
       ) hosts;
+
+      nixosConfigurations.kaxair = nixpkgs.lib.nixosSystem {
+        modules = [ ./nixos/kaxair/configuration.nix ];
+      };
     };
 }
