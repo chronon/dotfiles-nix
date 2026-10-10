@@ -30,6 +30,19 @@
     AllowSuspendThenHibernate = false;
   };
 
+  zramSwap.enable = true;
+
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings.meta = {
+        c = "C-insert";
+        v = "S-insert";
+      };
+    };
+  };
+
   networking.hostName = "kaxair";
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "systemd-resolved";
@@ -59,6 +72,8 @@
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.discover ];
+  programs.kde-pim.enable = false;
   services.xserver.xkb = {
     layout = "us";
     variant = "";

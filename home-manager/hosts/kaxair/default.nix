@@ -35,6 +35,7 @@
   };
 
   programs.ghostty.settings = {
+    keybind = [ "shift+insert=paste_from_clipboard" ];
     font-size = 12;
     window-width = 100;
     window-height = 25;
