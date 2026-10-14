@@ -1,7 +1,6 @@
 ---
 name: manager
 description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr spawns in new tabs, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr.
-argument-hint: "have <claude|codex> [model-id] <task | skill <name> [args]>"
 disable-model-invocation: true
 ---
 
@@ -49,8 +48,9 @@ or tell the user. Do not fix it yourself.
 
 ## Parse the directive
 
-The user's request (in Claude Code it arrives as `$ARGUMENTS`; otherwise take it from their
-message) names a worker kind, an optional model ID, and a task:
+The user usually invokes this skill without a task and sends it in their next message. If the
+invocation carried no task, finish the preflight, reply with one line saying you are ready, and
+wait for it. A directive names a worker kind, an optional model ID, and a task:
 
 - **Kind**: `claude` or `codex`. When unnamed, use `claude`.
 - **Model**: an optional model ID immediately after the kind. Pass it through as `--model <id>`
