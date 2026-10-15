@@ -25,6 +25,17 @@ return {
   },
 
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      overrides = {
+        buftype = {
+          [""] = { enabled = false },
+        },
+      },
+    },
+  },
+
+  {
     "folke/noice.nvim",
     opts = {
       lsp = {
