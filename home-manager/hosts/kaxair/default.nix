@@ -28,8 +28,9 @@
       ssh -t kanzi /usr/local/bin/orb -m $machine fish -lc herdr
     '';
     sysgc.body = ''
-      home-manager expire-generations "-7 days"
-      and sudo nix-collect-garbage --delete-older-than 7d
+      nix-env -p ~/.local/state/nix/profiles/home-manager --delete-generations +5
+      and sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +5
+      and sudo nix-collect-garbage
       and sudo /run/current-system/bin/switch-to-configuration boot
     '';
   };
