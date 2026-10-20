@@ -59,6 +59,9 @@ wait for it. A directive names a worker kind, an optional model ID, and a task:
   prompt for. A task of the form `skill <name> [args]` means "run that skill"; see the next
   section.
 
+A request for a triple review ("do a triple review", "triple review PR 4758") sets its own kinds
+and models; see "Triple review".
+
 ## Run a skill through a worker
 
 The user asks for a skill in plain text, as the task part of a directive or on its own line:
@@ -97,6 +100,49 @@ complete result as Markdown to ${TMPDIR:-/tmp}/herdr-reports/<name>.md and reply
 
 Relay the report as the skill's own output format specifies, attributed to the worker. For
 `pr-review` that means every reviewer comment with its verdict, plus the closing count line.
+
+## Triple review
+
+A triple review runs three read-only review workers in parallel on the same target, each in its
+own tab:
+
+- `review-claude`: kind `claude`, default model.
+- `review-fable`: kind `claude`, `-- --model fable`.
+- `review-codex`: kind `codex`, default model.
+
+Resolve the target before spawning anything. A target the user names (a PR number or URL, a
+branch, a commit, "unstaged", a path) wins. Otherwise infer it from the shared working tree:
+
+- **On a non-default branch**: everything the branch would ship, meaning the commits since its merge
+  base with the default branch plus any uncommitted and untracked changes. If
+  `gh pr view --json number,baseRefName,state` finds an `OPEN` PR for the branch, take the merge
+  base from its base branch and give the workers the PR number for its description and discussion.
+- **On the default branch with uncommitted or untracked changes**: those changes.
+
+If the target turns out empty, ask the user what to review.
+
+For a PR that is not checked out, get its head commit with `gh pr view <n> --json headRefOid` and
+put it in the prompt's commands: workers read the diff with `gh pr diff <n>` and the full files with
+`git show <headRefOid>:<path>`, running `git fetch origin pull/<n>/head` first if that commit is
+missing. They never check it out.
+
+Send all three the same prompt, differing only in the report name:
+
+```
+Review code in <cwd>. Scope: <target>; see it with `<commands>`. Read the surrounding code and the
+project's CLAUDE.md/AGENTS.md as needed. Look for correctness bugs, regressions, security issues,
+and violations of the project's conventions; skip nits a formatter or linter would catch. For each
+finding give the file and line, the input or state that triggers it, what goes wrong, how likely it
+is, and the simplest adequate fix. If nothing is worth reporting, say so. Do not edit, commit,
+check out, or switch anything. Write the complete report as Markdown to
+${TMPDIR:-/tmp}/herdr-reports/<name>.md and reply with only that path.
+```
+
+Relay once all three have settled, not one at a time. If a worker fails or cannot start, relay the
+other reports and say which reviewer is missing and why. Merge findings that describe the same
+defect into one entry naming every reviewer that raised it; agreement raises confidence, but a
+finding from one reviewer still stands on its merits. Then verify and triage the merged list as
+"Collect and report" describes.
 
 ## Decide whether to plan
 
@@ -224,8 +270,10 @@ fall back to `agent read` and ask it for the file. Then:
   `git diff -U0 | grep '^+.*//'`, plus any new untracked files).
 - Relay the findings to the user attributed to the worker, condensed but not reinterpreted.
   Disagree explicitly if verification contradicts it.
-- For a review, triage the findings as your global instructions describe. Triage is not
-  reinterpretation: keep each finding attributed to the worker, and say where you disagree.
+- For a review, verify each finding against the code, then sort it into worth fixing, a cheap
+  wording or test fix, or a rare edge case to accept and note, as your global instructions
+  describe. Triage is not reinterpretation: keep each finding attributed to the worker, and say
+  where you disagree.
 - Name the tab by its label so the user can find it. Tab and pane IDs such as `w1:t3` mean nothing
   to the user; keep them for `herdr` commands only.
 
