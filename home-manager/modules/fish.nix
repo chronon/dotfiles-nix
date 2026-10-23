@@ -64,7 +64,7 @@
       manager.body = ''
         switch "$argv[1]"
             case "" claude
-                claude --effort xhigh "/manager"
+                claude --effort high "/manager"
             case codex
                 codex -c model_reasoning_effort='"xhigh"' '$manager'
             case '*'

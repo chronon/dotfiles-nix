@@ -36,6 +36,17 @@ in
     };
   };
 
+  programs.zsh = {
+    enable = true;
+    dotDir = config.home.homeDirectory;
+    initContent = lib.mkBefore ''
+      if [[ -z ''${INSIDE_FISH-} ]] && command -v fish >/dev/null; then
+        export INSIDE_FISH=1
+        exec fish -l
+      fi
+    '';
+  };
+
   programs.fish.functions =
     lib.genAttrs orbTools (tool: {
       body = "__orb_tool ${tool} $argv";
