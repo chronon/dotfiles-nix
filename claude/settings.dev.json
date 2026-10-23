@@ -11,7 +11,7 @@
   "voiceEnabled": false,
   "modelSettings": {
     "claude-opus-5-5": {
-      "effortLevel": "xhigh"
+      "effortLevel": "high"
     }
   }
 }

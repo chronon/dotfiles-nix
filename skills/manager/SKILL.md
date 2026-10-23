@@ -253,6 +253,19 @@ If a wait returns `blocked`, read the worker's screen, tell the user exactly wha
 wait for their decision. Relay their answer with `agent send-keys` or `agent prompt`. Never answer
 on their behalf.
 
+## Handle messages that arrive mid-run
+
+When the user sends more while a worker is still working, sort the message by whether it changes
+the work in progress:
+
+- **A correction** (a changed scope, a wrong assumption, a reversed decision): send it right away,
+  because every minute on the wrong path is wasted. Use `agent prompt` without `--wait`, since the
+  background wait already running covers it, and tell the worker to make its report reflect the
+  correction. When that wait returns, check `agent get`; if the worker is working again, wait
+  again in the background before reading the report.
+- **A new, independent ask**: hold it and tell the user it is queued. Once the current result is
+  verified and relayed, send every held ask to the same worker as one prompt for the next round.
+
 ## Run workers in parallel
 
 Read-only tasks (review, audit, analysis) may run concurrently in separate tabs. At most one worker
