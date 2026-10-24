@@ -20,6 +20,8 @@
     pi-coding-agent
     opencode
     codex
+    hcloud
+    dig
     (playwright-mcp.override {
       playwright-driver = playwright-driver // {
         browsers = playwright-driver.selectBrowsers {

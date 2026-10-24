@@ -20,6 +20,7 @@ in
     packages = with pkgs; [
       _1password-cli
       cloudflared
+      hcloud
       unixtools.watch
       (writeShellScriptBin "tailscale" ''
         exec /Applications/Tailscale.app/Contents/MacOS/Tailscale "$@"
@@ -98,6 +99,10 @@ in
         set -l vmdir (__orb_dir); or return 1
         __orb_run $vmdir docker compose down $argv; or return 1
         __orb_run $vmdir docker compose -f ../../utility/compose.yml down
+      '';
+
+      hcloud.body = ''
+        HCLOUD_TOKEN='op://4pswfrz4cyx6mbnbbh5i2m3h4y/p2yinppvfcmgt7v5yxb77mfvpy/rh45gezz6lztqp2ltlpwyun2f4' op run --no-masking -- hcloud $argv
       '';
     };
 }
