@@ -12,9 +12,6 @@
       gcc
       unzip
     ];
-    sessionVariables = {
-      OP_BIOMETRIC_UNLOCK_ENABLED = "true";
-    };
   };
 
   programs.fish.shellAbbrs = {

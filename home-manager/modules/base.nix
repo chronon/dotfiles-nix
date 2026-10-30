@@ -33,6 +33,7 @@ in
       pnpm
       shellcheck
       wget
+      mtr
       (writeShellScriptBin "gsed" "exec ${gnused}/bin/sed \"$@\"")
     ];
   };

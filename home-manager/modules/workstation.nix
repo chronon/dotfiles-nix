@@ -17,6 +17,8 @@
     rclone
   ];
 
+  home.sessionVariables.OP_BIOMETRIC_UNLOCK_ENABLED = "true";
+
   programs.gpg.enable = true;
 
   programs.fish.functions.coolify.body = ''
