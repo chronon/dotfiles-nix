@@ -46,6 +46,8 @@ template → output mapping lives in that script). Templates: `git/allowed_signe
   - `dev.nix` — headless extras layered on `base` (gcc, rootless Docker host, bash→fish, agent
     harnesses, agent skills via `skills.nix`)
   - `macos.nix` — kanzi only: 1Password agent socket, Homebrew paths, Sublime Merge, orb shims
+  - `neovim.nix` — installs Neovim's language servers, formatters, linters and tree-sitter CLI from
+    nixpkgs. Mason is disabled, so a new server or tool goes in this list.
   - one module per tool (fish, git, neovim, …)
 - `scripts/bootstrap.sh` — enable Nix flakes, prepare `secrets/`
 - `scripts/update.sh` (`dotup`) — `nix flake update`, `build.sh`, headless `Lazy! sync`, then a

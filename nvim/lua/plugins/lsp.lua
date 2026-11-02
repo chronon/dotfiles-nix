@@ -4,6 +4,7 @@ return {
     opts = {
       servers = {
         intelephense = {},
+        marksman = { enabled = false },
         cssls = {
           autostart = false,
           settings = {
