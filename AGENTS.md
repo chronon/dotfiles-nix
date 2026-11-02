@@ -24,11 +24,8 @@ template → output mapping lives in that script). Templates: `git/allowed_signe
   `home.username` and names each config `username@hostname`. `home.homeDirectory` and the `dotfiles`
   module argument (the repo checkout, `~/dotfiles`) are derived from it and the system. Hostnames
   matching `dev-*` route to the shared `hosts/dev` module, so a new dev box needs only that one
-  line. Named hosts use their own `home-manager/hosts/<name>/` directory. Overlays from the
-  `sadjow/claude-code-nix` and `sadjow/codex-cli-nix` inputs replace `pkgs.claude-code` and
-  `pkgs.codex` with hourly-updated builds of the upstream releases (nixpkgs lags); bump with
-  `nix flake update claude-code codex`. The non-flake `cloudflare-skills` input pins
-  `cloudflare/skills` for `skills.nix`.
+  line. Named hosts use their own `home-manager/hosts/<name>/` directory. The non-flake
+  `cloudflare-skills` input pins `cloudflare/skills` for `skills.nix`.
 - `nixos/kaxair/` — kaxair's NixOS system config, exposed as `nixosConfigurations.kaxair` on the
   same nixpkgs pin as home-manager. Home-manager stays standalone there (applied by `build.sh`, not
   `nixos-rebuild`), and `dotup` doesn't rebuild the system; kaxair's `sysup` abbreviation does, and
