@@ -6,7 +6,6 @@ return {
         intelephense = {},
         marksman = { enabled = false },
         cssls = {
-          autostart = false,
           settings = {
             css = {
               lint = {
@@ -14,9 +13,6 @@ return {
               },
             },
           },
-        },
-        tailwindcss = {
-          autostart = false,
         },
         yamlls = {
           settings = {
