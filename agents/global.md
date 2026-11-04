@@ -28,3 +28,7 @@
   OrbStack VM, so create git worktrees with `git worktree add --relative-paths`. For an existing
   one, run `git config worktree.useRelativePaths true` and `git worktree repair --relative-paths`.
   Absolute worktree links break on the other side, where a prune or gc silently deletes them.
+- Use the `LSP` tool, when available, for definitions, references, types and outlines; fall back to grep
+  if it fails. It only sees statically resolvable code in files it indexes, so also grep before renames,
+  deletions or signature changes.
+- Fix diagnostics your edits introduce; mention pre-existing ones only if they look like real bugs.

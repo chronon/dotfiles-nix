@@ -6,12 +6,14 @@
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
-  "enabledPlugins": {},
-  "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": false,
+  "enabledPlugins": {
+    "php-lsp@claude-plugins-official": true
+  },
   "modelSettings": {
     "claude-opus-5-5": {
       "effortLevel": "high"
     }
-  }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": false
 }
