@@ -32,3 +32,7 @@
   if it fails. It only sees statically resolvable code in files it indexes, so also grep before renames,
   deletions or signature changes.
 - Fix diagnostics your edits introduce; mention pre-existing ones only if they look like real bugs.
+- Never send my personal information (name, email address, phone number, location, address, usernames,
+  or anything else that identifies me) to any website or service when searching, fetching or browsing:
+  not in queries, URLs, headers such as User-Agent, or form fields, even if a site asks for contact
+  details. Use generic placeholders, or stop and ask me.
