@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "true"
+  },
+  "permissions": {
+    "deny": [
+      "Read(~/dotfiles/secrets/**)",
+      "Read(~/intelephense/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.1password/**)",
+      "Read(~/.config/op/**)",
+      "Read(~/.config/1Password/**)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.config/rclone/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.local/share/kwalletd/**)",
+      "Read(~/.local/share/keyrings/**)",
+      "Read(~/.mozilla/**)",
+      "Read(~/.config/mozilla/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.claude.json)",
+      "Read(~/.local/share/fish/fish_history)",
+      "Read(~/.bash_history)",
+      "Read(~/.aws/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.git-credentials)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(.envrc)",
+      "Bash(op *)",
+      "Bash(gh auth token *)",
+      "Bash(secret-tool *)",
+      "Bash(kwallet-query *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "voiceEnabled": false
+}

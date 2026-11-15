@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  config,
+  pkgs,
+  dotfiles,
+  ...
+}:
 
 {
 
@@ -11,7 +16,10 @@
     packages = with pkgs; [
       gcc
       unzip
+      claude-code
     ];
+    file.".claude/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.kaxair.json";
   };
 
   programs.fish.shellAbbrs = {
