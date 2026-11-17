@@ -18,7 +18,6 @@
     unzip
     claude-code
     pi-coding-agent
-    opencode
     codex
     hcloud
     dig
