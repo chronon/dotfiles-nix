@@ -1,6 +1,6 @@
 ---
 name: manager
-description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr or tuios spawns in new tabs, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr or tuios.
+description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr spawns in new tabs or tuios in panes beside it, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr or tuios.
 disable-model-invocation: true
 ---
 
@@ -14,8 +14,8 @@ do the work yourself.
 Pick the multiplexer you are running in and read its file in this skill's directory. It has the
 commands for every step below that starts, prompts, waits on, reads or closes a worker:
 
-- `HERDR_ENV` is `1`: read `herdr.md`.
-- `TUIOS_ENV` is `1`: read `tuios.md`.
+- `TUIOS_ENV` is `1`: read `tuios.md`, even when `HERDR_ENV` is also `1` (tuios sets it too).
+- Otherwise, `HERDR_ENV` is `1`: read `herdr.md`.
 
 Run the preflight check in that file. If neither variable is set or the check fails, tell the user
 you are not running inside Herdr or tuios and stop. Nothing below works without one.
@@ -199,8 +199,9 @@ user when relaying the result.
 
 ## Spawn a worker
 
-Each worker gets its own tab, in the current working directory, without taking focus. Label the
-tab with a short task name so the user can find it. Choose a unique worker name that reflects the
+Each worker gets its own tab or pane, as the multiplexer's file says, in the current working
+directory, without taking focus. Below, "tab" means whichever it uses. Label it with a short task
+name so the user can find it. Choose a unique worker name that reflects the
 task (for example `review-unstaged`, `audit-deps`). Start it as "Start a worker" in the
 multiplexer's file describes, and prompt it only once it is ready.
 

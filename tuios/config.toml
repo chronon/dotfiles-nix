@@ -1,9 +1,11 @@
 [startup]
 tiled = true
 daemon = true
+layout = "master-stack"
 
 [appearance]
 theme = "catppuccin_mocha"
+master_grid = false
 
 [appearance.sidebar]
 position = "left"
