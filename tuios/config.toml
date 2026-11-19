@@ -16,3 +16,6 @@ width = 35
 
 [keybindings]
 leader_key = "ctrl+a"
+
+[keybindings.global]
+command_palette = ["ctrl+shift+p"]
