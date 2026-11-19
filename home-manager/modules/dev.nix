@@ -66,4 +66,16 @@
     command codex --no-daemon $argv
   '';
 
+  programs.fish.functions.manager.body = ''
+    switch "$argv[1]"
+        case "" claude
+            claude --permission-mode bypassPermissions --effort high "/manager"
+        case codex
+            codex -c model_reasoning_effort='"xhigh"' '$manager'
+        case '*'
+            echo "usage: manager [claude|codex]" >&2
+            return 1
+    end
+  '';
+
 }
