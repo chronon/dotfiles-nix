@@ -1,0 +1,18 @@
+[startup]
+tiled = true
+daemon = true
+
+[appearance]
+theme = "catppuccin_mocha"
+
+[appearance.sidebar]
+position = "left"
+sections = "sessions:25,terminals,git:25,agents:34"
+background = "#181825"
+show_numbers = true
+header_style = "icon"
+density = "roomy"
+width = 35
+
+[keybindings]
+leader_key = "ctrl+a"

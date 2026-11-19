@@ -1,6 +1,6 @@
 ---
 name: manager
-description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr spawns in new tabs, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr.
+description: Act as a manager only — delegate every task to worker agents (claude or codex) that Herdr or tuios spawns in new tabs, collect their reports, and never edit code yourself. Use only when the user explicitly asks for the manager or asks to have another agent do the work. Requires Herdr or tuios.
 disable-model-invocation: true
 ---
 
@@ -11,21 +11,21 @@ do the work yourself.
 
 ## Preflight
 
-Read the Herdr skill in the sibling `herdr/` directory of this skill and follow it for every Herdr
-command. Then run its environment check:
+Pick the multiplexer you are running in and read its file in this skill's directory. It has the
+commands for every step below that starts, prompts, waits on, reads or closes a worker:
 
-```bash
-test "${HERDR_ENV:-}" = 1
-```
+- `HERDR_ENV` is `1`: read `herdr.md`.
+- `TUIOS_ENV` is `1`: read `tuios.md`.
 
-If the check fails, tell the user you are not running inside Herdr and stop. Nothing below works
-without it.
+Run the preflight check in that file. If neither variable is set or the check fails, tell the user
+you are not running inside Herdr or tuios and stop. Nothing below works without one.
 
 ## What you may and may not do
 
 You may:
 
-- Run Herdr commands to create tabs, start workers, prompt them, wait on them, and read them.
+- Run the multiplexer's commands to create tabs, start workers, prompt them, wait on them, and read
+  them.
 - Read files and run read-only commands (`git status`, `git diff`, `git log`) to understand a task
   before delegating it or to verify a worker's claims afterwards. Never run tests, linters or builds
   yourself; that is the worker's job, and its quoted output is what you verify against.
@@ -53,8 +53,8 @@ invocation carried no task, finish the preflight, reply with one line saying you
 wait for it. A directive names a worker kind, an optional model ID, and a task:
 
 - **Kind**: `claude` or `codex`. When unnamed, use `claude`.
-- **Model**: an optional model ID immediately after the kind. Pass it through as `--model <id>`
-  after `--` on `agent start`. When absent, let the worker use its default.
+- **Model**: an optional model ID immediately after the kind. Pass it through as the worker's model
+  when starting it. When absent, let the worker use its default.
 - **Task**: everything else. Ask the user only if the task is too vague to write a self-contained
   prompt for. A task of the form `skill <name> [args]` means "run that skill"; see the next
   section.
@@ -95,7 +95,7 @@ and `codex`:
 Read <absolute path>/SKILL.md and follow it exactly. The user's arguments are: <args>. The skill
 requires <input>; you were given <what the user gave>, so first run `<command>` to obtain it, then
 apply the skill to that output. Working directory: <cwd>. Do not edit or commit anything. Write the
-complete result as Markdown to ${TMPDIR:-/tmp}/herdr-reports/<name>.md and reply with only that path.
+complete result as Markdown to ${TMPDIR:-/tmp}/manager-reports/<name>.md and reply with only that path.
 ```
 
 Relay the report as the skill's own output format specifies, attributed to the worker. For
@@ -107,7 +107,7 @@ A triple review runs three read-only review workers in parallel on the same targ
 own tab:
 
 - `review-claude`: kind `claude`, default model.
-- `review-fable`: kind `claude`, `-- --model fable`.
+- `review-fable`: kind `claude`, model `fable`.
 - `review-codex`: kind `codex`, default model.
 
 Resolve the target before spawning anything. A target the user names (a PR number or URL, a
@@ -135,7 +135,7 @@ and violations of the project's conventions; skip nits a formatter or linter wou
 finding give the file and line, the input or state that triggers it, what goes wrong, how likely it
 is, and the simplest adequate fix. If nothing is worth reporting, say so. Do not edit, commit,
 check out, or switch anything. Write the complete report as Markdown to
-${TMPDIR:-/tmp}/herdr-reports/<name>.md and reply with only that path.
+${TMPDIR:-/tmp}/manager-reports/<name>.md and reply with only that path.
 ```
 
 Relay once all three have settled, not one at a time. If a worker fails or cannot start, relay the
@@ -190,7 +190,8 @@ Before spawning a worker that will edit files, check `git branch --show-current`
   your call.
 - **Already on a non-default branch**: use it. Assume the user set it up deliberately; do not nest a
   new branch under it.
-- **In a Herdr worktree**: skip this section. The worktree already has its own branch.
+- **In a worktree the multiplexer created**: skip this section. The worktree already has its own
+  branch.
 
 Read-only workers (review, audit, analysis) never need a branch. Tell every editing worker which
 branch it is on and that it must not create or switch branches, and report the branch name to the
@@ -198,22 +199,10 @@ user when relaying the result.
 
 ## Spawn a worker
 
-Each worker gets its own tab in the current workspace, in the current working directory, without
-taking focus. Label the tab with a short task name so the user can find it:
-
-```bash
-herdr tab create --workspace "$HERDR_WORKSPACE_ID" --cwd "$PWD" --label "<short task>" --no-focus
-```
-
-Read the root pane from `.result.root_pane`. Choose a unique worker name that reflects the task
-(for example `review-unstaged`, `audit-deps`), then start the agent in that pane:
-
-```bash
-herdr agent start <name> --kind <kind> --pane <root-pane-id>            # default model
-herdr agent start <name> --kind <kind> --pane <root-pane-id> -- --model <model-id>
-```
-
-Wait for `idle` before prompting.
+Each worker gets its own tab, in the current working directory, without taking focus. Label the
+tab with a short task name so the user can find it. Choose a unique worker name that reflects the
+task (for example `review-unstaged`, `audit-deps`). Start it as "Start a worker" in the
+multiplexer's file describes, and prompt it only once it is ready.
 
 ## Delegate
 
@@ -229,29 +218,22 @@ Workers start with none of your context. Every prompt must be self-contained and
    they pass with clean output, and quote the commands and their summary lines verbatim in the
    report. The manager never runs them.
 4. The report contract: write the complete report as Markdown to
-   `${TMPDIR:-/tmp}/herdr-reports/<name>.md`, creating the directory if needed, and reply with
+   `${TMPDIR:-/tmp}/manager-reports/<name>.md`, creating the directory if needed, and reply with
    only that path.
 
-Send it and wait:
+Send it and wait, as "Prompt and wait" in the multiplexer's file describes. Always run that, and
+any other blocking wait, as a background command so the user keeps control of the session. Tell
+them which tab to watch by its label, end the turn, and pick up the result when the background task
+notifies you. Never wait in the foreground.
 
-```bash
-herdr agent prompt <name> "<prompt>" --wait --timeout <ms>
-```
-
-Always run this, and any other blocking wait (`agent wait`, `pane wait-output`), as a background
-command so the user keeps control of the session. Tell them which tab to watch by its label (the
-name you gave `--label`), end the turn, and pick up the result when the background task notifies
-you. Never wait in the foreground.
-
-Pick a timeout suited to the task; reviews and audits usually need several minutes. On `timeout`,
-inspect with `agent get` and `agent read` before deciding whether to keep waiting. Do not resend the
-prompt.
+Pick a timeout suited to the task; reviews and audits usually need several minutes. On a timeout,
+inspect the worker before deciding whether to keep waiting. Do not resend the prompt.
 
 ## Handle blocked workers
 
-If a wait returns `blocked`, read the worker's screen, tell the user exactly what it is asking, and
-wait for their decision. Relay their answer with `agent send-keys` or `agent prompt`. Never answer
-on their behalf.
+If a worker is blocked on a prompt, read it, tell the user exactly what it is asking, and wait for
+their decision. Relay their answer as "Blocked worker" in the multiplexer's file describes. Never
+answer on their behalf.
 
 ## Handle messages that arrive mid-run
 
@@ -259,10 +241,9 @@ When the user sends more while a worker is still working, sort the message by wh
 the work in progress:
 
 - **A correction** (a changed scope, a wrong assumption, a reversed decision): send it right away,
-  because every minute on the wrong path is wasted. Use `agent prompt` without `--wait`, since the
-  background wait already running covers it, and tell the worker to make its report reflect the
-  correction. When that wait returns, check `agent get`; if the worker is working again, wait
-  again in the background before reading the report.
+  because every minute on the wrong path is wasted. Send it as "Correct a working worker" in the
+  multiplexer's file describes, and tell the worker to make its report reflect the correction.
+  Before reading the report, make sure the worker has finished the corrected turn.
 - **A new, independent ask**: hold it and tell the user it is queued. Once the current result is
   verified and relayed, send every held ask to the same worker as one prompt for the next round.
 
@@ -270,12 +251,15 @@ the work in progress:
 
 Read-only tasks (review, audit, analysis) may run concurrently in separate tabs. At most one worker
 that edits files may run per working tree at a time. If the user wants parallel edits, put each
-editing worker in its own Herdr worktree and say so in the report.
+editing worker in its own worktree, as "Parallel editors" in the multiplexer's file describes,
+and say so in the report. When the project's tests or dev services are tied to one checkout (such
+as a Docker stack mounting the main working tree, or a shared test database), worktrees cannot run
+their own tests: run the editors one at a time instead and tell the user why.
 
 ## Collect and report
 
 When a worker settles, read the report file at the path it returned. If it did not return a path,
-fall back to `agent read` and ask it for the file. Then:
+read the worker (see "Read a worker" in the multiplexer's file) and ask it for the file. Then:
 
 - Verify anything that is cheap to verify without running tests: the diff it claims to have made,
   `git diff --check`, that the test output it quoted is present and clean, and that the added
@@ -287,9 +271,9 @@ fall back to `agent read` and ask it for the file. Then:
   wording or test fix, or a rare edge case to accept and note, as your global instructions
   describe. Triage is not reinterpretation: keep each finding attributed to the worker, and say
   where you disagree.
-- Name the tab by its label so the user can find it. Tab and pane IDs such as `w1:t3` mean nothing
-  to the user; keep them for `herdr` commands only.
+- Name the tab by its label so the user can find it. Tab, pane and window IDs mean nothing to the
+  user; keep them for the multiplexer's commands only.
 
-Close a worker's tab as soon as its work is verified and any follow-on action (a commit, a relay) has
+Close a worker's tab, as the multiplexer's file describes, as soon as its work is verified and any follow-on action (a commit, a relay) has
 been taken. Keep a tab open only while the worker still has a follow-up coming, and say so. Never
 close a tab you did not create.

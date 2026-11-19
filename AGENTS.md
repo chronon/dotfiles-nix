@@ -64,6 +64,7 @@ template → output mapping lives in that script). Templates: `git/allowed_signe
 
 - `nvim/` → `~/.config/nvim`
 - `zed/` → `~/.config/zed`
+- `tuios/` → `~/.config/tuios` (dev hosts)
 - `skills/` → `~/.claude/skills`, `~/.agents/skills`
 - `agents/global.md` → `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.agents/AGENTS.md`
 

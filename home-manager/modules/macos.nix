@@ -11,6 +11,7 @@ let
     "codex"
     "herdr"
     "pi"
+    "tuios"
   ];
 in
 {

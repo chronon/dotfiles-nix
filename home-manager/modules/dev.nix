@@ -21,6 +21,7 @@
     codex
     hcloud
     dig
+    tuios
     (playwright-mcp.override {
       playwright-driver = playwright-driver // {
         browsers = playwright-driver.selectBrowsers {
@@ -42,6 +43,8 @@
 
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.dev.json";
+
+  xdg.configFile."tuios".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/tuios";
 
   programs.bash = {
     enable = true;
