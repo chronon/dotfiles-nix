@@ -29,7 +29,7 @@ in
       go-task
       neovim
       nixfmt
-      nodejs_24
+      nodejs_26
       pnpm
       shellcheck
       wget
