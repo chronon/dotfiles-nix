@@ -19,6 +19,7 @@
       shell-integration-features = "no-cursor, ssh-env";
       cursor-style-blink = false;
       copy-on-select = "clipboard";
+      macos-option-as-alt = "left";
 
       split-divider-color = "#a6e3a1";
 

@@ -43,6 +43,8 @@
 
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.dev.json";
+  home.file.".claude/keybindings.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/keybindings.json";
 
   xdg.configFile."tuios".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/tuios";
 

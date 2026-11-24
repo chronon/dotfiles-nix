@@ -20,6 +20,8 @@
     ];
     file.".claude/settings.json".source =
       config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.kaxair.json";
+    file.".claude/keybindings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/keybindings.json";
   };
 
   programs.fish.shellAbbrs = {
