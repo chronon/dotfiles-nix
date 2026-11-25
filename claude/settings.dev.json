@@ -15,6 +15,10 @@
     }
   },
   "skipDangerousModePermissionPrompt": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "voiceEnabled": false,
   "hooks": {
     "SessionStart": [
