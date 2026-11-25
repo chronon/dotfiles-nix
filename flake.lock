@@ -3,11 +3,11 @@
     "cloudflare-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1794930949,
-        "narHash": "sha256-A3tzJg4lXaQz4RN0d+N/nKwNm4DqUzG1S0w5l6FKWCg=",
+        "lastModified": 1795540212,
+        "narHash": "sha256-50afPPoq1/Xd+es0P6HOoL7U0b9oT9dxUpPgq4n3UUQ=",
         "owner": "cloudflare",
         "repo": "skills",
-        "rev": "5108325ecceabc899c761e07aa617b09c02445ee",
+        "rev": "ff191de7d903788eceaf516a514ae7d3b56b924a",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795268568,
-        "narHash": "sha256-1RJm4DEu7YHJv94sjSY7sjqT+kHx/AUwmtUN4dtFBUo=",
+        "lastModified": 1795534022,
+        "narHash": "sha256-xkRZ+PcPWaAyf9YrEBszYD5w2S6/Ac2tIfsufzd4dEQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6857c7f7c338ad181729c52071386b0d3afa24bc",
+        "rev": "b56bcd042b5e69ad188eca20d9bec1bfbf3dd453",
         "type": "github"
       },
       "original": {
