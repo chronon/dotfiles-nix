@@ -38,8 +38,8 @@
       window-height = 75;
       window-width = 150;
 
-      quick-terminal-position = "left";
-      quick-terminal-size = "50%";
+      quick-terminal-position = "center";
+      quick-terminal-size = "35%,65%";
       quick-terminal-autohide = false;
       quick-terminal-animation-duration = 0;
     };
