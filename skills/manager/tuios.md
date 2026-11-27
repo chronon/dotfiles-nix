@@ -52,8 +52,18 @@ tuios list-windows -s "$TUIOS_SESSION" --json \
 Start the agent there without a prompt. It joins the stack beside you, without taking focus:
 
 ```bash
-tuios start-agent <kind> -s "$TUIOS_SESSION" --workspace <n> --name "<short task>" --cwd "$PWD" --grants read --json
+envflags=()
+while read -r v; do envflags+=(--env "$v"); done < <(
+  direnv show_dump "$DIRENV_DIFF" 2>/dev/null | jq -r '.n | keys[] | select(startswith("DIRENV_") | not)')
+tuios start-agent <kind> -s "$TUIOS_SESSION" --workspace <n> --name "<short task>" --cwd "$PWD" --grants read \
+  "${envflags[@]}" --json
 ```
+
+Run it as one command, so `envflags` survives to `start-agent`. A worker runs straight from the
+tuios daemon, with no shell to load direnv, so it gets only the daemon's environment. The loop reads
+the variables direnv applied to your own session (tokens, MCP switches) from `$DIRENV_DIFF`, and a
+bare `--env NAME` hands the worker your own value of each, without writing any secret down. Without
+direnv the loop adds nothing.
 
 Add `--model <model-id>` when the directive names a model. `--grants read` keeps the worker from
 typing into, closing or starting panes through tuios. Under `mode = "open"` a pane started without
@@ -121,7 +131,8 @@ the user that session's name instead of the pane's. `worktree new` takes no `--g
 before the first prompt read the worker's id with `tuios list-agents -s <session> --json | jq -r
 '.agents[0].window_id'` and drop it to read-only with `tuios set-pane-grants -s <session> -w
 <window-id> --grants read`. For these workers, use `<session>` wherever the sections above say
-`"$TUIOS_SESSION"`.
+`"$TUIOS_SESSION"`. `worktree new` takes no `--env` either, so these workers get only the daemon's
+environment, without the `.envrc` tokens; give one a task that needs them only in the shared tree.
 
 ## Close a worker
 

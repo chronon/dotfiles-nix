@@ -3,9 +3,8 @@
 - Never ask whether I want to commit, and don't offer to commit. Only commit when I explicitly tell you to.
 - When committing, keep the body concise: the why and anything non-obvious, not a walkthrough of the
   diff. Never add a `Co-Authored-By` or other attribution line. Always commit with `--no-gpg-sign`,
-  and when reporting, remind me to sign the unpushed commits before pushing with
-  `git rebase --exec 'git commit --amend --no-edit -S' <base>`, where `<base>` is the upstream
-  (`@{u}`) or, for a new branch, the branch it was cut from.
+  and when reporting, remind me to sign the unpushed commits before pushing with `git sign`, or
+  `git sign <branch>` for a new branch with no upstream, naming the branch it was cut from.
 - Default to no code comments. A comment is only warranted for something a reader cannot infer from the
   code or its tests, such as a non-obvious external constraint or a workaround for a specific bug. Never
   comment a fix, cast, guard, or refactor to explain why it was needed; that reasoning goes in the commit
